@@ -21,7 +21,7 @@ public class PlayerPrimaryAttackState : PlayerState
         if (_comboCounter > 2 || Time.time > _lastTimeAttacked + _comboWindow)
             _comboCounter = 0;
 
-        _player.PlayerAnimator.SetInteger("ComboCounter", _comboCounter);
+        _player.Animator.SetInteger("ComboCounter", _comboCounter);
 
 
         float attackDir = _player.GetFacingDirection();
