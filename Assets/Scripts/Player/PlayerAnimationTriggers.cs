@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class PlayerAnimationTriggers : MonoBehaviour
 {
-    [SerializeField] Player player;
+    [SerializeField] Player _player;
 
     private void AnimationTrigger()
     {
-        player.AnimationTrigger();
+        _player.AnimationTrigger();
+    }
+    private void AttackTrigger()
+    {
+        _player.DealDamage();
     }
 }

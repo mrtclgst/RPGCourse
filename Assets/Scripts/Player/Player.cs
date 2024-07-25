@@ -8,7 +8,6 @@ public class Player : Entity
     [Header("Attack Details")]
     [SerializeField] Vector2[] _attackMovementArray;
 
-
     private bool _isBusy = false;
 
     [Header("Move Info")]
@@ -19,9 +18,6 @@ public class Player : Entity
     [SerializeField] private float _dashCooldown;
     private float _dashUsageTimer;
     private float _dashDirection = 1;
-
-
-
 
     #region States
     public PlayerStateMachine StateMachine { get; private set; }
@@ -49,13 +45,11 @@ public class Player : Entity
         WallJumpState = new PlayerWallJumpState(this, StateMachine, "Jump");
         PrimaryAttackState = new PlayerPrimaryAttackState(this, StateMachine, "Attack");
     }
-
     protected override void Start()
     {
         base.Start();
         StateMachine.Initialize(IdleState);
     }
-
     protected override void Update()
     {
         base.Update();
@@ -87,7 +81,19 @@ public class Player : Entity
 
         }
     }
+    public override void DealDamage()
+    {
+        Collider2D[] damageableArray = Physics2D.OverlapCircleAll(_attackCheckPoint.position, _attackCheckRadius);
+        foreach (var damageable in damageableArray)
+        {
+            if (damageable.GetComponent<Enemy>() != null)
+            {
+                damageable.GetComponent<Enemy>().TakeDamage();
+            }
+        }
 
+        base.DealDamage();
+    }
     #region GetFunctions
     public float GetMoveSpeed()
     {

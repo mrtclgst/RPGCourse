@@ -16,7 +16,7 @@ public class SkeletonBattleState : EnemyState
     public override void Enter()
     {
         base.Enter();
-        _playerTransform = _enemySkeleton.GetPlayerTransform();
+        _playerTransform = GameObject.Find("Player").transform;
     }
 
     public override void Exit()
@@ -30,11 +30,16 @@ public class SkeletonBattleState : EnemyState
 
         if (_enemy.IsPlayerDetected())
         {
-            if (_enemy.IsPlayerDetected().distance < _enemy.GetAttackDistance())
+            _stateTimer = _enemy.GetBattleTime();
+            if (_enemy.IsPlayerDetected().distance < _enemy.GetAttackDistance() && CanAttack())
             {
-                _enemy.SetVelocityZero();
-                return;
+                _stateMachine.ChangeState(_enemySkeleton.AttackState);
             }
+        }
+        else
+        {
+            if (_stateTimer < 0 || Vector2.Distance(_playerTransform.position, _enemy.transform.position) > _enemy.GetChaseDistance())
+                _stateMachine.ChangeState(_enemySkeleton.IdleState);
         }
 
         if (_playerTransform.position.x > _enemy.transform.position.x)
@@ -47,5 +52,15 @@ public class SkeletonBattleState : EnemyState
         }
 
         _enemy.SetVelocity(_moveDir * _enemy.GetMoveSpeed(), _rb.velocity.y);
+    }
+
+    private bool CanAttack()
+    {
+        if (Time.time > _enemy.GetAttackCooldown() + _enemy.GetLastTimeAttacked())
+        {
+            return true;
+        }
+
+        return false;
     }
 }
