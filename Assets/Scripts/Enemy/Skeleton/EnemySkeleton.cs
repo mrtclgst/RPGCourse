@@ -32,10 +32,6 @@ public class EnemySkeleton : Enemy
     protected override void Update()
     {
         base.Update();
-        if(Input.GetKeyDown(KeyCode.S))
-        {
-            StateMachine.ChangeState(StunnedState);
-        }
     }
 
     public override void TakeDamage()
@@ -54,5 +50,15 @@ public class EnemySkeleton : Enemy
         }
 
         base.DealDamage();
+    }
+    internal override bool CanBeStunned()
+    {
+        if (base.CanBeStunned())
+        {
+            StateMachine.ChangeState(StunnedState);
+            return true;
+        }
+
+        return false;
     }
 }

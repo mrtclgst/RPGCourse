@@ -26,6 +26,8 @@ public class Enemy : Entity
     [Header("Stun Info")]
     [SerializeField] private Vector2 _stunForce;
     [SerializeField] private float _stunDuration;
+    [SerializeField] protected bool _canBeStunned;
+    [SerializeField] protected GameObject _counterImage;
 
 
     public EnemyStateMachine StateMachine { get; private set; }
@@ -113,5 +115,25 @@ public class Enemy : Entity
     public virtual void AnimationFinishTrigger()
     {
         StateMachine.CurrentState.AnimationFinishTrigger();
+    }
+
+    public virtual void OpenCounterAttackWindow()
+    {
+        _canBeStunned = true;
+        _counterImage.SetActive(true);
+    }
+    public virtual void CloseCounterAttackWindow()
+    {
+        _canBeStunned = false;
+        _counterImage.SetActive(false);
+    }
+    internal virtual bool CanBeStunned()
+    {
+        if (_canBeStunned)
+        {
+            return true;
+        }
+
+        return false;
     }
 }

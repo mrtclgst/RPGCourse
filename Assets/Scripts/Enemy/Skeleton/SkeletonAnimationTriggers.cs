@@ -15,4 +15,12 @@ public class SkeletonAnimationTriggers : MonoBehaviour
     {
         _enemySkeleton.DealDamage();
     }
+    private void OpenCounterWindow()
+    {
+        _enemySkeleton.OpenCounterAttackWindow();
+    }
+    private void CloseCounterWindow()
+    {
+        _enemySkeleton.CloseCounterAttackWindow();
+    }
 }

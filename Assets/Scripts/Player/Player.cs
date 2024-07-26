@@ -6,7 +6,8 @@ using UnityEngine;
 public class Player : Entity
 {
     [Header("Attack Details")]
-    [SerializeField] Vector2[] _attackMovementArray;
+    [SerializeField] private Vector2[] _attackMovementArray;
+    [SerializeField] private float _counterAttackDuration;
 
     private bool _isBusy = false;
 
@@ -28,10 +29,11 @@ public class Player : Entity
     public PlayerWallSlideState WallSlideState { get; private set; }
     public PlayerWallJumpState WallJumpState { get; private set; }
     public PlayerDashState DashState { get; private set; }
-
     public PlayerPrimaryAttackState PrimaryAttackState { get; private set; }
+    public PlayerCounterAttackState CounterAttackState { get; private set; }
     #endregion
 
+    #region MonoBehaviours
     protected override void Awake()
     {
         base.Awake();
@@ -44,6 +46,7 @@ public class Player : Entity
         WallSlideState = new PlayerWallSlideState(this, StateMachine, "WallSlide");
         WallJumpState = new PlayerWallJumpState(this, StateMachine, "Jump");
         PrimaryAttackState = new PlayerPrimaryAttackState(this, StateMachine, "Attack");
+        CounterAttackState = new PlayerCounterAttackState(this, StateMachine, "CounterAttack");
     }
     protected override void Start()
     {
@@ -56,6 +59,7 @@ public class Player : Entity
         StateMachine.CurrentState.Update();
         CheckForDashInput();
     }
+    #endregion
     public IEnumerator IE_BusyFor(float seconds)
     {
         _isBusy = true;
@@ -94,28 +98,43 @@ public class Player : Entity
 
         base.DealDamage();
     }
+    internal bool TryToCounterAttack()
+    {
+        bool hasEnemyCanBeStunned = false;
+
+        Collider2D[] damageableArray = Physics2D.OverlapCircleAll(_attackCheckPoint.position, _attackCheckRadius);
+        foreach (var damageable in damageableArray)
+        {
+            Enemy nearbyEnemy = damageable.GetComponent<Enemy>();
+            if (nearbyEnemy != null)
+            {
+                if (nearbyEnemy.CanBeStunned())
+                {
+                    nearbyEnemy.CloseCounterAttackWindow();
+                    hasEnemyCanBeStunned = true;
+                }
+            }
+        }
+
+        return hasEnemyCanBeStunned;
+    }
+
     #region GetFunctions
     public float GetMoveSpeed()
-    {
-        return _moveSpeed;
-    }
+    { return _moveSpeed; }
     public float GetJumpForce()
-    {
-        return _jumpForce;
-    }
-    public float GetDashSpeed() { return _dashSpeed; }
-    public float GetDashDuration() { return _dashDuration; }
+    { return _jumpForce; }
+    public float GetDashSpeed()
+    { return _dashSpeed; }
+    public float GetDashDuration()
+    { return _dashDuration; }
     public float GetDashDirection()
-    {
-        return _dashDirection;
-    }
+    { return _dashDirection; }
     public bool IsBusy()
-    {
-        return _isBusy;
-    }
+    { return _isBusy; }
     public Vector2 GetAttackMovement(int comboCount)
-    {
-        return _attackMovementArray[comboCount];
-    }
+    { return _attackMovementArray[comboCount]; }
+    public float GetCounterAttackDuration()
+    { return _counterAttackDuration; }
     #endregion
 }
