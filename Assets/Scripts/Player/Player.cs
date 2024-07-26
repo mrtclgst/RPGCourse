@@ -13,11 +13,10 @@ public class Player : Entity
 
     [Header("Move Info")]
     [SerializeField] private int _moveSpeed;
+
     [SerializeField] private int _jumpForce;
     [SerializeField] private float _dashSpeed;
     [SerializeField] private float _dashDuration;
-    [SerializeField] private float _dashCooldown;
-    private float _dashUsageTimer;
     private float _dashDirection = 1;
 
     #region States
@@ -72,11 +71,8 @@ public class Player : Entity
         if (IsWallDetected())
             return;
 
-        _dashUsageTimer -= Time.deltaTime;
-        if (Input.GetKeyDown(KeyCode.LeftShift) && _dashUsageTimer < 0)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && SkillManager.Instance.GetSkillDash().CanUseSkill())
         {
-            _dashUsageTimer = _dashCooldown;
-
             _dashDirection = Input.GetAxisRaw("Horizontal");
             if (_dashDirection == 0)
                 _dashDirection = _facingDirection;

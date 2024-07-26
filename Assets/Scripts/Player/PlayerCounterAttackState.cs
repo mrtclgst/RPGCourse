@@ -17,6 +17,8 @@ public class PlayerCounterAttackState : PlayerState
     {
         base.Update();
 
+        _player.SetVelocityZero();
+
         if (_player.TryToCounterAttack())
         {
             _stateTimer = 10;
