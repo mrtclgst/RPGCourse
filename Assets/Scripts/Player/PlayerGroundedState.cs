@@ -33,5 +33,8 @@ public class PlayerGroundedState : PlayerState
 
         if (Input.GetKeyDown(KeyCode.Space) && _player.IsGroundDetected())
         { _stateMachine.ChangeState(_player.JumpState); }
+
+        if (Input.GetKeyDown(KeyCode.Alpha1) && _player.IsGroundDetected())
+        { _stateMachine.ChangeState(_player.AimSwordState); }
     }
 }

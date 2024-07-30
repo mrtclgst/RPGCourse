@@ -30,6 +30,8 @@ public class Player : Entity
     public PlayerDashState DashState { get; private set; }
     public PlayerPrimaryAttackState PrimaryAttackState { get; private set; }
     public PlayerCounterAttackState CounterAttackState { get; private set; }
+    public PlayerAimSwordState AimSwordState { get; private set; }
+    public PlayerCatchSwordState CatchSwordState { get; private set; }
     #endregion
 
     #region MonoBehaviours
@@ -46,6 +48,8 @@ public class Player : Entity
         WallJumpState = new PlayerWallJumpState(this, StateMachine, "Jump");
         PrimaryAttackState = new PlayerPrimaryAttackState(this, StateMachine, "Attack");
         CounterAttackState = new PlayerCounterAttackState(this, StateMachine, "CounterAttack");
+        AimSwordState = new PlayerAimSwordState(this, StateMachine, "AimSword");
+        CatchSwordState = new PlayerCatchSwordState(this, StateMachine, "CatchSword");
     }
     protected override void Start()
     {
