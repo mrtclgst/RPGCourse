@@ -12,6 +12,7 @@ public class PlayerAimSwordState : PlayerState
     public override void Enter()
     {
         base.Enter();
+        SkillManager.Instance.GetSkillSword().DotsActive(true);
     }
 
     public override void Exit()

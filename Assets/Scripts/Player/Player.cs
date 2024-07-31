@@ -19,6 +19,8 @@ public class Player : Entity
     [SerializeField] private float _dashDuration;
     private float _dashDirection = 1;
 
+    public GameObject _sword;
+
     #region States
     public PlayerStateMachine StateMachine { get; private set; }
     public PlayerIdleState IdleState { get; private set; }
@@ -118,6 +120,14 @@ public class Player : Entity
 
         return hasEnemyCanBeStunned;
     }
+    public void AssignNewSword(GameObject newSword)
+    {
+        _sword = newSword;
+    }
+    public void ClearSword()
+    {
+        Destroy(_sword);
+    }
 
     #region GetFunctions
     public float GetMoveSpeed()
@@ -136,5 +146,7 @@ public class Player : Entity
     { return _attackMovementArray[comboCount]; }
     public float GetCounterAttackDuration()
     { return _counterAttackDuration; }
+    public GameObject GetSword()
+    { return _sword; }
     #endregion
 }

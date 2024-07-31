@@ -1533,6 +1533,7 @@ GameObject:
   - component: {fileID: 1044449823}
   - component: {fileID: 1044449825}
   - component: {fileID: 1044449826}
+  - component: {fileID: 1044449827}
   m_Layer: 0
   m_Name: SkillManager
   m_TagString: Untagged
@@ -1554,6 +1555,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _skillDash: {fileID: 1044449825}
   _skillClone: {fileID: 1044449826}
+  _skillSword: {fileID: 1044449827}
 --- !u!4 &1044449824
 Transform:
   m_ObjectHideFlags: 0
@@ -1598,6 +1600,57 @@ MonoBehaviour:
   _clonePrefab: {fileID: 6876000847952464988, guid: b7042e2a7ae16cd4fabd43014ebf0270, type: 3}
   _cloneDuration: 1
   _canAttack: 1
+--- !u!114 &1044449827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1044449822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84235f27a31925e40bfd1e94def4e92d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cooldown: 0
+  _swordPrefab: {fileID: 2325020011290180231, guid: 0f331c03c855b4644951904d87d119c7, type: 3}
+  _launchForce: {x: 35, y: 25}
+  _swordGravityScale: 4.5
+  _numberOfDots: 10
+  _spaceBetweenDots: 0.05
+  _dotPrefab: {fileID: 1473077939586860836, guid: d2fab0c3dd1952245aebef4c662cc6a4, type: 3}
+  _dotParent: {fileID: 1143560162}
+--- !u!1 &1143560161
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1143560162}
+  m_Layer: 0
+  m_Name: AimDotParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1143560162
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1143560161}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1156138867
 GameObject:
   m_ObjectHideFlags: 0
@@ -6811,3 +6864,4 @@ SceneRoots:
   - {fileID: 1837335854}
   - {fileID: 1156138869}
   - {fileID: 1044449824}
+  - {fileID: 1143560162}

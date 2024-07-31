@@ -34,7 +34,19 @@ public class PlayerGroundedState : PlayerState
         if (Input.GetKeyDown(KeyCode.Space) && _player.IsGroundDetected())
         { _stateMachine.ChangeState(_player.JumpState); }
 
-        if (Input.GetKeyDown(KeyCode.Alpha1) && _player.IsGroundDetected())
+        if (Input.GetKeyDown(KeyCode.Alpha1) && _player.IsGroundDetected() && !HasSword())
         { _stateMachine.ChangeState(_player.AimSwordState); }
+    }
+
+    private bool HasSword()
+    {
+        if (_player.GetSword() != null)
+        {
+            _player.GetSword().GetComponent<SkillSwordController>().ReturnSword();
+            return true;
+        }
+
+        Debug.Log("here");
+        return false;
     }
 }
