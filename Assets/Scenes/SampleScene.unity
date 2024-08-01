@@ -506,7 +506,7 @@ MonoBehaviour:
   _attackCheckPoint: {fileID: 1584224522}
   _attackCheckRadius: 0.75
   _groundCheck: {fileID: 740375574}
-  _groundCheckDistance: 0.15
+  _groundCheckDistance: 0.5
   _whatIsGround:
     serializedVersion: 2
     m_Bits: 8
@@ -959,7 +959,7 @@ MonoBehaviour:
   _attackCheckPoint: {fileID: 15747992}
   _attackCheckRadius: 0.75
   _groundCheck: {fileID: 290733395}
-  _groundCheckDistance: 0.15
+  _groundCheckDistance: 0.5
   _whatIsGround:
     serializedVersion: 2
     m_Bits: 8
@@ -1831,7 +1831,7 @@ MonoBehaviour:
   _attackCheckPoint: {fileID: 997427153}
   _attackCheckRadius: 0.75
   _groundCheck: {fileID: 395119891}
-  _groundCheckDistance: 0.15
+  _groundCheckDistance: 0.5
   _whatIsGround:
     serializedVersion: 2
     m_Bits: 8
@@ -2347,7 +2347,7 @@ MonoBehaviour:
   _attackCheckPoint: {fileID: 1211127196}
   _attackCheckRadius: 0.75
   _groundCheck: {fileID: 599809690}
-  _groundCheckDistance: 0.15
+  _groundCheckDistance: 0.5
   _whatIsGround:
     serializedVersion: 2
     m_Bits: 8
@@ -3241,17 +3241,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cooldown: 0
-  SwordType: 3
-  _bounceAmount: 0
+  SwordType: 1
+  _bounceAmount: 3
   _bounceGravity: 3
+  _bounceSpeed: 20
   _pierceAmount: 2
   _pierceGravity: 0
-  _maxTravelDistance: 7
+  _damageCooldown: 0.35
+  _maxTravelDistance: 9
   _spinDuration: 2
   _spinGravity: 3
   _swordPrefab: {fileID: 2325020011290180231, guid: 0f331c03c855b4644951904d87d119c7, type: 3}
   _launchForce: {x: 35, y: 25}
   _swordGravityScale: 4.5
+  _freezeTimeDuration: 1
+  _returnSpeed: 12
   _numberOfDots: 10
   _spaceBetweenDots: 0.05
   _dotPrefab: {fileID: 1473077939586860836, guid: d2fab0c3dd1952245aebef4c662cc6a4, type: 3}
@@ -9792,7 +9796,7 @@ MonoBehaviour:
   _attackCheckPoint: {fileID: 903372604}
   _attackCheckRadius: 0.75
   _groundCheck: {fileID: 937985577}
-  _groundCheckDistance: 0.15
+  _groundCheckDistance: 0.5
   _whatIsGround:
     serializedVersion: 2
     m_Bits: 8
@@ -9893,7 +9897,7 @@ MonoBehaviour:
   _attackCheckPoint: {fileID: 59674951}
   _attackCheckRadius: 0.75
   _groundCheck: {fileID: 1354189346}
-  _groundCheckDistance: 0.15
+  _groundCheckDistance: 0.5
   _whatIsGround:
     serializedVersion: 2
     m_Bits: 8

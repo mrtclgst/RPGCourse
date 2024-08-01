@@ -15,9 +15,10 @@ public class SkillSwordController : MonoBehaviour
     private Player _player;
     private bool _canRotate = true;
     private bool _isReturning;
+    private float _freezeTimeDuration;
 
     [Header("Bounce Info")]
-    [SerializeField] private float _bounceSpeedMultiplier = 1f;
+    private float _bounceSpeed = 1f;
     private bool _isBouncing;
     private int _bounceAmount = 0;
     private int _targetIndex = 0;
@@ -44,22 +45,27 @@ public class SkillSwordController : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody2D>();
         _collider = GetComponent<CapsuleCollider2D>();
     }
-    internal void SetupSword(Vector2 direction, float gravityScale, Player player)
+    internal void SetupSword(Vector2 direction, float gravityScale, Player player, float freezeTimeDuration, float returnSpeed)
     {
+        Destroy(gameObject, 7);
         _rigidbody.velocity = direction;
         _rigidbody.gravityScale = gravityScale;
         _player = player;
+        _freezeTimeDuration = freezeTimeDuration;
+        _returnSpeed = returnSpeed;
 
-        if (_pierceAmount > 0)
-            return;
+        if (_pierceAmount <= 0)
+        {
+            _animator.SetBool("Rotation", true);
+        }
 
         _spinDirection = Mathf.Clamp(_rigidbody.velocity.x, -1, 1);
-        _animator.SetBool("Rotation", true);
     }
-    internal void SetupBounce(bool canBounce, int bounceAmount)
+    internal void SetupBounce(bool canBounce, int bounceAmount, float bounceSpeed)
     {
         _isBouncing = canBounce;
         _bounceAmount = bounceAmount;
+        _bounceSpeed = bounceSpeed;
     }
     internal void SetupPierce(int pierceAmount)
     {
@@ -89,7 +95,6 @@ public class SkillSwordController : MonoBehaviour
         BounceLogic();
         SpinLogic();
     }
-
     private void SpinLogic()
     {
         if (_isSpinning)
@@ -118,7 +123,8 @@ public class SkillSwordController : MonoBehaviour
                 Collider2D[] targetArray = Physics2D.OverlapCircleAll(transform.position, 1);
                 foreach (Collider2D target in targetArray)
                 {
-                    target.GetComponent<Enemy>()?.TakeDamage();
+                    if (target.GetComponent<Enemy>() != null)
+                        SwordSkillDamage(target.GetComponent<Enemy>());
                 }
             }
         }
@@ -135,10 +141,10 @@ public class SkillSwordController : MonoBehaviour
     {
         if (_isBouncing && _targetList.Count > 0)
         {
-            transform.position = Vector2.MoveTowards(transform.position, _targetList[_targetIndex].position, _returnSpeed * _bounceSpeedMultiplier * Time.deltaTime);
+            transform.position = Vector2.MoveTowards(transform.position, _targetList[_targetIndex].position, _bounceSpeed * Time.deltaTime);
             if (Vector2.Distance(transform.position, _targetList[_targetIndex].position) < 0.2f)
             {
-                _targetList[_targetIndex].GetComponent<Enemy>()?.TakeDamage();
+                SwordSkillDamage(_targetList[_targetIndex].GetComponent<Enemy>());
                 _targetIndex++;
                 _bounceAmount--;
 
@@ -159,9 +165,19 @@ public class SkillSwordController : MonoBehaviour
         if (_isReturning)
             return;
 
-        collision.GetComponent<Enemy>()?.TakeDamage();
+        if (collision.GetComponent<Enemy>() != null)
+        {
+            Enemy enemy = collision.GetComponent<Enemy>();
+            SwordSkillDamage(enemy);
+        }
+
         SetupTargetsForBouncing(collision);
         StuckInto(collision);
+    }
+    private void SwordSkillDamage(Enemy enemy)
+    {
+        enemy.StartCoroutine(enemy.IE_FreezeTimerFor(_freezeTimeDuration));
+        enemy.TakeDamage();
     }
     private void SetupTargetsForBouncing(Collider2D collision)
     {
@@ -210,5 +226,9 @@ public class SkillSwordController : MonoBehaviour
         //_rigidbody.isKinematic = false;
         transform.parent = null;
         _isReturning = true;
+    }
+    private void DestroyMe()
+    {
+        Destroy(gameObject);
     }
 }

@@ -1,10 +1,7 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy : Entity
-
 {
     [Header("Collision Info")]
     [SerializeField] protected Transform _playerCheck;
@@ -15,6 +12,7 @@ public class Enemy : Entity
     [SerializeField] private float _moveSpeed;
     [SerializeField] private float _idleTimer;
     [SerializeField] private float _battleTime;
+    private float _defaultMoveSpeed;
 
     [Header("Attack Info")]
     [SerializeField] private float _attackDistance;
@@ -37,6 +35,7 @@ public class Enemy : Entity
     {
         base.Awake();
         StateMachine = new EnemyStateMachine();
+        _defaultMoveSpeed = _moveSpeed;
     }
     protected override void Start()
     {
@@ -93,6 +92,27 @@ public class Enemy : Entity
     }
     #endregion
 
+    protected virtual void FreezeTime(bool timeFrozen)
+    {
+        if (timeFrozen)
+        {
+            _moveSpeed = 0;
+            Animator.speed = 0;
+        }
+        else
+        {
+            Animator.speed = 1;
+            _moveSpeed = _defaultMoveSpeed;
+        }
+    }
+
+    internal virtual IEnumerator IE_FreezeTimerFor(float seconds)
+    {
+        FreezeTime(true);
+        yield return new WaitForSeconds(seconds);
+        FreezeTime(false);
+    }
+
     public void SetLastTimeAttacked()
     {
         _lastTimeAttacked = Time.time;
@@ -116,7 +136,7 @@ public class Enemy : Entity
     {
         StateMachine.CurrentState.AnimationFinishTrigger();
     }
-
+    #region Counter Attack Window
     public virtual void OpenCounterAttackWindow()
     {
         _canBeStunned = true;
@@ -127,6 +147,7 @@ public class Enemy : Entity
         _canBeStunned = false;
         _counterImage.SetActive(false);
     }
+    #endregion
     internal virtual bool CanBeStunned()
     {
         if (_canBeStunned)

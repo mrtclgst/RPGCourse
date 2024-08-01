@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.InteropServices;
 using UnityEngine;
 
 public class SkillSword : Skill
@@ -8,6 +9,7 @@ public class SkillSword : Skill
     [Header("Bounce Info")]
     [SerializeField] private int _bounceAmount;
     [SerializeField] private float _bounceGravity;
+    [SerializeField] private float _bounceSpeed;
 
     [Header("Pierce Info")]
     [SerializeField] private int _pierceAmount;
@@ -24,6 +26,8 @@ public class SkillSword : Skill
     [SerializeField] private GameObject _swordPrefab;
     [SerializeField] private Vector2 _launchForce;
     [SerializeField] private float _swordGravityScale;
+    [SerializeField] private float _freezeTimeDuration;
+    [SerializeField] private float _returnSpeed;
 
     private Vector2 _finalDirection;
 
@@ -78,7 +82,7 @@ public class SkillSword : Skill
 
         if (SwordType == SwordType.Bouncing)
         {
-            skillSwordController.SetupBounce(true, _bounceAmount);
+            skillSwordController.SetupBounce(true, _bounceAmount, _bounceSpeed);
         }
         else if (SwordType == SwordType.Piercing)
         {
@@ -89,7 +93,7 @@ public class SkillSword : Skill
             skillSwordController.SetupSpin(true, _maxTravelDistance, _spinDuration, _damageCooldown);
         }
 
-        skillSwordController.SetupSword(_finalDirection, _swordGravityScale, _player);
+        skillSwordController.SetupSword(_finalDirection, _swordGravityScale, _player, _freezeTimeDuration, _returnSpeed);
         _player.AssignNewSword(newSword);
         DotsActive(false);
     }
