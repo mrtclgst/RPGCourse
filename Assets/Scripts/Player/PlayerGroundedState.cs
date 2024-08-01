@@ -46,7 +46,6 @@ public class PlayerGroundedState : PlayerState
             return true;
         }
 
-        Debug.Log("here");
         return false;
     }
 }

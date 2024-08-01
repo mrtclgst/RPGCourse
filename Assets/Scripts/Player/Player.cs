@@ -13,13 +13,14 @@ public class Player : Entity
 
     [Header("Move Info")]
     [SerializeField] private int _moveSpeed;
+    [SerializeField] private float _swordReturnForce;
 
     [SerializeField] private int _jumpForce;
     [SerializeField] private float _dashSpeed;
     [SerializeField] private float _dashDuration;
     private float _dashDirection = 1;
 
-    public GameObject _sword;
+    private GameObject _sword;
 
     #region States
     public PlayerStateMachine StateMachine { get; private set; }
@@ -124,8 +125,9 @@ public class Player : Entity
     {
         _sword = newSword;
     }
-    public void ClearSword()
+    public void CatchSword()
     {
+        StateMachine.ChangeState(CatchSwordState);
         Destroy(_sword);
     }
 
@@ -148,5 +150,7 @@ public class Player : Entity
     { return _counterAttackDuration; }
     public GameObject GetSword()
     { return _sword; }
+    public float GetSwordReturnForce() 
+    { return _swordReturnForce; }
     #endregion
 }

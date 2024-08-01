@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerAimSwordState : PlayerState
@@ -18,16 +17,25 @@ public class PlayerAimSwordState : PlayerState
     public override void Exit()
     {
         base.Exit();
+        _player.StartCoroutine(_player.IE_BusyFor(0.2f));
     }
 
     public override void Update()
     {
         base.Update();
 
+        _player.SetVelocityZero();
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             _stateMachine.ChangeState(_player.IdleState);
+        }
+
+        Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        if (mousePosition.x > _player.transform.position.x && _player.GetFacingDirection() != 1
+            || mousePosition.x < _player.transform.position.x && _player.GetFacingDirection() != -1)
+        {
+            _player.Flip();
         }
     }
 }
