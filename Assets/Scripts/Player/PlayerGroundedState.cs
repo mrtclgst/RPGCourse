@@ -22,6 +22,9 @@ public class PlayerGroundedState : PlayerState
     {
         base.Update();
 
+        if (Input.GetKeyDown(KeyCode.R))
+        { _stateMachine.ChangeState(_player.BlackholeState); }
+
         if (Input.GetMouseButtonDown(1))
         { _stateMachine.ChangeState(_player.CounterAttackState); }
 

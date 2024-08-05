@@ -35,6 +35,8 @@ public class Player : Entity
     public PlayerCounterAttackState CounterAttackState { get; private set; }
     public PlayerAimSwordState AimSwordState { get; private set; }
     public PlayerCatchSwordState CatchSwordState { get; private set; }
+    public PlayerBlackholeState BlackholeState { get; private set; }
+
     #endregion
 
     #region MonoBehaviours
@@ -53,6 +55,7 @@ public class Player : Entity
         CounterAttackState = new PlayerCounterAttackState(this, StateMachine, "CounterAttack");
         AimSwordState = new PlayerAimSwordState(this, StateMachine, "AimSword");
         CatchSwordState = new PlayerCatchSwordState(this, StateMachine, "CatchSword");
+        BlackholeState = new PlayerBlackholeState(this, StateMachine, "Jump");
     }
     protected override void Start()
     {
@@ -64,6 +67,9 @@ public class Player : Entity
         base.Update();
         StateMachine.CurrentState.Update();
         CheckForDashInput();
+
+        if (Input.GetKeyDown(KeyCode.F)) 
+        { SkillManager.Instance.GetSkillCrystal().UseSkill(); }
     }
     #endregion
     public IEnumerator IE_BusyFor(float seconds)
@@ -131,6 +137,7 @@ public class Player : Entity
         Destroy(_sword);
     }
 
+
     #region GetFunctions
     public float GetMoveSpeed()
     { return _moveSpeed; }
@@ -150,7 +157,7 @@ public class Player : Entity
     { return _counterAttackDuration; }
     public GameObject GetSword()
     { return _sword; }
-    public float GetSwordReturnForce() 
+    public float GetSwordReturnForce()
     { return _swordReturnForce; }
     #endregion
 }

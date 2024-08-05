@@ -27,9 +27,9 @@ public class SkillCloneController : MonoBehaviour
             { Destroy(gameObject); }
         }
     }
-    public void SetupClone(Transform targetTransform, float cloneDuration, bool canAttack)
+    public void SetupClone(Transform targetTransform, float cloneDuration, bool canAttack, Vector3 offset)
     {
-        transform.position = targetTransform.position;
+        transform.position = targetTransform.position + offset;
         _cloneTimer = cloneDuration;
         FaceClosestTarget();
         if (canAttack)
@@ -71,9 +71,9 @@ public class SkillCloneController : MonoBehaviour
             }
         }
 
-        if(_closestEnemy != null)
+        if (_closestEnemy != null)
         {
-            if(transform.position.x > _closestEnemy.transform.position.x)
+            if (transform.position.x > _closestEnemy.transform.position.x)
             {
                 transform.Rotate(0, 180, 0);
             }

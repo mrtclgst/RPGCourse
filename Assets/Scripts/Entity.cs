@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.U2D;
 
 public class Entity : MonoBehaviour
 {
@@ -24,6 +25,7 @@ public class Entity : MonoBehaviour
     public Animator Animator { get; private set; }
     public Rigidbody2D RB { get; private set; }
     public EntityFX EntityFX { get; private set; }
+    public SpriteRenderer SpriteRenderer { get; private set; }
     #endregion
 
     #region MonoBehaviour
@@ -36,6 +38,7 @@ public class Entity : MonoBehaviour
         Animator = GetComponentInChildren<Animator>();
         RB = GetComponent<Rigidbody2D>();
         EntityFX = GetComponent<EntityFX>();
+        SpriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
     protected virtual void Update()
     {
@@ -126,5 +129,17 @@ public class Entity : MonoBehaviour
         RB.velocity = new Vector2(_knockbackForce.x * -_facingDirection, _knockbackForce.y);
         yield return new WaitForSeconds(_knockbackDuration);
         _isKnocked = false;
+    }
+
+    public void MakeTransparent(bool transparency)
+    {
+        if (transparency)
+        {
+            SpriteRenderer.color = Color.clear;
+        }
+        else
+        {
+            SpriteRenderer.color = Color.white;
+        }
     }
 }

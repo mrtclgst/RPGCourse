@@ -92,7 +92,7 @@ public class Enemy : Entity
     }
     #endregion
 
-    protected virtual void FreezeTime(bool timeFrozen)
+    internal virtual void FreezeTime(bool timeFrozen)
     {
         if (timeFrozen)
         {

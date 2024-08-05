@@ -10,6 +10,8 @@ public class SkillManager : MonoBehaviour
     [SerializeField] private SkillDash _skillDash;
     [SerializeField] private SkillClone _skillClone;
     [SerializeField] private SkillSword _skillSword;
+    [SerializeField] private SkillBlackhole _skillBlackhole;
+    [SerializeField] private SkillCrystal _skillCrystal;
 
     private void Awake()
     {
@@ -19,10 +21,10 @@ public class SkillManager : MonoBehaviour
         }
         Instance = this;
     }
-    internal SkillDash GetSkillDash()
-    { return _skillDash; }
-    internal SkillClone GetSkillClone()
-    { return _skillClone; }
-    internal SkillSword GetSkillSword()
-    { return _skillSword; }
+    internal SkillDash GetSkillDash() { return _skillDash; }
+    internal SkillClone GetSkillClone() { return _skillClone; }
+    internal SkillSword GetSkillSword() { return _skillSword; }
+    internal SkillBlackhole GetSkillBlackhole() { return _skillBlackhole; }
+    internal SkillCrystal GetSkillCrystal() { return _skillCrystal; }
+
 }
