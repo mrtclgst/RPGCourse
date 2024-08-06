@@ -68,7 +68,7 @@ public class Player : Entity
         StateMachine.CurrentState.Update();
         CheckForDashInput();
 
-        if (Input.GetKeyDown(KeyCode.F)) 
+        if (Input.GetKeyDown(KeyCode.F))
         { SkillManager.Instance.GetSkillCrystal().UseSkill(); }
     }
     #endregion
@@ -121,6 +121,11 @@ public class Player : Entity
                 {
                     nearbyEnemy.CloseCounterAttackWindow();
                     hasEnemyCanBeStunned = true;
+                    if (CounterAttackState.GetCanCreateClone())
+                    {
+                        CounterAttackState.SetCanCreateClone(false);
+                        SkillManager.Instance.GetSkillClone().CreateCloneOnCounterAttack(nearbyEnemy.transform, 0.3f);
+                    }
                 }
             }
         }

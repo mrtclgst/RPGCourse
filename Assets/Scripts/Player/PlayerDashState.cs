@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerDashState : PlayerState
 {
+
     public PlayerDashState(Player player, PlayerStateMachine playerStateMachine, string animBoolName) : base(player, playerStateMachine, animBoolName)
     {
     }
@@ -12,13 +13,14 @@ public class PlayerDashState : PlayerState
     {
         base.Enter();
         _stateTimer = _player.GetDashDuration();
-        SkillManager.Instance.GetSkillClone().CreateClone(_player.transform, Vector3.zero);
+        SkillManager.Instance.GetSkillClone().CreateCloneOnDashBegun();
     }
 
     public override void Exit()
     {
         base.Exit();
         _player.SetVelocity(0, _playerRb.velocity.y);
+        SkillManager.Instance.GetSkillClone().CreateCloneOnDashOver();
     }
 
     public override void Update()
@@ -37,4 +39,5 @@ public class PlayerDashState : PlayerState
             _stateMachine.ChangeState(_player.IdleState);
         }
     }
+
 }

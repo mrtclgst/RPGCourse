@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class PlayerCounterAttackState : PlayerState
 {
+    private bool _canCreateClone;
     public PlayerCounterAttackState(Player player, PlayerStateMachine playerStateMachine, string animBoolName) : base(player, playerStateMachine, animBoolName)
     {
     }
@@ -12,6 +9,7 @@ public class PlayerCounterAttackState : PlayerState
         base.Enter();
         _stateTimer = _player.GetCounterAttackDuration();
         _player.Animator.SetBool("SuccessfulCounterAttack", false);
+        _canCreateClone = true;
     }
     public override void Update()
     {
@@ -37,5 +35,13 @@ public class PlayerCounterAttackState : PlayerState
     public override void AnimationFinishTrigger()
     {
         base.AnimationFinishTrigger();
+    }
+    internal bool GetCanCreateClone()
+    {
+        return _canCreateClone;
+    }
+    internal void SetCanCreateClone(bool canCreateClone)
+    {
+        _canCreateClone = canCreateClone;
     }
 }

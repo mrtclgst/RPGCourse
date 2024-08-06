@@ -11,18 +11,44 @@ public class SkillCrystalController : MonoBehaviour
     private bool _canExplode;
     private bool _canMove;
     private float _moveSpeed;
+    private Transform _closestEnemy;
+    private int _direction;
 
-    public void SetupCrystal(float crystalDuration, bool canExplode, bool canMoveToEnemy, float moveSpeed)
+    public void SetupCrystal(float crystalDuration, bool canExplode, bool canMoveToEnemy, float moveSpeed, Transform closestEnemy)
     {
         _crystalExistTimer = crystalDuration;
         _canExplode = canExplode;
         _canMove = canMoveToEnemy;
         _moveSpeed = moveSpeed;
+        _closestEnemy = closestEnemy;
+        if (_closestEnemy == null)
+        {
+            _direction = PlayerManager.Instance.Player.GetFacingDirection();
+        }
     }
 
     private void Update()
     {
         _crystalExistTimer -= Time.deltaTime;
+
+        if (_canMove)
+        {
+            if (_closestEnemy != null)
+            {
+                transform.position = Vector2.MoveTowards(transform.position, _closestEnemy.position, _moveSpeed * Time.deltaTime);
+                if (Vector2.Distance(transform.position, _closestEnemy.position) < 1)
+                {
+                    CrystalExplosionLogic();
+                    _canMove = false;
+                }
+            }
+            else
+            {
+                Vector3 direction = new Vector3(_direction, 0);
+                transform.Translate(direction * _moveSpeed * Time.deltaTime);
+            }
+        }
+
         if (_crystalExistTimer < 0)
         {
             CrystalExplosionLogic();

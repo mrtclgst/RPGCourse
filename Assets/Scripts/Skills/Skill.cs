@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Skill : MonoBehaviour
@@ -20,7 +21,7 @@ public class Skill : MonoBehaviour
 
     internal virtual bool CanUseSkill()
     {
-        if (_cooldownTimer < 0)
+        if (_cooldownTimer <= 0)
         {
             return true;
         }
@@ -30,9 +31,36 @@ public class Skill : MonoBehaviour
 
     internal virtual void UseSkill()
     {
-        if (!CanUseSkill())
-        { return; }
+        if (CanUseSkill())
+        {
+            _cooldownTimer = _cooldown;
+        }
+        else
+        {
+            Debug.Log("can not use skill"); 
+            return;
+        }
+    }
 
-        _cooldownTimer = _cooldown;
+    protected virtual Transform FindClosestEnemy(Transform checkTransform)
+    {
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(checkTransform.position, 25);
+        float closestDistance = Mathf.Infinity;
+        Transform closestEnemy = null;
+
+        foreach (var hit in colliders)
+        {
+            if (hit.GetComponent<Enemy>() != null)
+            {
+                float distanceToEnemy = Vector2.Distance(checkTransform.position, hit.transform.position);
+                if (distanceToEnemy < closestDistance)
+                {
+                    closestEnemy = hit.transform;
+                    closestDistance = distanceToEnemy;
+                }
+            }
+        }
+
+        return closestEnemy;
     }
 }

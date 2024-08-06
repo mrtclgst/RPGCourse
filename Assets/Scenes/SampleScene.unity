@@ -184,7 +184,7 @@ Transform:
   m_GameObject: {fileID: 250828}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -29.14, y: -2.49, z: 0}
+  m_LocalPosition: {x: -28.64, y: -2.49, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1534,7 +1534,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -29.14, y: -1.0899994, z: -10}
+  m_LocalPosition: {x: -28.64, y: -1.0899994, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1639,7 +1639,7 @@ Transform:
   m_GameObject: {fileID: 539499317}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -29.14, y: -1.0899994, z: -10}
+  m_LocalPosition: {x: -28.64, y: -1.0899994, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3300,6 +3300,11 @@ MonoBehaviour:
   _clonePrefab: {fileID: 6876000847952464988, guid: b7042e2a7ae16cd4fabd43014ebf0270, type: 3}
   _cloneDuration: 1
   _canAttack: 1
+  _canCreateCloneOnDashStart: 0
+  _canCreateCloneOnDashOver: 0
+  _canCreateCloneOnCounterAttack: 1
+  _canDuplicateClone: 1
+  _duplicationChance: 20
 --- !u!114 &1044449827
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3367,9 +3372,18 @@ MonoBehaviour:
   _cooldown: 0
   _crystalPrefab: {fileID: 2755728465241350897, guid: bfccec2108b0237489611f4c3d7429b7, type: 3}
   _crystalDuration: 2
+  _canSpawnClone: 0
   _canExplode: 1
-  _canMoveToEnemy: 0
+  _canMoveToEnemy: 1
   _moveSpeed: 5
+  _canUseMultiStackCrystal: 1
+  _amountOfStack: 3
+  _cooldownOfMultiCrystal: 2
+  _useTimeWindow: 2.5
+  _crystalList:
+  - {fileID: 2755728465241350897, guid: bfccec2108b0237489611f4c3d7429b7, type: 3}
+  - {fileID: 2755728465241350897, guid: bfccec2108b0237489611f4c3d7429b7, type: 3}
+  - {fileID: 2755728465241350897, guid: bfccec2108b0237489611f4c3d7429b7, type: 3}
 --- !u!1 &1057140558
 GameObject:
   m_ObjectHideFlags: 0

@@ -115,7 +115,6 @@ public class Entity : MonoBehaviour
 
     public virtual void DealDamage()
     {
-        Debug.Log(gameObject.name + " dealt damage!");
     }
     public virtual void TakeDamage()
     {

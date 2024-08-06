@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SkillClone : Skill
@@ -9,9 +8,49 @@ public class SkillClone : Skill
     [Space]
     [SerializeField] private bool _canAttack;
 
+    [SerializeField] private bool _canCreateCloneOnDashStart;
+    [SerializeField] private bool _canCreateCloneOnDashOver;
+    [SerializeField] private bool _canCreateCloneOnCounterAttack;
+
+    [Header("Duplication")]
+    [SerializeField] private bool _canDuplicateClone;
+    [SerializeField] private float _duplicationChance;
+
+
     internal void CreateClone(Transform clonePosition, Vector3 offset)
     {
         GameObject newClone = Instantiate(_clonePrefab);
-        newClone.GetComponent<SkillCloneController>().SetupClone(clonePosition, _cloneDuration, _canAttack, offset);
+        newClone.GetComponent<SkillCloneController>().SetupClone
+            (clonePosition, _cloneDuration, _canAttack, offset, FindClosestEnemy(clonePosition.transform), _canDuplicateClone, _duplicationChance);
+    }
+
+    public void CreateCloneOnDashBegun()
+    {
+        if (_canCreateCloneOnDashStart)
+        {
+            CreateClone(_player.transform, Vector3.zero);
+        }
+    }
+    public void CreateCloneOnDashOver()
+    {
+        if (_canCreateCloneOnDashOver)
+        {
+            CreateClone(_player.transform, Vector3.zero);
+        }
+    }
+
+    public void CreateCloneOnCounterAttack(Transform enemyTransform, float delaySecond)
+    {
+        if (_canCreateCloneOnCounterAttack)
+        {
+            StartCoroutine(IE_CreateCloneWithDelay(enemyTransform, new Vector3(1 * _player.GetFacingDirection(), 0), delaySecond));
+        }
+    }
+
+    private IEnumerator IE_CreateCloneWithDelay(Transform targetTransform, Vector3 offset, float second)
+    {
+        yield return new WaitForSeconds(second);
+        CreateClone(targetTransform, offset);
+
     }
 }
