@@ -101,7 +101,7 @@ public class Player : Entity
         {
             if (damageable.GetComponent<Enemy>() != null)
             {
-                damageable.GetComponent<Enemy>().TakeDamage();
+                Stats.DealDamage(damageable.GetComponent<EnemyStats>());
             }
         }
 

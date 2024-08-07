@@ -45,7 +45,9 @@ public class EnemySkeleton : Enemy
         {
             if (damageable.GetComponent<Player>() != null)
             {
-                damageable.GetComponent<Player>().TakeDamage();
+                PlayerStats playerStats = damageable.GetComponent<PlayerStats>();
+                Debug.Log(playerStats.gameObject);
+                Stats.DealDamage(playerStats);
             }
         }
 

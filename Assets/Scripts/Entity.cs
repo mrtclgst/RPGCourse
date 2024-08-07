@@ -26,6 +26,7 @@ public class Entity : MonoBehaviour
     public Rigidbody2D RB { get; private set; }
     public EntityFX EntityFX { get; private set; }
     public SpriteRenderer SpriteRenderer { get; private set; }
+    public CharacterStats Stats { get; private set; }
     #endregion
 
     #region MonoBehaviour
@@ -39,6 +40,7 @@ public class Entity : MonoBehaviour
         RB = GetComponent<Rigidbody2D>();
         EntityFX = GetComponent<EntityFX>();
         SpriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        Stats = GetComponent<CharacterStats>();
     }
     protected virtual void Update()
     {
