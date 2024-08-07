@@ -7,6 +7,7 @@ public class SkillCrystalController : MonoBehaviour
 {
     [SerializeField] private Animator _animator;
     [SerializeField] private CircleCollider2D _collider;
+    [SerializeField] private LayerMask _whatIsEnemy;
     private float _crystalExistTimer;
     private bool _canExplode;
     private bool _canMove;
@@ -53,6 +54,14 @@ public class SkillCrystalController : MonoBehaviour
         {
             CrystalExplosionLogic();
         }
+    }
+
+    internal void ChooseRandomEnemy()
+    {
+        float radius = SkillManager.Instance.GetSkillBlackhole().GetBlackholeRadius();
+        Collider2D[] damageableArray = Physics2D.OverlapCircleAll(transform.position, radius, _whatIsEnemy);
+        if (damageableArray.Length > 0)
+            _closestEnemy = damageableArray[Random.Range(0, damageableArray.Length)].transform;
     }
 
     internal void CrystalExplosionLogic()
