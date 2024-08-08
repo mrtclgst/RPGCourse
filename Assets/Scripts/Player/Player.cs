@@ -36,6 +36,7 @@ public class Player : Entity
     public PlayerAimSwordState AimSwordState { get; private set; }
     public PlayerCatchSwordState CatchSwordState { get; private set; }
     public PlayerBlackholeState BlackholeState { get; private set; }
+    public PlayerDeadState DeadState { get; private set; }
 
     #endregion
 
@@ -56,6 +57,7 @@ public class Player : Entity
         AimSwordState = new PlayerAimSwordState(this, StateMachine, "AimSword");
         CatchSwordState = new PlayerCatchSwordState(this, StateMachine, "CatchSword");
         BlackholeState = new PlayerBlackholeState(this, StateMachine, "Jump");
+        DeadState = new PlayerDeadState(this, StateMachine, "Die");
     }
     protected override void Start()
     {
@@ -141,7 +143,11 @@ public class Player : Entity
         StateMachine.ChangeState(CatchSwordState);
         Destroy(_sword);
     }
-
+    internal override void Die()
+    {
+        base.Die();
+        StateMachine.ChangeState(DeadState);
+    }
 
     #region GetFunctions
     public float GetMoveSpeed()

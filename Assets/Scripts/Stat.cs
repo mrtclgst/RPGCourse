@@ -7,7 +7,10 @@ public class Stat
     [SerializeField] private int _baseValue;
     [SerializeField] private List<int> _modifiers;
 
-
+    internal void SetBaseValue(int value)
+    {
+        _baseValue = value;
+    }
     internal int GetValue()
     {
         int value = _baseValue;

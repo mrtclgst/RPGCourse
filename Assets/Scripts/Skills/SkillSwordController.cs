@@ -38,6 +38,7 @@ public class SkillSwordController : MonoBehaviour
 
     private float _damageTimer;
     private float _damageCooldown;
+    private int _damage;
 
     private void Awake()
     {
@@ -45,7 +46,7 @@ public class SkillSwordController : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody2D>();
         _collider = GetComponent<CapsuleCollider2D>();
     }
-    internal void SetupSword(Vector2 direction, float gravityScale, Player player, float freezeTimeDuration, float returnSpeed)
+    internal void SetupSword(Vector2 direction, float gravityScale, Player player, float freezeTimeDuration, float returnSpeed, int damage)
     {
         Destroy(gameObject, 7);
         _rigidbody.velocity = direction;
@@ -53,6 +54,7 @@ public class SkillSwordController : MonoBehaviour
         _player = player;
         _freezeTimeDuration = freezeTimeDuration;
         _returnSpeed = returnSpeed;
+        _damage = damage;
 
         if (_pierceAmount <= 0)
         {
@@ -177,7 +179,7 @@ public class SkillSwordController : MonoBehaviour
     private void SwordSkillDamage(Enemy enemy)
     {
         enemy.StartCoroutine(enemy.IE_FreezeTimerFor(_freezeTimeDuration));
-        enemy.TakeDamage();
+        enemy.TakeDamage(_damage);
     }
     private void SetupTargetsForBouncing(Collider2D collision)
     {

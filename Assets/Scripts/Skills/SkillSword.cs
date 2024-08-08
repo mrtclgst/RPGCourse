@@ -5,6 +5,7 @@ using UnityEngine;
 public class SkillSword : Skill
 {
     public SwordType SwordType = SwordType.Regular;
+    [SerializeField] private int _damage;
 
     [Header("Bounce Info")]
     [SerializeField] private int _bounceAmount;
@@ -38,6 +39,7 @@ public class SkillSword : Skill
     [SerializeField] private Transform _dotParent;
 
     private GameObject[] _dotArray;
+
 
 
     protected override void Start()
@@ -93,7 +95,7 @@ public class SkillSword : Skill
             skillSwordController.SetupSpin(true, _maxTravelDistance, _spinDuration, _damageCooldown);
         }
 
-        skillSwordController.SetupSword(_finalDirection, _swordGravityScale, _player, _freezeTimeDuration, _returnSpeed);
+        skillSwordController.SetupSword(_finalDirection, _swordGravityScale, _player, _freezeTimeDuration, _returnSpeed, _damage);
         _player.AssignNewSword(newSword);
         DotsActive(false);
     }

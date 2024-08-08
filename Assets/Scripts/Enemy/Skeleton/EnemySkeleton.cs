@@ -11,6 +11,7 @@ public class EnemySkeleton : Enemy
     public SkeletonBattleState BattleState { get; private set; }
     public SkeletonAttackState AttackState { get; private set; }
     public SkeletonStunnedState StunnedState { get; private set; }
+    public SkeletonDeadState DeadState { get; private set; }
     #endregion
 
     protected override void Awake()
@@ -21,6 +22,7 @@ public class EnemySkeleton : Enemy
         BattleState = new SkeletonBattleState(this, StateMachine, "Move", this);
         AttackState = new SkeletonAttackState(this, StateMachine, "Attack", this);
         StunnedState = new SkeletonStunnedState(this, StateMachine, "Stunned", this);
+        DeadState = new SkeletonDeadState(this, StateMachine, "Idle", this);
     }
 
     protected override void Start()
@@ -33,11 +35,6 @@ public class EnemySkeleton : Enemy
     {
         base.Update();
     }
-
-    public override void TakeDamage()
-    {
-        base.TakeDamage();
-    }
     public override void DealDamage()
     {
         Collider2D[] damageableArray = Physics2D.OverlapCircleAll(_attackCheckPoint.position, _attackCheckRadius);
@@ -45,9 +42,10 @@ public class EnemySkeleton : Enemy
         {
             if (damageable.GetComponent<Player>() != null)
             {
-                PlayerStats playerStats = damageable.GetComponent<PlayerStats>();
-                Debug.Log(playerStats.gameObject);
-                Stats.DealDamage(playerStats);
+                Player player = damageable.GetComponent<Player>();
+                player.TakeDamage(Stats.GetDamage());
+                //PlayerStats playerStats = damageable.GetComponent<PlayerStats>();
+                //Stats.DealDamage(playerStats);
             }
         }
 
@@ -62,5 +60,10 @@ public class EnemySkeleton : Enemy
         }
 
         return false;
+    }
+    internal override void Die()
+    {
+        base.Die();
+        StateMachine.ChangeState(DeadState);
     }
 }

@@ -14,14 +14,16 @@ public class SkillCrystalController : MonoBehaviour
     private float _moveSpeed;
     private Transform _closestEnemy;
     private int _direction;
+    private int _damage;
 
-    public void SetupCrystal(float crystalDuration, bool canExplode, bool canMoveToEnemy, float moveSpeed, Transform closestEnemy)
+    public void SetupCrystal(float crystalDuration, bool canExplode, bool canMoveToEnemy, float moveSpeed, Transform closestEnemy, int damage)
     {
         _crystalExistTimer = crystalDuration;
         _canExplode = canExplode;
         _canMove = canMoveToEnemy;
         _moveSpeed = moveSpeed;
         _closestEnemy = closestEnemy;
+        _damage = damage;
         if (_closestEnemy == null)
         {
             _direction = PlayerManager.Instance.Player.GetFacingDirection();
@@ -83,7 +85,7 @@ public class SkillCrystalController : MonoBehaviour
         {
             if (damageable.GetComponent<Enemy>() != null)
             {
-                damageable.GetComponent<Enemy>().TakeDamage();
+                damageable.GetComponent<Enemy>().TakeDamage(_damage);
             }
         }
     }

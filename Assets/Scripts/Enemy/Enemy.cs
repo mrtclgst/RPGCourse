@@ -29,6 +29,8 @@ public class Enemy : Entity
 
 
     public EnemyStateMachine StateMachine { get; private set; }
+    public string LastAnimBoolName { get; private set; }
+
 
     #region MonoBehaviour
     protected override void Awake()
@@ -105,24 +107,20 @@ public class Enemy : Entity
             _moveSpeed = _defaultMoveSpeed;
         }
     }
-
     internal virtual IEnumerator IE_FreezeTimerFor(float seconds)
     {
         FreezeTime(true);
         yield return new WaitForSeconds(seconds);
         FreezeTime(false);
     }
-
     public void SetLastTimeAttacked()
     {
         _lastTimeAttacked = Time.time;
     }
-
     public virtual RaycastHit2D IsPlayerDetected()
     {
         return Physics2D.Raycast(_playerCheck.position, Vector2.right * _facingDirection, _playerCheckDistance, _whatIsPlayer);
     }
-
     protected override void OnDrawGizmos()
     {
         base.OnDrawGizmos();
@@ -131,11 +129,23 @@ public class Enemy : Entity
         Gizmos.DrawLine(transform.position,
             new Vector3(transform.position.x + _attackDistance * _facingDirection, transform.position.y));
     }
-
+    internal virtual bool CanBeStunned()
+    {
+        if (_canBeStunned)
+        {
+            return true;
+        }
+        return false;
+    }
     public virtual void AnimationFinishTrigger()
     {
         StateMachine.CurrentState.AnimationFinishTrigger();
     }
+    public virtual void AssignLastAnimName(string animBoolName)
+    {
+        LastAnimBoolName = animBoolName;
+    }
+
     #region Counter Attack Window
     public virtual void OpenCounterAttackWindow()
     {
@@ -148,13 +158,5 @@ public class Enemy : Entity
         _counterImage.SetActive(false);
     }
     #endregion
-    internal virtual bool CanBeStunned()
-    {
-        if (_canBeStunned)
-        {
-            return true;
-        }
 
-        return false;
-    }
 }

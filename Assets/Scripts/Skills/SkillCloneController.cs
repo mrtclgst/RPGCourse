@@ -14,6 +14,7 @@ public class SkillCloneController : MonoBehaviour
     public Transform _closestEnemy;
     private bool _canDuplicate;
     private int _facingDir;
+    private int _damage;
 
     private void Awake()
     {
@@ -31,13 +32,14 @@ public class SkillCloneController : MonoBehaviour
         }
     }
     public void SetupClone
-        (Transform targetTransform, float cloneDuration, bool canAttack, Vector3 offset, Transform closestEnemy, bool canDuplicate, float duplicationChance)
+        (Transform targetTransform, float cloneDuration, bool canAttack, Vector3 offset, Transform closestEnemy, bool canDuplicate, float duplicationChance, int damage)
     {
         transform.position = targetTransform.position + offset;
         _cloneTimer = cloneDuration;
         _closestEnemy = closestEnemy;
         _canDuplicate = canDuplicate;
         _duplicationChance = duplicationChance;
+        _damage = damage;
 
         FaceClosestTarget();
         if (canAttack)
@@ -56,7 +58,7 @@ public class SkillCloneController : MonoBehaviour
         {
             if (damageable.GetComponent<Enemy>() != null)
             {
-                damageable.GetComponent<Enemy>().TakeDamage();
+                damageable.GetComponent<Enemy>().TakeDamage(_damage);
 
                 if (_canDuplicate)
                 {

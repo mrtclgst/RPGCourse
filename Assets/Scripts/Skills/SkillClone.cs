@@ -7,6 +7,7 @@ public class SkillClone : Skill
     [SerializeField] private float _cloneDuration;
     [Space]
     [SerializeField] private bool _canAttack;
+    [SerializeField] private int _damage;
 
     [SerializeField] private bool _canCreateCloneOnDashStart;
     [SerializeField] private bool _canCreateCloneOnDashOver;
@@ -31,7 +32,7 @@ public class SkillClone : Skill
 
         GameObject newClone = Instantiate(_clonePrefab);
         newClone.GetComponent<SkillCloneController>().SetupClone
-            (clonePosition, _cloneDuration, _canAttack, offset, FindClosestEnemy(clonePosition.transform), _canDuplicateClone, _duplicationChance);
+            (clonePosition, _cloneDuration, _canAttack, offset, FindClosestEnemy(clonePosition.transform), _canDuplicateClone, _duplicationChance, _damage);
     }
 
     public void CreateCloneOnDashBegun()
@@ -48,7 +49,6 @@ public class SkillClone : Skill
             CreateClone(_player.transform, Vector3.zero);
         }
     }
-
     public void CreateCloneOnCounterAttack(Transform enemyTransform, float delaySecond)
     {
         if (_canCreateCloneOnCounterAttack)
@@ -56,13 +56,11 @@ public class SkillClone : Skill
             StartCoroutine(IE_CreateCloneWithDelay(enemyTransform, new Vector3(1 * _player.GetFacingDirection(), 0), delaySecond));
         }
     }
-
     private IEnumerator IE_CreateCloneWithDelay(Transform targetTransform, Vector3 offset, float second)
     {
         yield return new WaitForSeconds(second);
         CreateClone(targetTransform, offset);
     }
-
     internal bool GetCrystalInsteadClone()
     {
         return _crystalInsteadOfClone;

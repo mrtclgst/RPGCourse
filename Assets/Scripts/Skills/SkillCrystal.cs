@@ -6,7 +6,7 @@ public class SkillCrystal : Skill
 {
     [SerializeField] private GameObject _crystalPrefab;
     [SerializeField] private float _crystalDuration;
-
+    [SerializeField] private int _damage;
 
     [Header("Crystal Mirage")]
     [SerializeField] private bool _canSpawnClone;
@@ -76,7 +76,7 @@ public class SkillCrystal : Skill
     {
         _currentCrystal = Instantiate(_crystalPrefab, _player.transform.position, Quaternion.identity);
         SkillCrystalController crystalController = _currentCrystal.GetComponent<SkillCrystalController>();
-        crystalController.SetupCrystal(_crystalDuration, _canExplode, _canMoveToEnemy, _moveSpeed, FindClosestEnemy(_currentCrystal.transform));
+        crystalController.SetupCrystal(_crystalDuration, _canExplode, _canMoveToEnemy, _moveSpeed, FindClosestEnemy(_currentCrystal.transform), _damage);
     }
 
     internal void CurrentCrystalChooseRandomEnemy()
@@ -98,7 +98,7 @@ public class SkillCrystal : Skill
                 GameObject newCrystal = Instantiate(crystalToSpawn, _player.transform.position, Quaternion.identity);
                 _crystalList.Remove(crystalToSpawn);
                 newCrystal.GetComponent<SkillCrystalController>().
-                    SetupCrystal(_crystalDuration, _canExplode, _canMoveToEnemy, _moveSpeed, FindClosestEnemy(newCrystal.transform));
+                    SetupCrystal(_crystalDuration, _canExplode, _canMoveToEnemy, _moveSpeed, FindClosestEnemy(newCrystal.transform), _damage);
 
                 if (_crystalList.Count <= 0)
                 {
