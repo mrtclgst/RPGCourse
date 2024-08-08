@@ -313,6 +313,21 @@ MonoBehaviour:
   _evasion:
     _baseValue: 0
     _modifiers: 
+  _magicResistance:
+    _baseValue: 0
+    _modifiers: 
+  _fireDamage:
+    _baseValue: 0
+    _modifiers: 
+  _iceDamage:
+    _baseValue: 0
+    _modifiers: 
+  _lightningDamage:
+    _baseValue: 0
+    _modifiers: 
+  _isIgnited: 0
+  _isChilled: 0
+  _isShocked: 0
 --- !u!1 &59674950
 GameObject:
   m_ObjectHideFlags: 0
@@ -7816,6 +7831,21 @@ MonoBehaviour:
   _evasion:
     _baseValue: 0
     _modifiers: 
+  _magicResistance:
+    _baseValue: 0
+    _modifiers: 
+  _fireDamage:
+    _baseValue: 5
+    _modifiers: 
+  _iceDamage:
+    _baseValue: 0
+    _modifiers: 
+  _lightningDamage:
+    _baseValue: 0
+    _modifiers: 
+  _isIgnited: 0
+  _isChilled: 0
+  _isShocked: 0
 --- !u!70 &1837335860
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

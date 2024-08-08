@@ -18,6 +18,17 @@ public class CharacterStats : MonoBehaviour
     [SerializeField] private Stat _maxHealth;
     [SerializeField] private Stat _armor;
     [SerializeField] private Stat _evasion;
+    [SerializeField] private Stat _magicResistance;
+
+    [Header("Magic Stats")]
+    [SerializeField] private Stat _fireDamage;
+    [SerializeField] private Stat _iceDamage;
+    [SerializeField] private Stat _lightningDamage;
+
+    [SerializeField] private bool _isIgnited;
+    [SerializeField] private bool _isChilled;
+    [SerializeField] private bool _isShocked;
+
 
     private int _currentHealth;
 
@@ -26,18 +37,13 @@ public class CharacterStats : MonoBehaviour
         _currentHealth = _maxHealth.GetValue();
         _critDamage.SetBaseValue(150);
     }
-
     internal virtual void DealDamage(CharacterStats targetStats)
     {
-        Debug.Log("attacked to" + gameObject.name);
         int totalDamage = _damage.GetValue() + _strength.GetValue();
         if (CanCrit())
         {
-            Debug.Log("critical hit");
             totalDamage = CriticalDamage(totalDamage);
-            Debug.Log(totalDamage);
         }
-
         targetStats.TakeDamage(totalDamage);
     }
     internal virtual void TakeDamage(int damage)
@@ -59,7 +65,6 @@ public class CharacterStats : MonoBehaviour
     private bool CanCrit()
     {
         int totalCritChance = _critChance.GetValue() + _agility.GetValue();
-        Debug.Log($"{totalCritChance}");
         if (Random.Range(0, 100) < totalCritChance)
         {
             return true;
@@ -91,5 +96,43 @@ public class CharacterStats : MonoBehaviour
     internal int GetCurrentHealth()
     {
         return _currentHealth;
+    }
+    public virtual void DealMagicalDamage(CharacterStats targetStats)
+    {
+        int fireDamage = _fireDamage.GetValue();
+        int iceDamage = _iceDamage.GetValue();
+        int lightningDamage = _lightningDamage.GetValue();
+        int totalMagicalDamage = fireDamage + iceDamage + lightningDamage + _intelligence.GetValue();
+        totalMagicalDamage = totalMagicalDamage - (targetStats._magicResistance.GetValue() + (targetStats._intelligence.GetValue() * 3));
+        totalMagicalDamage = Mathf.Max(totalMagicalDamage, 0);
+        targetStats.TakeDamage(totalMagicalDamage);
+
+        int highestMagicalDamage = Mathf.Max(fireDamage, iceDamage, lightningDamage);
+        bool canIgnite = false;
+        bool canChill = false;
+        bool canShock = false;
+        if (highestMagicalDamage == fireDamage)
+        {
+            canIgnite = true;
+        }
+        else if (highestMagicalDamage == iceDamage)
+        {
+            canChill = true;
+        }
+        else if (highestMagicalDamage == lightningDamage)
+        {
+            canShock = true;
+        }
+        targetStats.ApplyAilments(canIgnite, canChill, canShock);
+
+    }
+    public virtual void ApplyAilments(bool ignite, bool chill, bool shock)
+    {
+        if (ignite || chill || shock)
+        {
+            _isIgnited = ignite;
+            _isChilled = chill;
+            _isShocked = shock;
+        }
     }
 }
