@@ -179,7 +179,7 @@ public class SkillSwordController : MonoBehaviour
     private void SwordSkillDamage(Enemy enemy)
     {
         enemy.StartCoroutine(enemy.IE_FreezeTimerFor(_freezeTimeDuration));
-        enemy.TakeDamage(_damage);
+        enemy.TakeDamage(_damage, false);
     }
     private void SetupTargetsForBouncing(Collider2D collision)
     {

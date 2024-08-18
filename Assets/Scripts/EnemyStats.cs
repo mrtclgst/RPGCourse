@@ -15,9 +15,9 @@ public class EnemyStats : CharacterStats
     {
         base.DealDamage(targetStats);
     }
-    internal override void TakeDamage(int damage)
+    internal override void TakeDamage(int damage, bool isShocked)
     {
-        base.TakeDamage(damage);
+        base.TakeDamage(damage, isShocked);
     }
     protected override void Die()
     {

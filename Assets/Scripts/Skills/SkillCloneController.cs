@@ -58,7 +58,7 @@ public class SkillCloneController : MonoBehaviour
         {
             if (damageable.GetComponent<Enemy>() != null)
             {
-                damageable.GetComponent<Enemy>().TakeDamage(_damage);
+                damageable.GetComponent<Enemy>().TakeDamage(_damage, false);
 
                 if (_canDuplicate)
                 {

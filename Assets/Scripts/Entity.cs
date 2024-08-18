@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.U2D;
@@ -17,6 +18,8 @@ public class Entity : MonoBehaviour
     [SerializeField] protected Vector2 _knockbackForce;
     [SerializeField] protected float _knockbackDuration;
     protected bool _isKnocked;
+
+    public Action Entity_OnFlipped;
 
     protected int _facingDirection = 1;
     protected bool _facingRight = true;
@@ -90,6 +93,7 @@ public class Entity : MonoBehaviour
         _facingDirection = _facingDirection * -1;
         _facingRight = !_facingRight;
         transform.Rotate(0, 180, 0);
+        Entity_OnFlipped?.Invoke();
     }
     #endregion
 
@@ -120,9 +124,9 @@ public class Entity : MonoBehaviour
     public virtual void DealDamage()
     {
     }
-    public virtual void TakeDamage(int damage)
+    public virtual void TakeDamage(int damage, bool isShocked)
     {
-        Stats.TakeDamage(damage);
+        Stats.TakeDamage(damage, isShocked);
         EntityFX.StartCoroutine("IE_FlashFX");
         StartCoroutine(IE_HitKnockback());
     }

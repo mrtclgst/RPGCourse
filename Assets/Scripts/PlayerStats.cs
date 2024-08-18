@@ -9,9 +9,9 @@ public class PlayerStats : CharacterStats
         base.Start();
         _player = GetComponent<Player>();
     }
-    internal override void TakeDamage(int damage)
+    internal override void TakeDamage(int damage, bool isShocked)
     {
-        base.TakeDamage(damage);
+        base.TakeDamage(damage, isShocked);
     }
     protected override void Die()
     {
