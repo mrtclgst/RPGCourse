@@ -12,13 +12,17 @@ public class Player : Entity
     private bool _isBusy = false;
 
     [Header("Move Info")]
-    [SerializeField] private int _moveSpeed;
+    [SerializeField] private float _moveSpeed;
     [SerializeField] private float _swordReturnForce;
 
-    [SerializeField] private int _jumpForce;
+    [SerializeField] private float _jumpForce;
     [SerializeField] private float _dashSpeed;
     [SerializeField] private float _dashDuration;
     private float _dashDirection = 1;
+    private float _defaultMovementSpeed;
+    private float _defaultJumpForce;
+    private float _defaultDashSpeed;
+
 
     private GameObject _sword;
 
@@ -63,6 +67,9 @@ public class Player : Entity
     {
         base.Start();
         StateMachine.Initialize(IdleState);
+        _defaultMovementSpeed = _moveSpeed;
+        _defaultJumpForce = _jumpForce;
+        _defaultDashSpeed = _dashSpeed;
     }
     protected override void Update()
     {
@@ -173,4 +180,20 @@ public class Player : Entity
     public float GetSwordReturnForce()
     { return _swordReturnForce; }
     #endregion
+
+    public override void SlowEntityBy(float slowPercentage, float slowDuration)
+    {
+        _moveSpeed = _moveSpeed * (1 - slowPercentage);
+        _jumpForce = _jumpForce * (1 - slowPercentage);
+        _dashSpeed = _dashSpeed * (1 - slowPercentage);
+        Animator.speed = Animator.speed * (1 - slowPercentage);
+        Invoke("ReturnDefaultSpeed", slowDuration);
+    }
+    protected override void ReturnDefaultSpeed()
+    {
+        _moveSpeed = _defaultMovementSpeed;
+        _jumpForce = _defaultJumpForce;
+        _dashSpeed = _defaultDashSpeed;
+        base.ReturnDefaultSpeed();
+    }
 }

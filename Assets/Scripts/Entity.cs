@@ -97,7 +97,6 @@ public class Entity : MonoBehaviour
     }
     #endregion
 
-
     public void SetVelocity(float velocityX, float velocityY)
     {
         if (_isKnocked)
@@ -127,10 +126,9 @@ public class Entity : MonoBehaviour
     public virtual void TakeDamage(int damage, bool isShocked)
     {
         Stats.TakeDamage(damage, isShocked);
-        EntityFX.StartCoroutine("IE_FlashFX");
+        //EntityFX.StartCoroutine("IE_FlashFX");
         StartCoroutine(IE_HitKnockback());
     }
-
     protected virtual IEnumerator IE_HitKnockback()
     {
         _isKnocked = true;
@@ -138,7 +136,6 @@ public class Entity : MonoBehaviour
         yield return new WaitForSeconds(_knockbackDuration);
         _isKnocked = false;
     }
-
     public void MakeTransparent(bool transparency)
     {
         if (transparency)
@@ -150,9 +147,15 @@ public class Entity : MonoBehaviour
             SpriteRenderer.color = Color.white;
         }
     }
-
     internal virtual void Die()
     {
 
+    }
+    public virtual void SlowEntityBy(float slowPercentage, float slowDuration)
+    {
+    }
+    protected virtual void ReturnDefaultSpeed()
+    {
+        Animator.speed = 1;
     }
 }

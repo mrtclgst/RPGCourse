@@ -1,9 +1,12 @@
 using System;
+using UnityEditorInternal;
 using UnityEngine;
 
 public class CharacterStats : MonoBehaviour
 {
     public Action CharacterStats_OnHealthChanged;
+
+    private EntityFX _entityFX;
 
     [Header("Major Stats")]
     [SerializeField] private Stat _strength;    // 1 point increase damage by 1 and crit damage 1%
@@ -46,6 +49,7 @@ public class CharacterStats : MonoBehaviour
     protected virtual void Start()
     {
         _critDamage.SetBaseValue(150);
+        _entityFX = GetComponent<EntityFX>();
     }
     protected virtual void Update()
     {
@@ -121,18 +125,26 @@ public class CharacterStats : MonoBehaviour
 
         if (ignite)
         {
+            float igniteDuration = 2f;
             _isIgnited = ignite;
-            _igniteTimer = 2f;
+            _igniteTimer = igniteDuration;
+            _entityFX.IgniteFXFor(igniteDuration);
         }
         if (chill)
         {
+            float chillDuration = 4f;
             _isChilled = true;
-            _chilledTimer = 2f;
+            _chilledTimer = chillDuration;
+            _entityFX.ChillFXFor(chillDuration);
+            float slowPercentage = 0.25f;
+            GetComponent<Entity>().SlowEntityBy(slowPercentage, chillDuration);
         }
         if (shock)
         {
+            float shockDuration = 4f;
             _isShocked = true;
-            _shockedTimer = 2f;
+            _shockedTimer = shockDuration;
+            _entityFX.ShockFXFor(shockDuration);
         }
 
         _isChilled = chill;
@@ -145,6 +157,7 @@ public class CharacterStats : MonoBehaviour
 
         //_currentHealth = _currentHealth - ArmorAddedDamage(damage);
         DecreaseHealthBy(ArmorAddedDamage(damage));
+        _entityFX.StartCoroutine("IE_FlashFX");
         if (_currentHealth <= 0)
         {
             Die();

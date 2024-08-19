@@ -23,7 +23,7 @@ public class SkeletonStunnedState : EnemyState
     public override void Exit()
     {
         base.Exit();
-        _enemy.EntityFX.Invoke("CancelRedBlink", 0);
+        _enemy.EntityFX.Invoke("CancelColorChange", 0);
     }
 
     public override void Update()

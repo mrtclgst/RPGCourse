@@ -42,6 +42,7 @@ public class Enemy : Entity
     protected override void Start()
     {
         base.Start();
+        _defaultMoveSpeed = _moveSpeed;
     }
     protected override void Update()
     {
@@ -159,4 +160,15 @@ public class Enemy : Entity
     }
     #endregion
 
+    public override void SlowEntityBy(float slowPercentage, float slowDuration)
+    {
+        _moveSpeed = _moveSpeed * (1 - slowPercentage);
+        Animator.speed = Animator.speed * (1 - slowPercentage);
+        Invoke("ReturnDefaultSpeed", slowDuration);
+    }
+    protected override void ReturnDefaultSpeed()
+    {
+        _moveSpeed = _defaultMoveSpeed;
+        base.ReturnDefaultSpeed();
+    }
 }
