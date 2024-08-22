@@ -36,12 +36,16 @@ public class CharacterStats : MonoBehaviour
 
 
     private int _currentHealth;
+    protected bool _isDead;
     private float _igniteTimer;
     private float _igniteDamageCooldown = 0.3f;
     private float _igniteDamageTimer;
+    private int _igniteDamage;
     private float _chilledTimer;
     private float _shockedTimer;
-    private int _igniteDamage;
+    [SerializeField] private GameObject _thunderGO;
+    private int _shockDamage;
+
     protected virtual void OnEnable()
     {
         _currentHealth = _maxHealth.GetValue();
@@ -68,10 +72,8 @@ public class CharacterStats : MonoBehaviour
         if (_igniteDamageTimer < 0 && _isIgnited)
         {
             _igniteDamageTimer = _igniteDamageCooldown;
-            Debug.Log("ignite damage " + _igniteDamage);
-            //_currentHealth -= _igniteDamage;
             DecreaseHealthBy(_igniteDamage);
-            if (_currentHealth < 0)
+            if (_currentHealth < 0 && !_isDead)
                 Die();
         }
     }
@@ -120,7 +122,7 @@ public class CharacterStats : MonoBehaviour
     }
     public virtual void ApplyAilments(bool ignite, bool chill, bool shock)
     {
-        if (_isIgnited || _isChilled || _isShocked)
+        if (_isIgnited || _isChilled)
             return;
 
         if (ignite)
@@ -141,10 +143,48 @@ public class CharacterStats : MonoBehaviour
         }
         if (shock)
         {
-            float shockDuration = 4f;
-            _isShocked = true;
-            _shockedTimer = shockDuration;
-            _entityFX.ShockFXFor(shockDuration);
+            if (!_isShocked)
+            {
+                float shockDuration = 4f;
+                _isShocked = true;
+                _shockedTimer = shockDuration;
+                _entityFX.ShockFXFor(shockDuration);
+            }
+            else
+            {
+                if (GetComponent<Player>() != null)
+                    return;
+
+                Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 25);
+                float closestDistance = Mathf.Infinity;
+                Transform closestEnemy = null;
+
+                foreach (var hit in colliders)
+                {
+                    if (hit.GetComponent<Enemy>() != null)
+                    {
+                        float distanceToEnemy = Vector2.Distance(transform.position, hit.transform.position);
+                        if (distanceToEnemy < closestDistance && distanceToEnemy > 1)
+                        {
+                            closestEnemy = hit.transform;
+                            closestDistance = distanceToEnemy;
+                        }
+                    }
+                }
+
+                if (closestEnemy == null)
+                {
+                    closestEnemy = transform;
+                }
+
+
+                if (closestEnemy != null)
+                {
+                    GameObject thunderStrike = Instantiate(_thunderGO, transform.position, Quaternion.identity);
+                    thunderStrike.GetComponent<ThunderStrikeController>().Setup(_shockDamage, closestEnemy.GetComponent<CharacterStats>());
+                }
+
+            }
         }
 
         _isChilled = chill;
@@ -155,10 +195,9 @@ public class CharacterStats : MonoBehaviour
         if (CanAvoidAttack(isShocked))
             return;
 
-        //_currentHealth = _currentHealth - ArmorAddedDamage(damage);
         DecreaseHealthBy(ArmorAddedDamage(damage));
         _entityFX.StartCoroutine("IE_FlashFX");
-        if (_currentHealth <= 0)
+        if (_currentHealth <= 0 && _isDead)
         {
             Die();
         }
@@ -206,10 +245,15 @@ public class CharacterStats : MonoBehaviour
     }
     protected virtual void Die()
     {
+        _isDead = true;
     }
     internal int GetDamage()
     {
         return _damage.GetValue();
+    }
+    internal bool IsDead()
+    {
+        return _isDead;
     }
     internal int GetCurrentHealth()
     {

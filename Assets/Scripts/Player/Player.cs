@@ -110,9 +110,8 @@ public class Player : Entity
         {
             if (damageable.GetComponent<Enemy>() != null)
             {
-                //Stats.DealDamage(damageable.GetComponent<EnemyStats>());
-                Stats.DealMagicalDamage(damageable.GetComponent<EnemyStats>());
-
+                Stats.DealDamage(damageable.GetComponent<EnemyStats>());
+                //Stats.DealMagicalDamage(damageable.GetComponent<EnemyStats>());
             }
         }
 
