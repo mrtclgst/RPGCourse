@@ -43,8 +43,8 @@ public class EnemySkeleton : Enemy
             if (damageable.GetComponent<Player>() != null)
             {
                 Player player = damageable.GetComponent<Player>();
-                //Stats.DealDamage(player.Stats);
-                Stats.DealMagicalDamage(player.Stats);
+                Stats.DealDamage(player.Stats);
+                //Stats.DealMagicalDamage(player.Stats);
                 //PlayerStats playerStats = damageable.GetComponent<PlayerStats>();
                 //Stats.DealDamage(playerStats);
             }

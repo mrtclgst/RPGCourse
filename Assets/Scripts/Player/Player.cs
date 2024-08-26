@@ -153,8 +153,8 @@ public class Player : Entity
     }
     internal override void Die()
     {
-        base.Die();
         StateMachine.ChangeState(DeadState);
+        base.Die();
     }
 
     #region GetFunctions

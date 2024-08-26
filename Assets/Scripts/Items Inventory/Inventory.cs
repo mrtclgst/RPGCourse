@@ -7,6 +7,8 @@ public class Inventory : MonoBehaviour
 {
     public static Inventory Instance;
 
+    public List<ItemData> StartingEquipment;
+
     public List<InventoryItem> _inventoryList = new List<InventoryItem>();
     public Dictionary<ItemData, InventoryItem> _inventoryDictionary = new Dictionary<ItemData, InventoryItem>();
 
@@ -48,6 +50,11 @@ public class Inventory : MonoBehaviour
         _inventoryItemSlotArray = _inventorySlotParent.GetComponentsInChildren<UI_ItemSlot>();
         _stashItemSlotArray = _stastSlotParent.GetComponentsInChildren<UI_ItemSlot>();
         _equipmentSlotArray = _equipmentSlotParent.GetComponentsInChildren<UI_EquipmentSlot>();
+
+        for (int i = 0; i < StartingEquipment.Count; i++)
+        {
+            AddItem(StartingEquipment[i]);
+        }
     }
     public void AddItem(ItemData itemData)
     {
@@ -121,15 +128,8 @@ public class Inventory : MonoBehaviour
     {
         for (int i = 0; i < _equipmentSlotArray.Length; i++)
         {
-            foreach (KeyValuePair<ItemDataEquipment, InventoryItem> item in _equipmentDictionary)
-            {
-                if (item.Key.EquipmentType == _equipmentSlotArray[i].SlotType)
-                {
-                    _equipmentSlotArray[i].UpdateSlot(item.Value);
-                }
-            }
+            _equipmentSlotArray[i].CleanUpSlot();
         }
-
         for (int i = 0; i < _inventoryItemSlotArray.Length; i++)
         {
             _inventoryItemSlotArray[i].CleanUpSlot();
@@ -147,6 +147,16 @@ public class Inventory : MonoBehaviour
         for (int i = 0; i < _stashList.Count; i++)
         {
             _stashItemSlotArray[i].UpdateSlot(_stashList[i]);
+        }
+        for (int i = 0; i < _equipmentSlotArray.Length; i++)
+        {
+            foreach (KeyValuePair<ItemDataEquipment, InventoryItem> item in _equipmentDictionary)
+            {
+                if (item.Key.EquipmentType == _equipmentSlotArray[i].SlotType)
+                {
+                    _equipmentSlotArray[i].UpdateSlot(item.Value);
+                }
+            }
         }
     }
 
@@ -174,17 +184,61 @@ public class Inventory : MonoBehaviour
         _equipmentList.Add(newInventoryItem);
         _equipmentDictionary.Add(newEquipmentItem, newInventoryItem);
         RemoveItem(itemData);
+        newEquipmentItem.AddModifiers();
 
 
         UpdateUISlots();
     }
 
-    private void UnequipItem(ItemDataEquipment equipmentToDelete)
+    internal void UnequipItem(ItemDataEquipment equipmentToRemove)
     {
-        if (_equipmentDictionary.TryGetValue(equipmentToDelete, out InventoryItem value))
+        if (_equipmentDictionary.TryGetValue(equipmentToRemove, out InventoryItem value))
         {
             _equipmentList.Remove(value);
-            _equipmentDictionary.Remove(equipmentToDelete);
+            _equipmentDictionary.Remove(equipmentToRemove);
+            equipmentToRemove.RemoveModifiers();
         }
+    }
+
+    public bool CanCraft(ItemDataEquipment itemWantedCrafted)
+    {
+        List<InventoryItem> requiredMaterialList = itemWantedCrafted.CraftingMaterialList;
+        for (int i = 0; i < requiredMaterialList.Count; i++)
+        {
+            if (_stashDictionary.TryGetValue(requiredMaterialList[i].Data, out InventoryItem stashValue))
+            {
+                if (stashValue.StackSize < requiredMaterialList[i].StackSize)
+                {
+                    Debug.Log("not enough material " + stashValue.Data.name);
+                    return false;
+                }
+            }
+            else
+            {
+                Debug.Log("not enough material");
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    internal void CraftItem(ItemDataEquipment craftData)
+    {
+        for (int i = 0; i < craftData.CraftingMaterialList.Count; i++)
+        {
+            RemoveItem(craftData.CraftingMaterialList[i].Data);
+        }
+        AddItem(craftData);
+        Debug.Log("item crafted " + craftData.name);
+    }
+
+    public List<InventoryItem> GetEquipmentList()
+    {
+        return _equipmentList;
+    }
+    public List<InventoryItem> GetStashList()
+    {
+        return _stashList;
     }
 }

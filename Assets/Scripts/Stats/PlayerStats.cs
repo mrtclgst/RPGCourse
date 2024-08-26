@@ -15,7 +15,8 @@ public class PlayerStats : CharacterStats
     }
     protected override void Die()
     {
-        base.Die();
         _player.Die();
+        GetComponent<PlayerItemDrop>()?.GenerateDrop();
+        base.Die();
     }
 }

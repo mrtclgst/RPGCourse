@@ -9,26 +9,26 @@ public class CharacterStats : MonoBehaviour
     private EntityFX _entityFX;
 
     [Header("Major Stats")]
-    [SerializeField] private Stat _strength;    // 1 point increase damage by 1 and crit damage 1%
-    [SerializeField] private Stat _agility;     // 1 point increase evasion by 1% and crit chance 1%
-    [SerializeField] private Stat _intelligence;// 1 point increase magic damage 1 and magic resistance by 3
-    [SerializeField] private Stat _vitality;    // 1 point increase health 3 or 5 points
+    [SerializeField] public Stat Strength;    // 1 point increase damage by 1 and crit damage 1%
+    [SerializeField] public Stat Agility;     // 1 point increase evasion by 1% and crit chance 1%
+    [SerializeField] public Stat Intelligence;// 1 point increase magic damage 1 and magic resistance by 3
+    [SerializeField] public Stat Vitality;    // 1 point increase health 3 or 5 points
 
     [Header("Offensive Stats")]
-    [SerializeField] private Stat _damage;
-    [SerializeField] private Stat _critChance;
-    [SerializeField] private Stat _critDamage;      //default value 150
+    [SerializeField] public Stat Damage;
+    [SerializeField] public Stat CritChance;
+    [SerializeField] public Stat CritDamage;      //default value 150
 
     [Header("Defensive Stats")]
-    [SerializeField] private Stat _maxHealth;
-    [SerializeField] private Stat _armor;
-    [SerializeField] private Stat _evasion;
-    [SerializeField] private Stat _magicResistance;
+    [SerializeField] public Stat MaxHealth;
+    [SerializeField] public Stat Armor;
+    [SerializeField] public Stat Evasion;
+    [SerializeField] public Stat MagicResistance;
 
     [Header("Magic Stats")]
-    [SerializeField] private Stat _fireDamage;
-    [SerializeField] private Stat _iceDamage;
-    [SerializeField] private Stat _lightningDamage;
+    [SerializeField] public Stat FireDamage;
+    [SerializeField] public Stat IceDamage;
+    [SerializeField] public Stat LightningDamage;
 
     [SerializeField] private bool _isIgnited;   //does damage over time
     [SerializeField] private bool _isChilled;   //decrease armor who is chilled
@@ -48,11 +48,11 @@ public class CharacterStats : MonoBehaviour
 
     protected virtual void OnEnable()
     {
-        _currentHealth = _maxHealth.GetValue();
+        _currentHealth = MaxHealth.GetValue();
     }
     protected virtual void Start()
     {
-        _critDamage.SetBaseValue(150);
+        CritDamage.SetBaseValue(150);
         _entityFX = GetComponent<EntityFX>();
     }
     protected virtual void Update()
@@ -79,7 +79,7 @@ public class CharacterStats : MonoBehaviour
     }
     internal virtual void DealDamage(CharacterStats targetStats)
     {
-        int totalDamage = _damage.GetValue() + _strength.GetValue();
+        int totalDamage = Damage.GetValue() + Strength.GetValue();
         if (CanCrit())
         {
             totalDamage = CriticalDamage(totalDamage);
@@ -88,11 +88,11 @@ public class CharacterStats : MonoBehaviour
     }
     public virtual void DealMagicalDamage(CharacterStats targetStats)
     {
-        int fireDamage = _fireDamage.GetValue();
-        int iceDamage = _iceDamage.GetValue();
-        int lightningDamage = _lightningDamage.GetValue();
-        int totalMagicalDamage = fireDamage + iceDamage + lightningDamage + _intelligence.GetValue();
-        totalMagicalDamage = totalMagicalDamage - (targetStats._magicResistance.GetValue() + (targetStats._intelligence.GetValue() * 3));
+        int fireDamage = FireDamage.GetValue();
+        int iceDamage = IceDamage.GetValue();
+        int lightningDamage = LightningDamage.GetValue();
+        int totalMagicalDamage = fireDamage + iceDamage + lightningDamage + Intelligence.GetValue();
+        totalMagicalDamage = totalMagicalDamage - (targetStats.MagicResistance.GetValue() + (targetStats.Intelligence.GetValue() * 3));
         totalMagicalDamage = Mathf.Max(totalMagicalDamage, 0);
         targetStats.TakeDamage(totalMagicalDamage, _isShocked);
 
@@ -197,7 +197,7 @@ public class CharacterStats : MonoBehaviour
 
         DecreaseHealthBy(ArmorAddedDamage(damage));
         _entityFX.StartCoroutine("IE_FlashFX");
-        if (_currentHealth <= 0 && _isDead)
+        if (_currentHealth <= 0 && !_isDead)
         {
             Die();
         }
@@ -206,18 +206,18 @@ public class CharacterStats : MonoBehaviour
     {
         if (_isChilled)
         {
-            damage = Mathf.Max(damage - Mathf.RoundToInt(_armor.GetValue() * 0.8f), 0);
+            damage = Mathf.Max(damage - Mathf.RoundToInt(Armor.GetValue() * 0.8f), 0);
         }
         else
         {
-            damage = Mathf.Max(damage - _armor.GetValue(), 0);
+            damage = Mathf.Max(damage - Armor.GetValue(), 0);
         }
 
         return damage;
     }
     private bool CanCrit()
     {
-        int totalCritChance = _critChance.GetValue() + _agility.GetValue();
+        int totalCritChance = CritChance.GetValue() + Agility.GetValue();
         if (UnityEngine.Random.Range(0, 100) < totalCritChance)
         {
             return true;
@@ -226,13 +226,13 @@ public class CharacterStats : MonoBehaviour
     }
     private int CriticalDamage(int damage)
     {
-        float totalCritDamage = (_critDamage.GetValue() + _strength.GetValue()) / 100f;
+        float totalCritDamage = (CritDamage.GetValue() + Strength.GetValue()) / 100f;
         float critDamage = damage * totalCritDamage;
         return Mathf.RoundToInt(critDamage);
     }
     private bool CanAvoidAttack(bool isShocked)
     {
-        int totalEvasion = _evasion.GetValue() + _agility.GetValue();
+        int totalEvasion = Evasion.GetValue() + Agility.GetValue();
 
         if (isShocked)
             totalEvasion += 20;
@@ -249,7 +249,7 @@ public class CharacterStats : MonoBehaviour
     }
     internal int GetDamage()
     {
-        return _damage.GetValue();
+        return Damage.GetValue();
     }
     internal bool IsDead()
     {
@@ -269,7 +269,7 @@ public class CharacterStats : MonoBehaviour
     }
     internal int GetMaxHealth()
     {
-        return _maxHealth.GetValue() + _vitality.GetValue() * 5;
+        return MaxHealth.GetValue() + Vitality.GetValue() * 5;
     }
     internal float GetCurrentHealthPercentage()
     {
