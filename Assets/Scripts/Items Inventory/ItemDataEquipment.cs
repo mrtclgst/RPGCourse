@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 [CreateAssetMenu(fileName = "New Item Data", menuName = "Data/Equipment")]
 
 public class ItemDataEquipment : ItemData
 {
     public EquipmentType EquipmentType;
+    public ItemEffect[] ItemEffectArray;
 
     [Header("Main Stats")]
     public int Strength;
@@ -77,6 +79,14 @@ public class ItemDataEquipment : ItemData
         playerStats.FireDamage.RemoveModifier(FireDamage);
         playerStats.IceDamage.RemoveModifier(IceDamage);
         playerStats.LightningDamage.RemoveModifier(LightningDamage);
+    }
+
+    public void ExecuteItemEffect(Transform enemyTransform)
+    {
+        foreach (ItemEffect itemEffect in ItemEffectArray)
+        {
+            itemEffect.ExecuteEffect(enemyTransform);
+        }
     }
 }
 

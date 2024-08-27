@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : Entity
@@ -41,7 +39,6 @@ public class Player : Entity
     public PlayerCatchSwordState CatchSwordState { get; private set; }
     public PlayerBlackholeState BlackholeState { get; private set; }
     public PlayerDeadState DeadState { get; private set; }
-
     #endregion
 
     #region MonoBehaviours
@@ -111,7 +108,8 @@ public class Player : Entity
             if (damageable.GetComponent<Enemy>() != null)
             {
                 Stats.DealDamage(damageable.GetComponent<EnemyStats>());
-                //Stats.DealMagicalDamage(damageable.GetComponent<EnemyStats>());
+
+                Inventory.Instance.GetEquipment(EquipmentType.Weapon)?.ExecuteItemEffect(damageable.transform);
             }
         }
 

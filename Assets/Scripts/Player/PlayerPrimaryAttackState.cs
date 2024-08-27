@@ -1,6 +1,6 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerPrimaryAttackState : PlayerState
@@ -57,5 +57,10 @@ public class PlayerPrimaryAttackState : PlayerState
         {
             _stateMachine.ChangeState(_player.IdleState);
         }
+    }
+
+    internal int GetComboCount()
+    {
+        return _comboCounter;
     }
 }
