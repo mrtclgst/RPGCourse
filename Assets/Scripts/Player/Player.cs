@@ -76,6 +76,11 @@ public class Player : Entity
 
         if (Input.GetKeyDown(KeyCode.F))
         { SkillManager.Instance.GetSkillCrystal().UseSkill(); }
+
+        if (Input.GetKeyDown(KeyCode.Keypad1))
+        {
+            Inventory.Instance.UseFlask();
+        }
     }
     #endregion
     public IEnumerator IE_BusyFor(float seconds)
@@ -112,7 +117,6 @@ public class Player : Entity
                 Inventory.Instance.GetEquipment(EquipmentType.Weapon)?.ExecuteItemEffect(damageable.transform);
             }
         }
-
         base.DealDamage();
     }
     internal bool TryToCounterAttack()

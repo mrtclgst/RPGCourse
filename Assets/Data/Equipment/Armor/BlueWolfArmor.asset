@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0701e3bd6700b594d80653f08979a5b7, type: 3}
+  m_Name: BlueWolfArmor
+  m_EditorClassIdentifier: 
+  ItemType: 1
+  ItemName: Blue Wolf Armor
+  Icon: {fileID: 288293509, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
+  DropChance: 0
+  EquipmentType: 1
+  ItemCooldown: 5
+  ItemEffectArray:
+  - {fileID: 11400000, guid: 60bfed65f292a1744b43cc4f101ec144, type: 2}
+  Strength: 4
+  Agility: 0
+  Intelligence: 0
+  Vitality: 0
+  Damage: 0
+  CritChance: 0
+  CritDamage: 0
+  Health: 25
+  Armor: 4
+  Evasion: 0
+  MagicResistance: 15
+  FireDamage: 0
+  IceDamage: 0
+  LightningDamage: 0
+  CraftingMaterialList: []

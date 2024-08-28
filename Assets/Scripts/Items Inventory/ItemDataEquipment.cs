@@ -8,6 +8,7 @@ using UnityEngine.UIElements;
 public class ItemDataEquipment : ItemData
 {
     public EquipmentType EquipmentType;
+    public float ItemCooldown;
     public ItemEffect[] ItemEffectArray;
 
     [Header("Main Stats")]

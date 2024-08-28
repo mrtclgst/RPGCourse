@@ -29,6 +29,9 @@ public class Inventory : MonoBehaviour
     private UI_ItemSlot[] _stashItemSlotArray;
     private UI_EquipmentSlot[] _equipmentSlotArray;
 
+    [Header("Items Cooldown")]
+    private float _lastTimeUsedFlask = Mathf.NegativeInfinity;
+    private float _lastTimeUsedArmor = Mathf.NegativeInfinity;
 
     private void Awake()
     {
@@ -253,5 +256,35 @@ public class Inventory : MonoBehaviour
         }
 
         return equippedItem;
+    }
+    public void UseFlask()
+    {
+        ItemDataEquipment currentFlask = GetEquipment(EquipmentType.Flask);
+        if (currentFlask == null)
+            return;
+
+        bool canUseFlask = Time.time > _lastTimeUsedFlask + currentFlask.ItemCooldown;
+        if (canUseFlask)
+        {
+            Debug.Log("Flask effect used");
+            currentFlask.ExecuteItemEffect(null);
+            _lastTimeUsedFlask = Time.time;
+        }
+        else
+        {
+            Debug.Log("Flask on CD");
+        }
+    }
+    public bool CanUseArmor()
+    {
+        ItemDataEquipment currentArmor = GetEquipment(EquipmentType.Armor);
+        if (Time.time > _lastTimeUsedArmor + currentArmor.ItemCooldown)
+        {
+            _lastTimeUsedArmor = Time.time;
+            return true;
+        }
+
+        Debug.Log("Armor in cooldown");
+        return false;
     }
 }

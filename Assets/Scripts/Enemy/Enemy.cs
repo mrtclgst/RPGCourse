@@ -94,7 +94,11 @@ public class Enemy : Entity
         return _stunForce;
     }
     #endregion
-
+    
+    internal virtual void FreezeTimeFor(float duration)
+    {
+        StartCoroutine(IE_FreezeTimerFor(duration));
+    }
     internal virtual void FreezeTime(bool timeFrozen)
     {
         if (timeFrozen)

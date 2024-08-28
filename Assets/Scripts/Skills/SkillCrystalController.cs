@@ -87,6 +87,10 @@ public class SkillCrystalController : MonoBehaviour
             {
                 //damageable.GetComponent<Enemy>().TakeDamage(_damage, false);
                 PlayerManager.Instance.Player.Stats.DealMagicalDamage(damageable.GetComponent<Enemy>().Stats);
+
+                ItemDataEquipment equippedAmulet = Inventory.Instance.GetEquipment(EquipmentType.Amulet);
+                if (equippedAmulet != null)
+                    equippedAmulet.ExecuteItemEffect(damageable.transform);
             }
         }
     }

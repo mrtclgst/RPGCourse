@@ -10,13 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0701e3bd6700b594d80653f08979a5b7, type: 3}
-  m_Name: PlateArmor
+  m_Name: IceAndFireWeapon
   m_EditorClassIdentifier: 
   ItemType: 1
-  ItemName: Plate Armor
-  Icon: {fileID: -1581127718, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
-  DropChance: 20
-  EquipmentType: 1
+  ItemName: Ice and Fire
+  Icon: {fileID: 1398721256, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
+  DropChance: 6
+  EquipmentType: 0
+  ItemCooldown: 0
+  ItemEffectArray:
+  - {fileID: 11400000, guid: 874d11c2d06d5224cb5ad52fe8c340f9, type: 2}
+  - {fileID: 11400000, guid: 8b56356529199414092c4ee3eef88b74, type: 2}
   Strength: 0
   Agility: 0
   Intelligence: 0
@@ -24,11 +28,11 @@ MonoBehaviour:
   Damage: 0
   CritChance: 0
   CritDamage: 0
-  Health: 10
-  Armor: 5
+  Health: 0
+  Armor: 0
   Evasion: 0
   MagicResistance: 0
-  FireDamage: 0
-  IceDamage: 0
+  FireDamage: 5
+  IceDamage: 10
   LightningDamage: 0
   CraftingMaterialList: []

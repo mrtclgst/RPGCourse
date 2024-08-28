@@ -1,7 +1,4 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
 public class SkillSwordController : MonoBehaviour
@@ -178,8 +175,12 @@ public class SkillSwordController : MonoBehaviour
     }
     private void SwordSkillDamage(Enemy enemy)
     {
-        enemy.StartCoroutine(enemy.IE_FreezeTimerFor(_freezeTimeDuration));
+        enemy.FreezeTimeFor(_freezeTimeDuration);
         enemy.TakeDamage(_damage, false);
+
+        ItemDataEquipment equippedAmulet = Inventory.Instance.GetEquipment(EquipmentType.Amulet);
+        if (equippedAmulet != null)
+            equippedAmulet.ExecuteItemEffect(enemy.transform);
     }
     private void SetupTargetsForBouncing(Collider2D collision)
     {

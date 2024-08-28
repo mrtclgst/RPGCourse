@@ -1,5 +1,5 @@
 using System;
-using UnityEditorInternal;
+using System.Collections;
 using UnityEngine;
 
 public class CharacterStats : MonoBehaviour
@@ -77,6 +77,18 @@ public class CharacterStats : MonoBehaviour
                 Die();
         }
     }
+    public virtual void IncreaseStatBy(int modifier, float duration, Stat statToModify)
+    {
+        StartCoroutine(IE_StatModifyCoroutine(modifier, duration, statToModify));
+    }
+
+    private IEnumerator IE_StatModifyCoroutine(int modifier, float duration, Stat statToModify)
+    {
+        statToModify.AddModifier(modifier);
+        yield return new WaitForSeconds(duration);
+        statToModify.RemoveModifier(modifier);
+    }
+
     internal virtual void DealDamage(CharacterStats targetStats)
     {
         int totalDamage = Damage.GetValue() + Strength.GetValue();
@@ -276,9 +288,17 @@ public class CharacterStats : MonoBehaviour
         float percentage = (float)_currentHealth / GetMaxHealth();
         return percentage;
     }
-    private void DecreaseHealthBy(int damage)
+    protected virtual void DecreaseHealthBy(int damage)
     {
         _currentHealth -= damage;
+        CharacterStats_OnHealthChanged?.Invoke();
+    }
+    internal virtual void IncreaseHealthBy(int healAmount)
+    {
+        _currentHealth += healAmount;
+        if (_currentHealth >= GetMaxHealth())
+            _currentHealth = GetMaxHealth();
+
         CharacterStats_OnHealthChanged?.Invoke();
     }
 }
