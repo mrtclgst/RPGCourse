@@ -1,3 +1,4 @@
+using System.Text;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Item Data", menuName = "Data/Item")]
@@ -9,6 +10,12 @@ public class ItemData : ScriptableObject
 
     [Range(0, 100)]
     public float DropChance;
+
+    protected StringBuilder _sb = new StringBuilder();
+    public virtual string GetDescription()
+    {
+        return "";
+    }
 }
 
 public enum ItemType

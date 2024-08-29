@@ -62,9 +62,17 @@ public class Inventory : MonoBehaviour
             AddItem(StartingEquipment[i]);
         }
     }
+    public bool CanAddItem()
+    {
+        if (_inventoryList.Count >= _inventoryItemSlotArray.Length)
+        {
+            return false;
+        }
+        return true;
+    }
     public void AddItem(ItemData itemData)
     {
-        if (itemData.ItemType == ItemType.Equipment)
+        if (itemData.ItemType == ItemType.Equipment && CanAddItem())
         {
             AddToInventory(itemData);
         }
@@ -144,8 +152,6 @@ public class Inventory : MonoBehaviour
         {
             _stashItemSlotArray[i].CleanUpSlot();
         }
-
-
         for (int i = 0; i < _inventoryList.Count; i++)
         {
             _inventoryItemSlotArray[i].UpdateSlot(_inventoryList[i]);
