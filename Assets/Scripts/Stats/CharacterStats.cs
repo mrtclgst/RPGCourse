@@ -301,4 +301,44 @@ public class CharacterStats : MonoBehaviour
 
         CharacterStats_OnHealthChanged?.Invoke();
     }
+
+    public Stat StatOfType(StatType buffType)
+    {
+        switch (buffType)
+        {
+            case StatType.Strength: return Strength;
+            case StatType.Agility: return Agility;
+            case StatType.Intelligence: return Intelligence;
+            case StatType.Vitality: return Vitality;
+            case StatType.Damage: return Damage;
+            case StatType.CritChance: return CritChance;
+            case StatType.CritDamage: return CritDamage;
+            case StatType.Health: return MaxHealth;
+            case StatType.Armor: return Armor;
+            case StatType.Evasion: return Evasion;
+            case StatType.MagicResistance: return MagicResistance;
+            case StatType.FireDamage: return FireDamage;
+            case StatType.IceDamage: return IceDamage;
+            case StatType.LightningDamage: return LightningDamage;
+        }
+        return null;
+    }
+}
+
+public enum StatType
+{
+    Strength,
+    Agility,
+    Intelligence,
+    Vitality,
+    Damage,
+    CritChance,
+    CritDamage,
+    Health,
+    Armor,
+    Evasion,
+    MagicResistance,
+    FireDamage,
+    IceDamage,
+    LightningDamage,
 }

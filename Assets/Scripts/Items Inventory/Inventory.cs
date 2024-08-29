@@ -23,11 +23,13 @@ public class Inventory : MonoBehaviour
     [SerializeField] private Transform _inventorySlotParent;
     [SerializeField] private Transform _stastSlotParent;
     [SerializeField] private Transform _equipmentSlotParent;
+    [SerializeField] private Transform _statSlotParent;
 
 
     private UI_ItemSlot[] _inventoryItemSlotArray;
     private UI_ItemSlot[] _stashItemSlotArray;
     private UI_EquipmentSlot[] _equipmentSlotArray;
+    private UI_StatSlot[] _statSlotArray;
 
     [Header("Items Cooldown")]
     private float _lastTimeUsedFlask = Mathf.NegativeInfinity;
@@ -53,6 +55,7 @@ public class Inventory : MonoBehaviour
         _inventoryItemSlotArray = _inventorySlotParent.GetComponentsInChildren<UI_ItemSlot>();
         _stashItemSlotArray = _stastSlotParent.GetComponentsInChildren<UI_ItemSlot>();
         _equipmentSlotArray = _equipmentSlotParent.GetComponentsInChildren<UI_EquipmentSlot>();
+        _statSlotArray = _statSlotParent.GetComponentsInChildren<UI_StatSlot>();
 
         for (int i = 0; i < StartingEquipment.Count; i++)
         {
@@ -160,6 +163,10 @@ public class Inventory : MonoBehaviour
                     _equipmentSlotArray[i].UpdateSlot(item.Value);
                 }
             }
+        }
+        for (int i = 0; i < _statSlotArray.Length; i++)
+        {
+            _statSlotArray[i].UpdateStatValueUI();
         }
     }
 
