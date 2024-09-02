@@ -9,8 +9,6 @@ public class SkillClone : Skill
     [SerializeField] private bool _canAttack;
     [SerializeField] private int _damage;
 
-    [SerializeField] private bool _canCreateCloneOnDashStart;
-    [SerializeField] private bool _canCreateCloneOnDashOver;
     [SerializeField] private bool _canCreateCloneOnCounterAttack;
 
     [Header("Duplication")]
@@ -35,20 +33,7 @@ public class SkillClone : Skill
             (clonePosition, _cloneDuration, _canAttack, offset, FindClosestEnemy(clonePosition.transform), _canDuplicateClone, _duplicationChance, _damage);
     }
 
-    public void CreateCloneOnDashBegun()
-    {
-        if (_canCreateCloneOnDashStart)
-        {
-            CreateClone(_player.transform, Vector3.zero);
-        }
-    }
-    public void CreateCloneOnDashOver()
-    {
-        if (_canCreateCloneOnDashOver)
-        {
-            CreateClone(_player.transform, Vector3.zero);
-        }
-    }
+   
     public void CreateCloneOnCounterAttack(Transform enemyTransform, float delaySecond)
     {
         if (_canCreateCloneOnCounterAttack)

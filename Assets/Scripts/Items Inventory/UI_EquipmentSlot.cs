@@ -11,6 +11,7 @@ public class UI_EquipmentSlot : UI_ItemSlot
         //base.OnPointerDown(eventData);
         Inventory.Instance.UnequipItem(Item.Data as ItemDataEquipment);
         Inventory.Instance.AddItem(Item.Data as ItemDataEquipment);
+        _ui.ItemTooltip.HideTooltip();
         CleanUpSlot();
     }
 }

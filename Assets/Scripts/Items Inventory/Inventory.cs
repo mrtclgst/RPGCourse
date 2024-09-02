@@ -59,7 +59,8 @@ public class Inventory : MonoBehaviour
 
         for (int i = 0; i < StartingEquipment.Count; i++)
         {
-            AddItem(StartingEquipment[i]);
+            if (StartingEquipment[i] != null)
+                AddItem(StartingEquipment[i]);
         }
     }
     public bool CanAddItem()
@@ -236,6 +237,7 @@ public class Inventory : MonoBehaviour
             }
         }
 
+        CraftItem(itemWantedCrafted);
         return true;
     }
 

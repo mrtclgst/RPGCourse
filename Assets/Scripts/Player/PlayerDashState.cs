@@ -13,14 +13,16 @@ public class PlayerDashState : PlayerState
     {
         base.Enter();
         _stateTimer = _player.GetDashDuration();
-        SkillManager.Instance.GetSkillClone().CreateCloneOnDashBegun();
+
+        SkillManager.Instance.GetSkillDash().CloneOnDash();
     }
 
     public override void Exit()
     {
         base.Exit();
         _player.SetVelocity(0, _playerRb.velocity.y);
-        SkillManager.Instance.GetSkillClone().CreateCloneOnDashOver();
+
+        SkillManager.Instance.GetSkillDash().CloneOnArrival();
     }
 
     public override void Update()

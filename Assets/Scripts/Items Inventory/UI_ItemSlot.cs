@@ -5,19 +5,19 @@ using UnityEngine.UI;
 
 public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
 {
-    [SerializeField] private Image _itemImage;
-    [SerializeField] private TextMeshProUGUI _itemText;
+    [SerializeField] protected Image _itemImage;
+    [SerializeField] protected TextMeshProUGUI _itemText;
 
     public InventoryItem Item;
 
-    private UI _ui;
+    protected UI _ui;
 
-    private void Start()
+    protected virtual void Start()
     {
         _ui = GetComponentInParent<UI>();
     }
 
-    public void UpdateSlot(InventoryItem inventoryItem)
+    public virtual void UpdateSlot(InventoryItem inventoryItem)
     {
         Item = inventoryItem;
         _itemImage.color = Color.white;
@@ -47,6 +47,8 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
 
         if (Item.Data.ItemType == ItemType.Equipment)
             Inventory.Instance.EquipItem(Item.Data);
+
+        _ui.ItemTooltip.HideTooltip();
     }
     public void CleanUpSlot()
     {

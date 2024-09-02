@@ -21,6 +21,7 @@ MonoBehaviour:
   ItemEffectArray:
   - {fileID: 11400000, guid: 874d11c2d06d5224cb5ad52fe8c340f9, type: 2}
   - {fileID: 11400000, guid: 8b56356529199414092c4ee3eef88b74, type: 2}
+  _itemEffectDescription: 'Unique : Each third attack you launch ice or fire projectile.'
   Strength: 0
   Agility: 0
   Intelligence: 0
@@ -35,4 +36,8 @@ MonoBehaviour:
   FireDamage: 5
   IceDamage: 10
   LightningDamage: 0
-  CraftingMaterialList: []
+  CraftingMaterialList:
+  - Data: {fileID: 11400000, guid: dff7ceb05d0f20e4dba2254ff2506f18, type: 2}
+    StackSize: 5
+  - Data: {fileID: 11400000, guid: e941c351994910a4ca7cc6e834a88c72, type: 2}
+    StackSize: 15

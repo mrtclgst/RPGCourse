@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0701e3bd6700b594d80653f08979a5b7, type: 3}
-  m_Name: WoodenSword
+  m_Name: TheBook
   m_EditorClassIdentifier: 
-  ItemType: 1
-  ItemName: Wooden Sword
-  Icon: {fileID: 1025091068, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
-  DropChance: 30
+  ItemType: 0
+  ItemName: The Book
+  Icon: {fileID: -1985898824, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
+  DropChance: 0
   EquipmentType: 0
   ItemCooldown: 0
   ItemEffectArray: []
@@ -23,16 +23,14 @@ MonoBehaviour:
   Agility: 0
   Intelligence: 0
   Vitality: 0
-  Damage: 4
-  CritChance: 0
-  CritDamage: 0
+  Damage: 0
+  CritChance: 1
+  CritDamage: 1
   Health: 0
   Armor: 0
-  Evasion: 3
-  MagicResistance: 0
+  Evasion: 0
+  MagicResistance: 1
   FireDamage: 0
-  IceDamage: 0
-  LightningDamage: 0
-  CraftingMaterialList:
-  - Data: {fileID: 11400000, guid: e941c351994910a4ca7cc6e834a88c72, type: 2}
-    StackSize: 2
+  IceDamage: 3
+  LightningDamage: 3
+  CraftingMaterialList: []

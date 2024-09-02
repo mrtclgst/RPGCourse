@@ -92,6 +92,9 @@ public class Player : Entity
     public void AnimationTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();
     private void CheckForDashInput()
     {
+        if (!SkillManager.Instance.GetSkillDash().DashUnlocked)
+            return;
+
         if (IsWallDetected())
             return;
 

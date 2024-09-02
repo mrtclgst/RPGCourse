@@ -10,6 +10,9 @@ public class ItemDataEquipment : ItemData
     public EquipmentType EquipmentType;
     public float ItemCooldown;
     public ItemEffect[] ItemEffectArray;
+    [TextArea]
+    [SerializeField] private string _itemEffectDescription;
+
 
     [Header("Main Stats")]
     public int Strength;
@@ -112,6 +115,13 @@ public class ItemDataEquipment : ItemData
         AddItemDescription(FireDamage, "Fire Dmg");
         AddItemDescription(IceDamage, "Ice Dmg");
         AddItemDescription(LightningDamage, "Lightning Dmg");
+
+        if (_itemEffectDescription.Length > 0)
+        {
+            _sb.AppendLine();
+            _sb.AppendLine();
+            _sb.Append(_itemEffectDescription);
+        }
 
         return _sb.ToString();
     }

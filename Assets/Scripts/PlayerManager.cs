@@ -6,6 +6,7 @@ public class PlayerManager : MonoBehaviour
 {
     public static PlayerManager Instance;
     public Player Player;
+    public int Currency;
 
     private void Awake()
     {
@@ -14,5 +15,21 @@ public class PlayerManager : MonoBehaviour
             Destroy(Instance.gameObject);
         }
         Instance = this;
+    }
+
+    public bool HaveEnoughMoney(int price)
+    {
+        if (price > Currency)
+        {
+            Debug.Log("Not enough money to buy");
+            return false;
+        }
+
+        return true;
+    }
+
+    public void SpendCurrency(int price)
+    {
+        Currency = Currency - price;
     }
 }

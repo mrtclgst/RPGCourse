@@ -10,6 +10,8 @@ public class UI : MonoBehaviour
 
     public UI_ItemTooltip ItemTooltip;
     public UI_StatTooltip StatTooltip;
+    public UI_CraftWindow CraftWindow;
+    public UI_SkillTooltip SkillTooltip;
 
     private void Start()
     {

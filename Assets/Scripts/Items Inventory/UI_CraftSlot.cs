@@ -1,22 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class UI_CraftSlot : UI_ItemSlot
 {
-    private void OnEnable()
+    protected override void Start()
     {
-        UpdateSlot(Item);
+        base.Start();
+    }
+
+    public void SetupCraftSlot(ItemDataEquipment data)
+    {
+        if (data == null)
+            return;
+
+        Item.Data = data;
+        _itemImage.sprite = data.Icon;
+        _itemText.text = data.ItemName;
     }
     public override void OnPointerDown(PointerEventData eventData)
     {
-        ItemDataEquipment craftData = Item.Data as ItemDataEquipment;
-
-        if (Inventory.Instance.CanCraft(craftData))
-        {
-            Inventory.Instance.CraftItem(craftData);
-        }
+        _ui.CraftWindow.SetupCraftWindow(Item.Data as ItemDataEquipment);
     }
 }
