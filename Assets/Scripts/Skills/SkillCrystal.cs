@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SkillCrystal : Skill
 {
@@ -9,24 +10,44 @@ public class SkillCrystal : Skill
     [SerializeField] private int _damage;
 
     [Header("Crystal Mirage")]
+    [SerializeField] private UI_SkillTreeSlot _spawnCloneInsteadButton;
     [SerializeField] private bool _canSpawnClone;
 
-    private GameObject _currentCrystal;
+    [Header("Simple Crystal")]
+    [SerializeField] private UI_SkillTreeSlot _unlockCrystalButton;
+    public bool CrystalUnlocked;
 
     [Header("Explosive Crystal")]
+    [SerializeField] private UI_SkillTreeSlot _unlockExplosiveCrystalButton;
     [SerializeField] private bool _canExplode;
 
     [Header("Moving Crystal")]
+    [SerializeField] private UI_SkillTreeSlot _unlockMovingCrystalButton;
     [SerializeField] private bool _canMoveToEnemy;
     [SerializeField] private float _moveSpeed;
 
     [Header("Multi Stacking Crystals")]
+    [SerializeField] private UI_SkillTreeSlot _unlockMultiCrystalButton;
     [SerializeField] private bool _canUseMultiStackCrystal;
     [SerializeField] private int _amountOfStack;
     [SerializeField] private float _cooldownOfMultiCrystal;
     [SerializeField] private float _useTimeWindow;
     private float _multiCrystalTimer;
     [SerializeField] private List<GameObject> _crystalList = new();
+
+    private GameObject _currentCrystal;
+
+
+    protected override void Start()
+    {
+        base.Start();
+        _unlockCrystalButton.GetComponent<Button>().onClick.AddListener(UnlockCrystal);
+        _spawnCloneInsteadButton.GetComponent<Button>().onClick.AddListener(UnlockMirageCrystal);
+        _unlockExplosiveCrystalButton.GetComponent<Button>().onClick.AddListener(UnlockExplosiveCrystal);
+        _unlockMovingCrystalButton.GetComponent<Button>().onClick.AddListener(UnlockMovingCrystal);
+        _unlockMultiCrystalButton.GetComponent<Button>().onClick.AddListener(UnlockMultiCrystal);
+    }
+
     protected override void Update()
     {
         base.Update();
@@ -129,4 +150,32 @@ public class SkillCrystal : Skill
         _multiCrystalTimer = _cooldownOfMultiCrystal;
         RefillCrystal();
     }
+
+    #region Skill Unlocking Area
+    private void UnlockCrystal()
+    {
+        if (_unlockCrystalButton.Unlocked)
+            CrystalUnlocked = true;
+    }
+    private void UnlockMirageCrystal()
+    {
+        if (_spawnCloneInsteadButton.Unlocked)
+            _canSpawnClone = true;
+    }
+    private void UnlockExplosiveCrystal()
+    {
+        if (_unlockExplosiveCrystalButton.Unlocked)
+            _canExplode = true;
+    }
+    private void UnlockMovingCrystal()
+    {
+        if (_unlockMovingCrystalButton.Unlocked)
+            _canMoveToEnemy = true;
+    }
+    private void UnlockMultiCrystal()
+    {
+        if (_unlockMultiCrystalButton.Unlocked)
+            _canUseMultiStackCrystal = true;
+    }
+    #endregion
 }

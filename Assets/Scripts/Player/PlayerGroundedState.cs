@@ -25,7 +25,7 @@ public class PlayerGroundedState : PlayerState
         if (Input.GetKeyDown(KeyCode.R))
         { _stateMachine.ChangeState(_player.BlackholeState); }
 
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1) && SkillManager.Instance.GetSkillParry().ParryUnlocked)
         { _stateMachine.ChangeState(_player.CounterAttackState); }
 
         if (!_player.IsGroundDetected())

@@ -5646,10 +5646,10 @@ RectTransform:
   - {fileID: 1059156173}
   - {fileID: 2027251222}
   - {fileID: 1118076200}
-  - {fileID: 1739431961}
   - {fileID: 1680106218}
-  - {fileID: 1862969407}
   - {fileID: 252003640}
+  - {fileID: 1739431961}
+  - {fileID: 1862969407}
   - {fileID: 540701018}
   - {fileID: 1190450027}
   - {fileID: 901235285}
@@ -13656,6 +13656,7 @@ GameObject:
   - component: {fileID: 1044449827}
   - component: {fileID: 1044449828}
   - component: {fileID: 1044449829}
+  - component: {fileID: 1044449830}
   m_Layer: 0
   m_Name: SkillManager
   m_TagString: Untagged
@@ -13680,6 +13681,7 @@ MonoBehaviour:
   _skillSword: {fileID: 1044449827}
   _skillBlackhole: {fileID: 1044449828}
   _skillCrystal: {fileID: 1044449829}
+  _skillParry: {fileID: 1044449830}
 --- !u!4 &1044449824
 Transform:
   m_ObjectHideFlags: 0
@@ -13731,7 +13733,6 @@ MonoBehaviour:
   _cloneDuration: 1
   _canAttack: 0
   _damage: 1
-  _canCreateCloneOnCounterAttack: 0
   _canDuplicateClone: 0
   _duplicationChance: 20
   _crystalInsteadOfClone: 0
@@ -13804,10 +13805,16 @@ MonoBehaviour:
   _crystalPrefab: {fileID: 2755728465241350897, guid: bfccec2108b0237489611f4c3d7429b7, type: 3}
   _crystalDuration: 2
   _damage: 1
+  _spawnCloneInsteadButton: {fileID: 1400073368}
   _canSpawnClone: 0
+  _unlockCrystalButton: {fileID: 1059156174}
+  CrystalUnlocked: 0
+  _unlockExplosiveCrystalButton: {fileID: 1118076201}
   _canExplode: 0
+  _unlockMovingCrystalButton: {fileID: 1680106219}
   _canMoveToEnemy: 0
   _moveSpeed: 5
+  _unlockMultiCrystalButton: {fileID: 252003641}
   _canUseMultiStackCrystal: 0
   _amountOfStack: 3
   _cooldownOfMultiCrystal: 2
@@ -13816,6 +13823,26 @@ MonoBehaviour:
   - {fileID: 2755728465241350897, guid: bfccec2108b0237489611f4c3d7429b7, type: 3}
   - {fileID: 2755728465241350897, guid: bfccec2108b0237489611f4c3d7429b7, type: 3}
   - {fileID: 2755728465241350897, guid: bfccec2108b0237489611f4c3d7429b7, type: 3}
+--- !u!114 &1044449830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1044449822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9498d30d0d08a64eac8c247a47dbeed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cooldown: 0
+  _parryUnlockButton: {fileID: 540701019}
+  ParryUnlocked: 0
+  _parryWithRestoreButton: {fileID: 1190450028}
+  _restorePercentage: 0.1
+  RestoringParryUnlocked: 0
+  _parryWithMirageUnlockButton: {fileID: 901235286}
+  ParryWithMirageUnlocked: 0
 --- !u!1 &1045195957
 GameObject:
   m_ObjectHideFlags: 0
@@ -30407,67 +30434,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2032322445}
   m_CullTransparentMesh: 1
---- !u!1001 &2048214897
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1403993926471334484, guid: 3726905415b5f6540bc2951ad316d9d0, type: 3}
-      propertyPath: _itemData
-      value: 
-      objectReference: {fileID: 11400000, guid: 5759fa564f00497479c57549d3bb3ae9, type: 2}
-    - target: {fileID: 2846109869209617347, guid: 3726905415b5f6540bc2951ad316d9d0, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -21.87
-      objectReference: {fileID: 0}
-    - target: {fileID: 2846109869209617347, guid: 3726905415b5f6540bc2951ad316d9d0, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -2.98
-      objectReference: {fileID: 0}
-    - target: {fileID: 2846109869209617347, guid: 3726905415b5f6540bc2951ad316d9d0, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2846109869209617347, guid: 3726905415b5f6540bc2951ad316d9d0, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2846109869209617347, guid: 3726905415b5f6540bc2951ad316d9d0, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2846109869209617347, guid: 3726905415b5f6540bc2951ad316d9d0, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2846109869209617347, guid: 3726905415b5f6540bc2951ad316d9d0, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2846109869209617347, guid: 3726905415b5f6540bc2951ad316d9d0, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2846109869209617347, guid: 3726905415b5f6540bc2951ad316d9d0, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2846109869209617347, guid: 3726905415b5f6540bc2951ad316d9d0, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5078578360333985665, guid: 3726905415b5f6540bc2951ad316d9d0, type: 3}
-      propertyPath: m_Name
-      value: ItemObject
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 3726905415b5f6540bc2951ad316d9d0, type: 3}
 --- !u!1 &2082063619
 GameObject:
   m_ObjectHideFlags: 0
@@ -31684,4 +31650,3 @@ SceneRoots:
   - {fileID: 762547770}
   - {fileID: 1375877226}
   - {fileID: 953573686}
-  - {fileID: 2048214897}

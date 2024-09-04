@@ -31,8 +31,7 @@ public class SkillCloneController : MonoBehaviour
             { Destroy(gameObject); }
         }
     }
-    public void SetupClone
-        (Transform targetTransform, float cloneDuration, bool canAttack, Vector3 offset, Transform closestEnemy, bool canDuplicate, float duplicationChance, int damage)
+    public void SetupClone(Transform targetTransform, float cloneDuration, bool canAttack, Vector3 offset, Transform closestEnemy, bool canDuplicate, float duplicationChance, int damage)
     {
         transform.position = targetTransform.position + offset;
         _cloneTimer = cloneDuration;

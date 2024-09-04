@@ -74,7 +74,7 @@ public class Player : Entity
         StateMachine.CurrentState.Update();
         CheckForDashInput();
 
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.F) && SkillManager.Instance.GetSkillCrystal().CrystalUnlocked)
         { SkillManager.Instance.GetSkillCrystal().UseSkill(); }
 
         if (Input.GetKeyDown(KeyCode.Keypad1))
@@ -136,10 +136,13 @@ public class Player : Entity
                 {
                     nearbyEnemy.CloseCounterAttackWindow();
                     hasEnemyCanBeStunned = true;
+                    SkillManager.Instance.GetSkillParry().UseSkill();
+
                     if (CounterAttackState.GetCanCreateClone())
                     {
                         CounterAttackState.SetCanCreateClone(false);
-                        SkillManager.Instance.GetSkillClone().CreateCloneOnCounterAttack(nearbyEnemy.transform, 0.3f);
+                        //SkillManager.Instance.GetSkillClone().CreateCloneOnCounterAttack(nearbyEnemy.transform, 0.3f);
+                        SkillManager.Instance.GetSkillParry().MakeMirageOnParry(nearbyEnemy.transform);
                     }
                 }
             }

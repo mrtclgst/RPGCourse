@@ -12,6 +12,7 @@ public class SkillManager : MonoBehaviour
     [SerializeField] private SkillSword _skillSword;
     [SerializeField] private SkillBlackhole _skillBlackhole;
     [SerializeField] private SkillCrystal _skillCrystal;
+    [SerializeField] private SkillParry _skillParry;
 
     private void Awake()
     {
@@ -26,5 +27,5 @@ public class SkillManager : MonoBehaviour
     internal SkillSword GetSkillSword() { return _skillSword; }
     internal SkillBlackhole GetSkillBlackhole() { return _skillBlackhole; }
     internal SkillCrystal GetSkillCrystal() { return _skillCrystal; }
-
+    internal SkillParry GetSkillParry() { return _skillParry; }
 }
