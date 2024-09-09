@@ -59,6 +59,14 @@ public class SkillCloneController : MonoBehaviour
             {
                 damageable.GetComponent<Enemy>().TakeDamage(_damage, false);
 
+                if (SkillManager.Instance.GetSkillClone().CanApplyOnHitEffect)
+                {
+                    ItemDataEquipment itemDataEquipment = Inventory.Instance.GetEquipment(EquipmentType.Weapon);
+                    if (itemDataEquipment != null)
+                        itemDataEquipment.ExecuteItemEffect(damageable.transform);
+                }
+
+
                 if (_canDuplicate)
                 {
                     if (Random.Range(0, 100) < _duplicationChance)

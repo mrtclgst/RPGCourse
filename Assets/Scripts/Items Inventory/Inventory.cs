@@ -171,6 +171,11 @@ public class Inventory : MonoBehaviour
                 }
             }
         }
+        UpdateStatsUI();
+    }
+
+    public void UpdateStatsUI()
+    {
         for (int i = 0; i < _statSlotArray.Length; i++)
         {
             _statSlotArray[i].UpdateStatValueUI();

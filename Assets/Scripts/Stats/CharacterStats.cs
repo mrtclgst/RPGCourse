@@ -37,6 +37,7 @@ public class CharacterStats : MonoBehaviour
 
     private int _currentHealth;
     protected bool _isDead;
+    protected bool _isVulnurable;
     private float _igniteTimer;
     private float _igniteDamageCooldown = 0.3f;
     private float _igniteDamageTimer;
@@ -251,9 +252,14 @@ public class CharacterStats : MonoBehaviour
 
         if (UnityEngine.Random.Range(0, 100) < totalEvasion)
         {
+            OnEvasion();
             return true;
         }
         return false;
+    }
+    public virtual void OnEvasion()
+    {
+
     }
     protected virtual void Die()
     {
@@ -290,7 +296,13 @@ public class CharacterStats : MonoBehaviour
     }
     protected virtual void DecreaseHealthBy(int damage)
     {
-        _currentHealth -= damage;
+        int totalDamage = damage;
+        if (_isVulnurable)
+        {
+            totalDamage = Mathf.RoundToInt(damage * 1.1f);
+        }
+
+        _currentHealth -= totalDamage;
         CharacterStats_OnHealthChanged?.Invoke();
     }
     internal virtual void IncreaseHealthBy(int healAmount)
@@ -300,6 +312,16 @@ public class CharacterStats : MonoBehaviour
             _currentHealth = GetMaxHealth();
 
         CharacterStats_OnHealthChanged?.Invoke();
+    }
+    public void MakeVulnurableFor(float seconds)
+    {
+        StartCoroutine(IE_VulnurableFor(seconds));
+    }
+    private IEnumerator IE_VulnurableFor(float seconds)
+    {
+        _isVulnurable = true;
+        yield return new WaitForSeconds(seconds);
+        _isVulnurable = false;
     }
 
     public Stat StatOfType(StatType buffType)

@@ -19,6 +19,7 @@ public class SkillDash : Skill
 
     protected override void Start()
     {
+        base.Start();
         _dashUnlockButton.GetComponent<Button>().onClick.AddListener(UnlockDash);
         _cloneOnDashUnlockButton.GetComponent<Button>().onClick.AddListener(UnlockCloneOnDash);
         _cloneOnArrivalUnlockButton.GetComponent<Button>().onClick.AddListener(UnlockCloneOnArrival);

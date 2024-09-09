@@ -28,4 +28,9 @@ public class PlayerStats : CharacterStats
             currentArmor.ExecuteItemEffect(transform);
         }
     }
+    public override void OnEvasion()
+    {
+        SkillManager.Instance.GetSkillDodge().CreateMirageOnDodge();
+        Debug.Log("Player avoided attack");
+    }
 }

@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Skill : MonoBehaviour
@@ -37,7 +34,7 @@ public class Skill : MonoBehaviour
         }
         else
         {
-            Debug.Log("can not use skill"); 
+            Debug.Log("can not use skill");
             return;
         }
     }

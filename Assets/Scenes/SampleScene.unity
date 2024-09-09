@@ -5640,9 +5640,9 @@ RectTransform:
   - {fileID: 1186499776}
   - {fileID: 611392658}
   - {fileID: 621570848}
-  - {fileID: 2136295994}
   - {fileID: 1400073367}
   - {fileID: 1936091499}
+  - {fileID: 2136295994}
   - {fileID: 1059156173}
   - {fileID: 2027251222}
   - {fileID: 1118076200}
@@ -5677,7 +5677,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -13657,6 +13657,7 @@ GameObject:
   - component: {fileID: 1044449828}
   - component: {fileID: 1044449829}
   - component: {fileID: 1044449830}
+  - component: {fileID: 1044449831}
   m_Layer: 0
   m_Name: SkillManager
   m_TagString: Untagged
@@ -13682,6 +13683,7 @@ MonoBehaviour:
   _skillBlackhole: {fileID: 1044449828}
   _skillCrystal: {fileID: 1044449829}
   _skillParry: {fileID: 1044449830}
+  _skillDodge: {fileID: 1044449831}
 --- !u!4 &1044449824
 Transform:
   m_ObjectHideFlags: 0
@@ -13731,10 +13733,18 @@ MonoBehaviour:
   _cooldown: 1
   _clonePrefab: {fileID: 6876000847952464988, guid: b7042e2a7ae16cd4fabd43014ebf0270, type: 3}
   _cloneDuration: 1
-  _canAttack: 0
   _damage: 1
+  _attackMultiplier: 1
+  _cloneAttackUnlockButton: {fileID: 611392659}
+  _cloneAttackMultiplier: 0.3
+  _canAttack: 0
+  _aggressiveCloneUnlockButton: {fileID: 621570849}
+  _aggressiveCloneAttackMultiplier: 0.8
+  _multipleCloneUnlockButton: {fileID: 1936091500}
+  _multiCloneAttackMultiplier: 0.3
   _canDuplicateClone: 0
   _duplicationChance: 20
+  _crystalInsteadUnlockButton: {fileID: 1400073368}
   _crystalInsteadOfClone: 0
 --- !u!114 &1044449827
 MonoBehaviour:
@@ -13751,15 +13761,19 @@ MonoBehaviour:
   _cooldown: 0
   SwordType: 1
   _damage: 1
+  _bounceUnlockButton: {fileID: 1186499780}
   _bounceAmount: 3
   _bounceGravity: 3
   _bounceSpeed: 20
+  _pierceUnlockButton: {fileID: 657308061}
   _pierceAmount: 2
   _pierceGravity: 0
+  _spinUnlockButton: {fileID: 780412563}
   _damageCooldown: 0.35
   _maxTravelDistance: 9
   _spinDuration: 2
   _spinGravity: 3
+  _swordUnlockButton: {fileID: 386167174}
   _swordPrefab: {fileID: 2325020011290180231, guid: 0f331c03c855b4644951904d87d119c7, type: 3}
   _launchForce: {x: 35, y: 25}
   _swordGravityScale: 4.5
@@ -13769,6 +13783,8 @@ MonoBehaviour:
   _spaceBetweenDots: 0.05
   _dotPrefab: {fileID: 1473077939586860836, guid: d2fab0c3dd1952245aebef4c662cc6a4, type: 3}
   _dotParent: {fileID: 1143560162}
+  _timeStopUnlockButton: {fileID: 1233613660}
+  _vulnurabilityUnlockButton: {fileID: 1492127021}
 --- !u!114 &1044449828
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13782,6 +13798,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cooldown: 0
+  _blackHoleUnlockButton: {fileID: 2136295995}
   _blackholePrefab: {fileID: 777318196812066190, guid: 67cbd6381ab346748a237a3ab8fe6670, type: 3}
   _maxSize: 15
   _growSpeed: 3
@@ -13843,6 +13860,22 @@ MonoBehaviour:
   RestoringParryUnlocked: 0
   _parryWithMirageUnlockButton: {fileID: 901235286}
   ParryWithMirageUnlocked: 0
+--- !u!114 &1044449831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1044449822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d62e49e7744b7d1478a1973ec5c141c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cooldown: 0
+  _unlockDodgeButton: {fileID: 1739431962}
+  _evasionAmount: 10
+  _unlockMirageDodgeButton: {fileID: 1862969408}
 --- !u!1 &1045195957
 GameObject:
   m_ObjectHideFlags: 0
@@ -31643,10 +31676,10 @@ SceneRoots:
   - {fileID: 250830}
   - {fileID: 959274783}
   - {fileID: 601397665}
-  - {fileID: 1156138869}
-  - {fileID: 1044449824}
   - {fileID: 1143560162}
   - {fileID: 715542073}
   - {fileID: 762547770}
   - {fileID: 1375877226}
   - {fileID: 953573686}
+  - {fileID: 1044449824}
+  - {fileID: 1156138869}
