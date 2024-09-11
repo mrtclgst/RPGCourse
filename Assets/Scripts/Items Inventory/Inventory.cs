@@ -307,4 +307,9 @@ public class Inventory : MonoBehaviour
         Debug.Log("Armor in cooldown");
         return false;
     }
+    public float GetFlaskCooldown()
+    {
+        ItemDataEquipment currentFlask = GetEquipment(EquipmentType.Flask);
+        return currentFlask.ItemCooldown;
+    }
 }

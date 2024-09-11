@@ -6,6 +6,7 @@ public class UI : MonoBehaviour
     [SerializeField] private GameObject _skillTreeUI;
     [SerializeField] private GameObject _craftUI;
     [SerializeField] private GameObject _optionsUI;
+    [SerializeField] private GameObject _inGameUI;
 
 
     public UI_ItemTooltip ItemTooltip;
@@ -13,9 +14,14 @@ public class UI : MonoBehaviour
     public UI_CraftWindow CraftWindow;
     public UI_SkillTooltip SkillTooltip;
 
+    private void Awake()
+    {
+        SwitchTo(_skillTreeUI);
+    }
+
     private void Start()
     {
-        SwitchTo(null);
+        SwitchTo(_inGameUI);
         ItemTooltip.gameObject.SetActive(false);
         StatTooltip.gameObject.SetActive(false);
     }
@@ -54,8 +60,20 @@ public class UI : MonoBehaviour
         if (menu != null && menu.activeSelf)
         {
             menu.SetActive(false);
+            CheckForInGameUI();
             return;
         }
         SwitchTo(menu);
+    }
+
+    private void CheckForInGameUI()
+    {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            if (transform.GetChild(i).gameObject.activeSelf)
+                return;
+        }
+
+        SwitchTo(_inGameUI);
     }
 }

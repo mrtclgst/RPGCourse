@@ -32,4 +32,9 @@ public class PlayerManager : MonoBehaviour
     {
         Currency = Currency - price;
     }
+
+    public int CurrentCurrencyAmount()
+    {
+        return Currency;
+    }
 }

@@ -60,4 +60,9 @@ public class Skill : MonoBehaviour
 
         return closestEnemy;
     }
+
+    public float GetCooldown()
+    {
+        return _cooldown;
+    }
 }
