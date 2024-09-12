@@ -9,7 +9,7 @@ public class UI_SkillTreeSlot : MonoBehaviour, IPointerEnterHandler, IPointerExi
     [SerializeField] private string _skillName;
     [TextArea]
     [SerializeField] private string _skillDescription;
-    [SerializeField] private int _skillPrice;
+    [SerializeField] private int _skillCost;
     [SerializeField] private Color _skillLockedColor;
 
     public bool Unlocked;
@@ -34,7 +34,7 @@ public class UI_SkillTreeSlot : MonoBehaviour, IPointerEnterHandler, IPointerExi
 
     public void UnlockSkillSlot()
     {
-        if (!PlayerManager.Instance.HaveEnoughMoney(_skillPrice))
+        if (!PlayerManager.Instance.HaveEnoughMoney(_skillCost))
             return;
 
         for (int i = 0; i < _shouldBeUnlocked.Length; i++)
@@ -54,7 +54,7 @@ public class UI_SkillTreeSlot : MonoBehaviour, IPointerEnterHandler, IPointerExi
             }
         }
 
-        PlayerManager.Instance.SpendCurrency(_skillPrice);
+        PlayerManager.Instance.SpendCurrency(_skillCost);
         Unlocked = true;
         _skillImage.color = Color.white;
     }
@@ -65,7 +65,7 @@ public class UI_SkillTreeSlot : MonoBehaviour, IPointerEnterHandler, IPointerExi
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        _ui.SkillTooltip.ShowTooltip(_skillName, _skillDescription);
+        _ui.SkillTooltip.ShowTooltip(_skillName, _skillDescription, _skillCost);
 
         //Vector2 mousePosition = Input.mousePosition;
         //float xOffset = 0;

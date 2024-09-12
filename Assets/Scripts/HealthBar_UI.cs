@@ -22,8 +22,10 @@ public class HealthBar_UI : MonoBehaviour
     }
     private void OnDestroy()
     {
-        _entity.Entity_OnFlipped -= OnEntityFlipped;
-        _characterStats.CharacterStats_OnHealthChanged -= UpdateHealthUI;
+        if (_entity != null)
+            _entity.Entity_OnFlipped -= OnEntityFlipped;
+        if (_characterStats != null)
+            _characterStats.CharacterStats_OnHealthChanged -= UpdateHealthUI;
     }
 
     private void OnEntityFlipped()

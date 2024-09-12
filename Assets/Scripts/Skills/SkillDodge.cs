@@ -23,7 +23,7 @@ public class SkillDodge : Skill
 
     private void UnlockDodge()
     {
-        if (_unlockDodgeButton.Unlocked)
+        if (_unlockDodgeButton.Unlocked && !_dodgeUnlocked)
         {
             _player.Stats.Evasion.AddModifier(_evasionAmount);
             _dodgeUnlocked = true;

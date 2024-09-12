@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 [CreateAssetMenu(fileName = "New Item Data", menuName = "Data/Equipment")]
 
@@ -10,9 +8,6 @@ public class ItemDataEquipment : ItemData
     public EquipmentType EquipmentType;
     public float ItemCooldown;
     public ItemEffect[] ItemEffectArray;
-    [TextArea]
-    [SerializeField] private string _itemEffectDescription;
-
 
     [Header("Main Stats")]
     public int Strength;
@@ -63,7 +58,6 @@ public class ItemDataEquipment : ItemData
         playerStats.IceDamage.AddModifier(IceDamage);
         playerStats.LightningDamage.AddModifier(LightningDamage);
     }
-
     public void RemoveModifiers()
     {
         PlayerStats playerStats = PlayerManager.Instance.Player.GetComponent<PlayerStats>();
@@ -86,7 +80,6 @@ public class ItemDataEquipment : ItemData
         playerStats.IceDamage.RemoveModifier(IceDamage);
         playerStats.LightningDamage.RemoveModifier(LightningDamage);
     }
-
     public void ExecuteItemEffect(Transform enemyTransform)
     {
         foreach (ItemEffect itemEffect in ItemEffectArray)
@@ -116,11 +109,14 @@ public class ItemDataEquipment : ItemData
         AddItemDescription(IceDamage, "Ice Dmg");
         AddItemDescription(LightningDamage, "Lightning Dmg");
 
-        if (_itemEffectDescription.Length > 0)
+        for (int i = 0; i < ItemEffectArray.Length; i++)
         {
-            _sb.AppendLine();
-            _sb.AppendLine();
-            _sb.Append(_itemEffectDescription);
+            if (ItemEffectArray.Length > 0)
+            {
+                _sb.AppendLine();
+                _sb.AppendLine();
+                _sb.Append("Unique: " + ItemEffectArray[i].EffectDescription);
+            }
         }
 
         return _sb.ToString();
