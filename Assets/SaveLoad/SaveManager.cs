@@ -19,13 +19,12 @@ public class SaveManager : MonoBehaviour
         else
             Instance = this;
     }
-    private void Start()
+    private void OnEnable()
     {
         _fileDataHandler = new(Application.persistentDataPath, _fileName);
         _saveManagerList = FindAllSaveManagers();
         LoadGame();
     }
-
     public void NewGame()
     {
         _gameData = new GameData();

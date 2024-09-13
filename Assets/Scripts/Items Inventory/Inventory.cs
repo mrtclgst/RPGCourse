@@ -1,9 +1,8 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
-public class Inventory : MonoBehaviour
+public class Inventory : MonoBehaviour, ISaveManager
 {
     public static Inventory Instance;
 
@@ -35,6 +34,10 @@ public class Inventory : MonoBehaviour
     private float _lastTimeUsedFlask = Mathf.NegativeInfinity;
     private float _lastTimeUsedArmor = Mathf.NegativeInfinity;
 
+    [Header("Data Base")]
+    public List<ItemData> _itemDataBase;
+    public List<InventoryItem> LoadedItemList;
+
     private void Awake()
     {
         if (Instance == null)
@@ -56,13 +59,33 @@ public class Inventory : MonoBehaviour
         _stashItemSlotArray = _stastSlotParent.GetComponentsInChildren<UI_ItemSlot>();
         _equipmentSlotArray = _equipmentSlotParent.GetComponentsInChildren<UI_EquipmentSlot>();
         _statSlotArray = _statSlotParent.GetComponentsInChildren<UI_StatSlot>();
+        AddStartingItems();
+    }
 
-        for (int i = 0; i < StartingEquipment.Count; i++)
+    private void AddStartingItems()
+    {
+        if (LoadedItemList.Count > 0)
         {
-            if (StartingEquipment[i] != null)
-                AddItem(StartingEquipment[i]);
+            foreach (var item in LoadedItemList)
+            {
+                for (int i = 0; i < item.StackSize; i++)
+                {
+                    AddItem(item.Data);
+                }
+            }
+            Debug.Log("here");
+        }
+        else
+        {
+            for (int i = 0; i < StartingEquipment.Count; i++)
+            {
+                if (StartingEquipment[i] != null)
+                    AddItem(StartingEquipment[i]);
+            }
+            Debug.Log("there");
         }
     }
+
     public bool CanAddItem()
     {
         if (_inventoryList.Count >= _inventoryItemSlotArray.Length)
@@ -173,7 +196,6 @@ public class Inventory : MonoBehaviour
         }
         UpdateStatsUI();
     }
-
     public void UpdateStatsUI()
     {
         for (int i = 0; i < _statSlotArray.Length; i++)
@@ -181,7 +203,6 @@ public class Inventory : MonoBehaviour
             _statSlotArray[i].UpdateStatValueUI();
         }
     }
-
     public void EquipItem(ItemData itemData)
     {
         ItemDataEquipment newEquipmentItem = itemData as ItemDataEquipment;
@@ -211,7 +232,6 @@ public class Inventory : MonoBehaviour
 
         UpdateUISlots();
     }
-
     internal void UnequipItem(ItemDataEquipment equipmentToRemove)
     {
         if (_equipmentDictionary.TryGetValue(equipmentToRemove, out InventoryItem value))
@@ -221,7 +241,6 @@ public class Inventory : MonoBehaviour
             equipmentToRemove.RemoveModifiers();
         }
     }
-
     public bool CanCraft(ItemDataEquipment itemWantedCrafted)
     {
         List<InventoryItem> requiredMaterialList = itemWantedCrafted.CraftingMaterialList;
@@ -245,7 +264,6 @@ public class Inventory : MonoBehaviour
         CraftItem(itemWantedCrafted);
         return true;
     }
-
     internal void CraftItem(ItemDataEquipment craftData)
     {
         for (int i = 0; i < craftData.CraftingMaterialList.Count; i++)
@@ -255,7 +273,6 @@ public class Inventory : MonoBehaviour
         AddItem(craftData);
         Debug.Log("item crafted " + craftData.name);
     }
-
     public List<InventoryItem> GetEquipmentList()
     {
         return _equipmentList;
@@ -264,7 +281,6 @@ public class Inventory : MonoBehaviour
     {
         return _stashList;
     }
-
     public ItemDataEquipment GetEquipment(EquipmentType equipmentType)
     {
         ItemDataEquipment equippedItem = null;
@@ -311,5 +327,56 @@ public class Inventory : MonoBehaviour
     {
         ItemDataEquipment currentFlask = GetEquipment(EquipmentType.Flask);
         return currentFlask.ItemCooldown;
+    }
+
+    public void LoadData(GameData gameData)
+    {
+        foreach (KeyValuePair<string, int> pair in gameData.Inventory)
+        {
+            List<ItemData> itemDataBase = GetItemDataBase();
+            foreach (var item in itemDataBase)
+            {
+                if (item != null && item.ItemID == pair.Key)
+                {
+                    InventoryItem itemToLoad = new(item);
+                    itemToLoad.StackSize = pair.Value;
+                    LoadedItemList.Add(itemToLoad);
+                    Debug.Log(LoadedItemList.Count);
+                }
+            }
+        }
+    }
+
+    public void SaveData(ref GameData gameData)
+    {
+        gameData.Inventory.Clear();
+        foreach (KeyValuePair<ItemData, InventoryItem> pair in _inventoryDictionary)
+        {
+            gameData.Inventory.Add(pair.Key.ItemID, pair.Value.StackSize);
+            Debug.Log("item saved : " + pair.Key.ItemName + " " + pair.Value.StackSize);
+        }
+    }
+
+    private List<ItemData> GetItemDataBase()
+    {
+        //#if UNITY_EDITOR
+
+        //        _itemDataBase = new List<ItemData>();
+        //        string[] assetNameArray = AssetDatabase.FindAssets("", new[] { "Assets/Data/Equipment" });
+        //        foreach (string SOName in assetNameArray)
+        //        {
+        //            var SOPath = AssetDatabase.GUIDToAssetPath(SOName);
+        //            var itemData = AssetDatabase.LoadAssetAtPath<ItemData>(SOPath);
+        //            _itemDataBase.Add(itemData);
+        //        }
+        //#endif
+
+        _itemDataBase = new List<ItemData>();
+        var itemDataArray = Resources.LoadAll("Data/Equipment");
+        foreach (ItemData item in itemDataArray)
+        {
+            _itemDataBase.Add(item);
+        }
+        return _itemDataBase;
     }
 }
