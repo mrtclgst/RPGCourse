@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using UnityEngine;
 
@@ -11,6 +12,7 @@ public class SaveManager : MonoBehaviour
     private List<ISaveManager> _saveManagerList;
     private FileDataHandler _fileDataHandler;
     [SerializeField] private string _fileName;
+    [SerializeField] private bool _encrypteData;
 
     private void Awake()
     {
@@ -21,7 +23,7 @@ public class SaveManager : MonoBehaviour
     }
     private void OnEnable()
     {
-        _fileDataHandler = new(Application.persistentDataPath, _fileName);
+        _fileDataHandler = new(Application.persistentDataPath, _fileName, _encrypteData);
         _saveManagerList = FindAllSaveManagers();
         LoadGame();
     }
@@ -32,12 +34,13 @@ public class SaveManager : MonoBehaviour
     public void LoadGame()
     {
         _gameData = _fileDataHandler.Load();
-
         if (_gameData == null)
         {
             Debug.Log("No saved data found!");
             NewGame();
         }
+        Debug.Log(_gameData);
+        Debug.Log(_gameData.EquipmentIDList.Count);
 
         foreach (ISaveManager saveManager in _saveManagerList)
         {
@@ -57,7 +60,12 @@ public class SaveManager : MonoBehaviour
     {
         SaveGame();
     }
-
+    [ContextMenu("DeleteSavedFile")]
+    private void DeleteSavedData()
+    {
+        _fileDataHandler = new(Application.persistentDataPath, _fileName, _encrypteData);
+        _fileDataHandler.DeleteData();
+    }
     private List<ISaveManager> FindAllSaveManagers()
     {
         IEnumerable<ISaveManager> saveManagers = FindObjectsOfType<MonoBehaviour>().OfType<ISaveManager>();

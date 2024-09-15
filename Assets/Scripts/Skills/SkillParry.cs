@@ -28,6 +28,12 @@ public class SkillParry : Skill
         _parryWithRestoreButton.GetComponent<Button>().onClick.AddListener(UnlockRestoringParry);
         _parryWithMirageUnlockButton.GetComponent<Button>().onClick.AddListener(UnlockParryWithMirage);
     }
+    protected override void CheckUnlock()
+    {
+        UnlockParry();
+        UnlockRestoringParry();
+        UnlockParryWithMirage();
+    }
     internal override void UseSkill()
     {
         base.UseSkill();

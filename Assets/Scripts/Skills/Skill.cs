@@ -10,6 +10,7 @@ public class Skill : MonoBehaviour
     protected virtual void Start()
     {
         _player = PlayerManager.Instance.Player;
+        CheckUnlock();
     }
     protected virtual void Update()
     {
@@ -59,6 +60,11 @@ public class Skill : MonoBehaviour
         }
 
         return closestEnemy;
+    }
+
+    protected virtual void CheckUnlock()
+    {
+
     }
 
     public float GetCooldown()

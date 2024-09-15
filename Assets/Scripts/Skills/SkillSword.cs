@@ -1,5 +1,4 @@
 using System;
-using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -63,6 +62,14 @@ public class SkillSword : Skill
         _spinUnlockButton.GetComponent<Button>().onClick.AddListener(UnlockSpinSword);
         _timeStopUnlockButton.GetComponent<Button>().onClick.AddListener(UnlockTimeStop);
         _vulnurabilityUnlockButton.GetComponent<Button>().onClick.AddListener(UnlockVulnurablity);
+    }
+    protected override void CheckUnlock()
+    {
+        UnlockSword();
+        UnlockBounceSword();
+        UnlockPierceSword();
+        UnlockTimeStop();
+        UnlockVulnurablity();
     }
     private void SetupGravity()
     {

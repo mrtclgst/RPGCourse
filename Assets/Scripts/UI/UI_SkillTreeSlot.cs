@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Tilemaps;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class UI_SkillTreeSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class UI_SkillTreeSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, ISaveManager
 {
     [SerializeField] private string _skillName;
     [TextArea]
@@ -30,6 +31,9 @@ public class UI_SkillTreeSlot : MonoBehaviour, IPointerEnterHandler, IPointerExi
         _skillImage = GetComponent<Image>();
         _skillImage.color = _skillLockedColor;
         _ui = GetComponentInParent<UI>();
+
+        if (Unlocked)
+            _skillImage.color = Color.white;
     }
 
     public void UnlockSkillSlot()
@@ -66,18 +70,31 @@ public class UI_SkillTreeSlot : MonoBehaviour, IPointerEnterHandler, IPointerExi
     public void OnPointerEnter(PointerEventData eventData)
     {
         _ui.SkillTooltip.ShowTooltip(_skillName, _skillDescription, _skillCost);
-
-        //Vector2 mousePosition = Input.mousePosition;
-        //float xOffset = 0;
-        //if (mousePosition.x > 600)
-        //{
-        //    xOffset = -150;
-        //}
-        //_ui.SkillTooltip.transform.position = new Vector2(mousePosition.x + xOffset, mousePosition.y);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         _ui.SkillTooltip.HideTooltip();
+    }
+
+    public void LoadData(GameData gameData)
+    {
+        if(gameData.SkillTree.TryGetValue(_skillName,out bool value))
+        {
+            Unlocked = value;
+        }
+    }
+
+    public void SaveData(ref GameData gameData)
+    {
+        if (gameData.SkillTree.TryGetValue(_skillName, out bool value))
+        {
+            gameData.SkillTree.Remove(_skillName);
+            gameData.SkillTree.Add(_skillName, Unlocked);
+        }
+        else
+        {
+            gameData.SkillTree.Add(_skillName, Unlocked);
+        }
     }
 }
