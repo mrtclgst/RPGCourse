@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Tilemaps;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -25,12 +23,14 @@ public class UI_SkillTreeSlot : MonoBehaviour, IPointerEnterHandler, IPointerExi
     {
         GetComponent<Button>().onClick.AddListener(() => UnlockSkillSlot());
     }
-
-    private void Start()
+    private IEnumerator Start()
     {
         _skillImage = GetComponent<Image>();
         _skillImage.color = _skillLockedColor;
         _ui = GetComponentInParent<UI>();
+
+        yield return new WaitForSeconds(0.3f);
+        Debug.LogWarning(_skillName + " " + Unlocked);
 
         if (Unlocked)
             _skillImage.color = Color.white;
@@ -66,20 +66,17 @@ public class UI_SkillTreeSlot : MonoBehaviour, IPointerEnterHandler, IPointerExi
     {
         gameObject.name = _skillName;
     }
-
     public void OnPointerEnter(PointerEventData eventData)
     {
         _ui.SkillTooltip.ShowTooltip(_skillName, _skillDescription, _skillCost);
     }
-
     public void OnPointerExit(PointerEventData eventData)
     {
         _ui.SkillTooltip.HideTooltip();
     }
-
     public void LoadData(GameData gameData)
     {
-        if(gameData.SkillTree.TryGetValue(_skillName,out bool value))
+        if (gameData.SkillTree.TryGetValue(_skillName, out bool value))
         {
             Unlocked = value;
         }

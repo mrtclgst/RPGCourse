@@ -45,7 +45,7 @@ public class FileDataHandler
     public GameData Load()
     {
         string fullPath = Path.Combine(_dataDirectionPath, _dataFileName);
-        GameData loadData = new();
+        GameData loadData = null;
 
         if (File.Exists(fullPath))
         {
@@ -63,7 +63,6 @@ public class FileDataHandler
                 if (_encryptData)
                 {
                     dataToLoad = EncryptDecrypt(dataToLoad);
-                    Debug.Log("here");
                 }
 
                 loadData = JsonUtility.FromJson<GameData>(dataToLoad);

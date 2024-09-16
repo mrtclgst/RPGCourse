@@ -10,8 +10,9 @@ public class Skill : MonoBehaviour
     protected virtual void Start()
     {
         _player = PlayerManager.Instance.Player;
-        CheckUnlock();
+        Invoke("CheckUnlock", 0.1f);
     }
+
     protected virtual void Update()
     {
         _cooldownTimer -= Time.deltaTime;

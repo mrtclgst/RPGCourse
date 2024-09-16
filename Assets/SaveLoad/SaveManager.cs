@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using UnityEngine;
 
@@ -21,7 +19,7 @@ public class SaveManager : MonoBehaviour
         else
             Instance = this;
     }
-    private void OnEnable()
+    private void Start()
     {
         _fileDataHandler = new(Application.persistentDataPath, _fileName, _encrypteData);
         _saveManagerList = FindAllSaveManagers();
@@ -39,12 +37,11 @@ public class SaveManager : MonoBehaviour
             Debug.Log("No saved data found!");
             NewGame();
         }
-        Debug.Log(_gameData);
-        Debug.Log(_gameData.EquipmentIDList.Count);
 
         foreach (ISaveManager saveManager in _saveManagerList)
         {
             saveManager.LoadData(_gameData);
+            Debug.Log(saveManager);
         }
     }
     public void SaveGame()
@@ -61,7 +58,7 @@ public class SaveManager : MonoBehaviour
         SaveGame();
     }
     [ContextMenu("DeleteSavedFile")]
-    private void DeleteSavedData()
+    public void DeleteSavedData()
     {
         _fileDataHandler = new(Application.persistentDataPath, _fileName, _encrypteData);
         _fileDataHandler.DeleteData();
@@ -70,5 +67,13 @@ public class SaveManager : MonoBehaviour
     {
         IEnumerable<ISaveManager> saveManagers = FindObjectsOfType<MonoBehaviour>().OfType<ISaveManager>();
         return new List<ISaveManager>(saveManagers);
+    }
+    public bool HasSavedData()
+    {
+        if (_fileDataHandler.Load() != null)
+        {
+            return true;
+        }
+        return false;
     }
 }

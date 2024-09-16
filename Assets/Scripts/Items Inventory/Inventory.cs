@@ -59,7 +59,8 @@ public class Inventory : MonoBehaviour, ISaveManager
         _stashItemSlotArray = _stastSlotParent.GetComponentsInChildren<UI_ItemSlot>();
         _equipmentSlotArray = _equipmentSlotParent.GetComponentsInChildren<UI_EquipmentSlot>();
         _statSlotArray = _statSlotParent.GetComponentsInChildren<UI_StatSlot>();
-        AddStartingItems();
+
+        Invoke("AddStartingItems", 0.1f);
     }
 
     private void AddStartingItems()
