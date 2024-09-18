@@ -1,3 +1,5 @@
+using System;
+using System.Text;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,7 +16,11 @@ public class UI_InGame : MonoBehaviour
     [SerializeField] private Image _blackholeImage;
     [SerializeField] private Image _potionImage;
 
+    [Header("Souls Info")]
     [SerializeField] private TextMeshProUGUI _currentSoulsText;
+    [SerializeField] private float _soulsAmount;
+    [SerializeField] private float _increaseRate = 100;
+
 
     private SkillManager _skillManager;
 
@@ -32,6 +38,8 @@ public class UI_InGame : MonoBehaviour
     }
     private void Update()
     {
+        UpdateSoulsUI();
+
         if (Input.GetKeyDown(KeyCode.LeftShift) && _skillManager.GetSkillDash().DashUnlocked)
             SetCooldownOf(_dashImage);
 
@@ -50,6 +58,12 @@ public class UI_InGame : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Keypad1) && Inventory.Instance.GetEquipment(EquipmentType.Flask) != null)
             SetCooldownOf(_potionImage);
 
+        if (Input.GetKeyDown(KeyCode.V))
+            PlayerManager.Instance.Currency += 1000;
+
+        if (Input.GetKeyDown(KeyCode.N))
+            PlayerManager.Instance.Currency = Mathf.Max(PlayerManager.Instance.Currency - 1000, 0);
+
         CheckCooldownOf(_dashImage, _skillManager.GetSkillDash().GetCooldown());
         CheckCooldownOf(_parryImage, _skillManager.GetSkillParry().GetCooldown());
         CheckCooldownOf(_crystalImage, _skillManager.GetSkillCrystal().GetCooldown());
@@ -60,8 +74,19 @@ public class UI_InGame : MonoBehaviour
         if (Inventory.Instance.GetEquipment(EquipmentType.Flask) != null)
             CheckCooldownOf(_potionImage, Inventory.Instance.GetFlaskCooldown());
 
-        _currentSoulsText.text = PlayerManager.Instance.CurrentCurrencyAmount().ToString("#,#");
     }
+
+    private void UpdateSoulsUI()
+    {
+        _increaseRate = Mathf.Max(Mathf.Abs(PlayerManager.Instance.Currency - _soulsAmount), 100);
+        if (_soulsAmount != PlayerManager.Instance.Currency)
+        {
+            _soulsAmount = Mathf.RoundToInt(Mathf.MoveTowards(_soulsAmount, PlayerManager.Instance.Currency, Time.deltaTime * _increaseRate));
+        }
+        _currentSoulsText.text = _soulsAmount.ToString();
+        //Debug.Log($"increase rate : {_increaseRate} \n souls amount : {_soulsAmount} \n manager currency : {PlayerManager.Instance.Currency}");
+    }
+
     private void UpdateHealthUI()
     {
         _slider.value = _playerStats.GetCurrentHealthPercentage();

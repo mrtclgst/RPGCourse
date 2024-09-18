@@ -41,7 +41,6 @@ public class SaveManager : MonoBehaviour
         foreach (ISaveManager saveManager in _saveManagerList)
         {
             saveManager.LoadData(_gameData);
-            Debug.Log(saveManager);
         }
     }
     public void SaveGame()

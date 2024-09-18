@@ -17,6 +17,8 @@ public class PlayerStats : CharacterStats
     {
         _player.Die();
         GetComponent<PlayerItemDrop>()?.GenerateDrop();
+        GameManager.Instance.LostCurrencyAmount = PlayerManager.Instance.Currency;
+        PlayerManager.Instance.Currency = 0;
         base.Die();
     }
     protected override void DecreaseHealthBy(int damage)
