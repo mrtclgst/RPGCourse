@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -50,7 +48,6 @@ public class SkillDash : Skill
         if (_cloneOnArrivalUnlockButton.Unlocked)
             CloneOnArrivalUnlocked = true;
     }
-
     public void CloneOnDash()
     {
         if (CloneOnDashUnlocked)

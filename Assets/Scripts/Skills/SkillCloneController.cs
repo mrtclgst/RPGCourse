@@ -57,6 +57,7 @@ public class SkillCloneController : MonoBehaviour
         {
             if (damageable.GetComponent<Enemy>() != null)
             {
+                damageable.GetComponent<Entity>().SetKnockbackDirection(this.transform);
                 damageable.GetComponent<Enemy>().TakeDamage(_damage, false);
 
                 if (SkillManager.Instance.GetSkillClone().CanApplyOnHitEffect)

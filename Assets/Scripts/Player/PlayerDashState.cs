@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class PlayerDashState : PlayerState
 {
 
@@ -13,7 +9,6 @@ public class PlayerDashState : PlayerState
     {
         base.Enter();
         _stateTimer = _player.GetDashDuration();
-
         SkillManager.Instance.GetSkillDash().CloneOnDash();
     }
 
@@ -21,7 +16,6 @@ public class PlayerDashState : PlayerState
     {
         base.Exit();
         _player.SetVelocity(0, _playerRb.velocity.y);
-
         SkillManager.Instance.GetSkillDash().CloneOnArrival();
     }
 
@@ -33,7 +27,6 @@ public class PlayerDashState : PlayerState
         {
             _stateMachine.ChangeState(_player.WallSlideState);
         }
-
 
         _player.SetVelocity(_player.GetDashSpeed() * _player.GetDashDirection(), 0);
         if (_stateTimer < 0)

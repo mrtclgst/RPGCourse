@@ -20,6 +20,7 @@ public class Skill : MonoBehaviour
 
     internal virtual bool CanUseSkill()
     {
+        Debug.Log("Cd: " + _cooldown + "  cdtimer: " + _cooldownTimer);
         if (_cooldownTimer <= 0)
         {
             return true;
@@ -33,6 +34,7 @@ public class Skill : MonoBehaviour
         if (CanUseSkill())
         {
             _cooldownTimer = _cooldown;
+            Debug.Log("here");
         }
         else
         {

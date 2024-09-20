@@ -183,6 +183,8 @@ public class SkillSwordController : MonoBehaviour
         if (SkillManager.Instance.GetSkillSword().VulnurabilityUnlocked)
             enemy.GetComponent<EnemyStats>()?.MakeVulnurableFor(_freezeTimeDuration);
 
+
+        enemy.GetComponent<Entity>().SetKnockbackDirection(this.transform);
         enemy.TakeDamage(_damage, false);
 
         ItemDataEquipment equippedAmulet = Inventory.Instance.GetEquipment(EquipmentType.Amulet);

@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ItemObject : MonoBehaviour
@@ -17,6 +14,7 @@ public class ItemObject : MonoBehaviour
             return;
         }
 
+        AudioManager.Instance.PlaySFX(17, transform);
         Inventory.Instance.AddItem(_itemData);
         Destroy(gameObject);
     }

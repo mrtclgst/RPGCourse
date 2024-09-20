@@ -12,6 +12,9 @@ public class AudioManager : MonoBehaviour
 
     public bool ActivateBGM;
     private int _currentBGMIndex;
+    private bool _canPlaySFX;
+
+    private Coroutine _currentCoroutine;
 
     private void Awake()
     {
@@ -19,6 +22,10 @@ public class AudioManager : MonoBehaviour
             Destroy(Instance.gameObject);
         else
             Instance = this;
+    }
+    private void Start()
+    {
+        Invoke("AllowSFX", 0.5f);
     }
     private void Update()
     {
@@ -34,25 +41,42 @@ public class AudioManager : MonoBehaviour
             }
         }
     }
-
-    public void PlaySFX(int sfxIndex, Transform soundSource)
+    public void PlaySFX(int sfxIndex, Transform soundSource, bool fadeIn = false)
     {
-        if (soundSource != null && Vector2.Distance(PlayerManager.Instance.Player.transform.position, soundSource.position) > _sfxMinimumDistance)
-            return;
+        if (!_canPlaySFX) { return; }
 
-        if (_sfxArray[sfxIndex].isPlaying)
+        if (soundSource != null && Vector2.Distance(PlayerManager.Instance.Player.transform.position, soundSource.position) > _sfxMinimumDistance)
             return;
 
         if (sfxIndex < _sfxArray.Length)
         {
+            if (fadeIn)
+            {
+                if (_currentCoroutine != null)
+                    StopCoroutine(_currentCoroutine);
+
+                _currentCoroutine = StartCoroutine(IE_SFXFadeIn(_sfxArray[sfxIndex]));
+            }
             _sfxArray[sfxIndex].pitch = Random.Range(0.9f, 1.1f);
             _sfxArray[sfxIndex].Play();
         }
     }
-    public void StopSFX(int sfxIndex)
+    public void StopSFX(int sfxIndex, bool fadeOut = false)
     {
         if (sfxIndex < _sfxArray.Length)
-            _sfxArray[sfxIndex].Stop();
+        {
+            if (fadeOut)
+            {
+                if (_currentCoroutine != null)
+                    StopCoroutine(_currentCoroutine);
+
+                _currentCoroutine = StartCoroutine(IE_SFXFadeOut(_sfxArray[sfxIndex]));
+            }
+            else
+            {
+                _sfxArray[sfxIndex].Stop();
+            }
+        }
     }
     public void PlayBGM(int bgmIndex)
     {
@@ -74,5 +98,30 @@ public class AudioManager : MonoBehaviour
         {
             _bgmArray[i].Stop();
         }
+    }
+    private void AllowSFX()
+    {
+        _canPlaySFX = true;
+    }
+    private IEnumerator IE_SFXFadeIn(AudioSource audioSource)
+    {
+        audioSource.volume = 0;
+        while (audioSource.volume < 1f)
+        {
+            audioSource.volume += Time.deltaTime;
+            yield return null;
+        }
+        yield break;
+    }
+    private IEnumerator IE_SFXFadeOut(AudioSource audioSource)
+    {
+
+        while (audioSource.volume >= 0f)
+        {
+            audioSource.volume -= Time.deltaTime;
+            yield return null;
+        }
+        audioSource.Stop();
+        yield break;
     }
 }

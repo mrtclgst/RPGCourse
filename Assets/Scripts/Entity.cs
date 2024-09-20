@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.U2D;
 
 public class Entity : MonoBehaviour
 {
@@ -23,6 +22,7 @@ public class Entity : MonoBehaviour
 
     protected int _facingDirection = 1;
     protected bool _facingRight = true;
+    public int KnockbackDirection { get; private set; }
 
     #region Components
     public Animator Animator { get; private set; }
@@ -112,7 +112,17 @@ public class Entity : MonoBehaviour
 
         RB.velocity = new Vector2(0, 0);
     }
-
+    public virtual void SetKnockbackDirection(Transform damageSource)
+    {
+        if (damageSource.transform.position.x > transform.position.x)
+        {
+            KnockbackDirection = -1;
+        }
+        else if (damageSource.transform.position.x < transform.position.x)
+        {
+            KnockbackDirection = 1;
+        }
+    }
     #region GetFunctions
     public virtual int GetFacingDirection()
     {
@@ -131,8 +141,9 @@ public class Entity : MonoBehaviour
     }
     protected virtual IEnumerator IE_HitKnockback()
     {
+        Debug.Log("here");
         _isKnocked = true;
-        RB.velocity = new Vector2(_knockbackForce.x * -_facingDirection, _knockbackForce.y);
+        RB.velocity = new Vector2(_knockbackForce.x * KnockbackDirection, _knockbackForce.y);
         yield return new WaitForSeconds(_knockbackDuration);
         _isKnocked = false;
     }

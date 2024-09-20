@@ -23,13 +23,12 @@ public class UI_SkillTreeSlot : MonoBehaviour, IPointerEnterHandler, IPointerExi
     {
         GetComponent<Button>().onClick.AddListener(() => UnlockSkillSlot());
     }
-    private IEnumerator Start()
+    private void Start()
     {
         _skillImage = GetComponent<Image>();
         _skillImage.color = _skillLockedColor;
         _ui = GetComponentInParent<UI>();
 
-        yield return new WaitForSeconds(0.3f);
         Debug.LogWarning(_skillName + " " + Unlocked);
 
         if (Unlocked)

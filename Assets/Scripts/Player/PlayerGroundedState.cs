@@ -22,8 +22,15 @@ public class PlayerGroundedState : PlayerState
     {
         base.Update();
 
-        if (Input.GetKeyDown(KeyCode.R) && SkillManager.Instance.GetSkillBlackhole().BlackholeUnlocked)
-        { _stateMachine.ChangeState(_player.BlackholeState); }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SkillBlackhole skillBlackhole = SkillManager.Instance.GetSkillBlackhole();
+            if (skillBlackhole.BlackholeUnlocked && skillBlackhole.CanUseSkill())
+            {
+                SkillManager.Instance.GetSkillBlackhole().UseSkill();
+                _stateMachine.ChangeState(_player.BlackholeState);
+            }
+        }
 
         if (Input.GetMouseButtonDown(1) && SkillManager.Instance.GetSkillParry().ParryUnlocked)
         { _stateMachine.ChangeState(_player.CounterAttackState); }

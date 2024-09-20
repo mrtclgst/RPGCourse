@@ -97,6 +97,8 @@ public class CharacterStats : MonoBehaviour
         {
             totalDamage = CriticalDamage(totalDamage);
         }
+
+        targetStats.GetComponent<Entity>().SetKnockbackDirection(this.transform);
         targetStats.TakeDamage(totalDamage, _isShocked);
     }
     public virtual void DealMagicalDamage(CharacterStats targetStats)

@@ -1,7 +1,8 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class UI : MonoBehaviour
+public class UI : MonoBehaviour, ISaveManager
 {
     public UI_FadeScreen _fadeScreen;
     [SerializeField] private GameObject _youDiedText;
@@ -18,6 +19,8 @@ public class UI : MonoBehaviour
     public UI_StatTooltip StatTooltip;
     public UI_CraftWindow CraftWindow;
     public UI_SkillTooltip SkillTooltip;
+
+    [SerializeField] private UI_VolumeSlider[] _volumeSettingsArray;
 
     private void Awake()
     {
@@ -62,7 +65,10 @@ public class UI : MonoBehaviour
         }
 
         if (menu != null)
+        {
             menu.SetActive(true);
+            AudioManager.Instance.PlaySFX(28, null);
+        }
     }
     public void SwitchWithKeyTo(GameObject menu)
     {
@@ -102,5 +108,29 @@ public class UI : MonoBehaviour
     public void RestartGameButton()
     {
         GameManager.Instance.RestartScene();
+    }
+
+    public void LoadData(GameData gameData)
+    {
+        foreach (KeyValuePair<string, float> pair in gameData.VolumeSettings)
+        {
+            foreach (UI_VolumeSlider volumeSlider in _volumeSettingsArray)
+            {
+                if (pair.Key == volumeSlider.Parameter)
+                {
+                    volumeSlider.LoadSlider(pair.Value);
+                }
+            }
+        }
+    }
+
+    public void SaveData(ref GameData gameData)
+    {
+        gameData.VolumeSettings.Clear();
+
+        foreach (UI_VolumeSlider volumeSlider in _volumeSettingsArray)
+        {
+            gameData.VolumeSettings.Add(volumeSlider.Parameter, volumeSlider.Slider.value);
+        }
     }
 }

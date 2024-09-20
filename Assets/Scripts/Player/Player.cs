@@ -100,6 +100,7 @@ public class Player : Entity
 
         if (Input.GetKeyDown(KeyCode.LeftShift) && SkillManager.Instance.GetSkillDash().CanUseSkill())
         {
+            SkillManager.Instance.GetSkillDash().UseSkill();
             _dashDirection = Input.GetAxisRaw("Horizontal");
             if (_dashDirection == 0)
                 _dashDirection = _facingDirection;
