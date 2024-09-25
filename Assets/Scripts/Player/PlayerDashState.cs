@@ -10,6 +10,7 @@ public class PlayerDashState : PlayerState
         base.Enter();
         _stateTimer = _player.GetDashDuration();
         SkillManager.Instance.GetSkillDash().CloneOnDash();
+        _player.Stats.MakeInvincible(true);
     }
 
     public override void Exit()
@@ -17,6 +18,7 @@ public class PlayerDashState : PlayerState
         base.Exit();
         _player.SetVelocity(0, _playerRb.velocity.y);
         SkillManager.Instance.GetSkillDash().CloneOnArrival();
+        _player.Stats.MakeInvincible(false);
     }
 
     public override void Update()

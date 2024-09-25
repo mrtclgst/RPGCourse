@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SkeletonBattleState : EnemyState
@@ -17,6 +15,9 @@ public class SkeletonBattleState : EnemyState
     {
         base.Enter();
         _playerTransform = PlayerManager.Instance.Player.transform;
+
+        if (_playerTransform.GetComponent<PlayerStats>().IsDead())
+            _stateMachine.ChangeState(_enemySkeleton.MoveState);
     }
 
     public override void Exit()
@@ -42,6 +43,8 @@ public class SkeletonBattleState : EnemyState
                 _stateMachine.ChangeState(_enemySkeleton.IdleState);
         }
 
+
+
         if (_playerTransform.position.x > _enemy.transform.position.x)
         {
             _moveDir = 1;
@@ -51,7 +54,14 @@ public class SkeletonBattleState : EnemyState
             _moveDir = -1;
         }
 
-        _enemy.SetVelocity(_moveDir * _enemy.GetMoveSpeed(), _rb.velocity.y);
+        if (Vector2.Distance(_playerTransform.position, _enemySkeleton.transform.position) < _enemySkeleton.GetAttackDistance())
+        {
+            _enemy.SetVelocity(_moveDir * _enemy.GetMoveSpeed() / 3f, _rb.velocity.y);
+        }
+        else
+        {
+            _enemy.SetVelocity(_moveDir * _enemy.GetMoveSpeed(), _rb.velocity.y);
+        }
     }
 
     private bool CanAttack()

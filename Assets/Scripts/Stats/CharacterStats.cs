@@ -37,6 +37,7 @@ public class CharacterStats : MonoBehaviour
 
     private int _currentHealth;
     protected bool _isDead;
+    protected bool _isInvincible;
     protected bool _isVulnurable;
     private float _igniteTimer;
     private float _igniteDamageCooldown = 0.3f;
@@ -82,14 +83,12 @@ public class CharacterStats : MonoBehaviour
     {
         StartCoroutine(IE_StatModifyCoroutine(modifier, duration, statToModify));
     }
-
     private IEnumerator IE_StatModifyCoroutine(int modifier, float duration, Stat statToModify)
     {
         statToModify.AddModifier(modifier);
         yield return new WaitForSeconds(duration);
         statToModify.RemoveModifier(modifier);
     }
-
     internal virtual void DealDamage(CharacterStats targetStats)
     {
         int totalDamage = Damage.GetValue() + Strength.GetValue();
@@ -207,6 +206,9 @@ public class CharacterStats : MonoBehaviour
     }
     internal virtual void TakeDamage(int damage, bool isShocked)
     {
+        if (_isInvincible)
+            return;
+
         if (CanAvoidAttack(isShocked))
             return;
 
@@ -325,7 +327,6 @@ public class CharacterStats : MonoBehaviour
         yield return new WaitForSeconds(seconds);
         _isVulnurable = false;
     }
-
     public Stat StatOfType(StatType buffType)
     {
         switch (buffType)
@@ -346,6 +347,15 @@ public class CharacterStats : MonoBehaviour
             case StatType.LightningDamage: return LightningDamage;
         }
         return null;
+    }
+    public void KillEntity()
+    {
+        if (!_isDead)
+            Die();
+    }
+    public void MakeInvincible(bool invincibility)
+    {
+        _isInvincible = invincibility;
     }
 }
 
