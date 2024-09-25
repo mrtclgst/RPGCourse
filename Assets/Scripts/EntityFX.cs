@@ -22,6 +22,12 @@ public class EntityFX : MonoBehaviour
     [SerializeField] private ParticleSystem _chillFX;
     [SerializeField] private ParticleSystem _shockFX;
 
+    [Header("Hit FX")]
+    [SerializeField] private GameObject _hitFX;
+    [SerializeField] private GameObject _hitCriticalFX;
+
+    [Space]
+    [SerializeField] private ParticleSystem _dustFX;
 
     private void Start()
     {
@@ -108,5 +114,29 @@ public class EntityFX : MonoBehaviour
         {
             _spriteRenderer.color = _shockedColorArray[1];
         }
+    }
+    public void CreateHitFX(Transform target, bool isCritical)
+    {
+
+        GameObject newHitFX;
+
+        if (isCritical)
+        {
+            newHitFX = Instantiate(_hitCriticalFX, target.position, Quaternion.identity);
+            if (GetComponent<Entity>()?.GetFacingDirection() == 1)
+                newHitFX.transform.Rotate(0, 0, 180);
+        }
+        else
+        {
+            newHitFX = Instantiate(_hitFX, target.position, Quaternion.identity);
+        }
+
+        Destroy(newHitFX, 0.5f);
+    }
+
+    public void PlayDustFX()
+    {
+        if (_dustFX != null)
+            _dustFX.Play();
     }
 }

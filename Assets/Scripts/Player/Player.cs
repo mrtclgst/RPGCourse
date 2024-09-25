@@ -160,6 +160,7 @@ public class Player : Entity
     public void CatchSword()
     {
         StateMachine.ChangeState(CatchSwordState);
+        EntityFX.PlayDustFX();
         Destroy(_sword);
     }
     internal override void Die()

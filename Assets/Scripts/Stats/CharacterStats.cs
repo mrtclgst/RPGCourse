@@ -92,11 +92,14 @@ public class CharacterStats : MonoBehaviour
     internal virtual void DealDamage(CharacterStats targetStats)
     {
         int totalDamage = Damage.GetValue() + Strength.GetValue();
+        bool isCritical = false;
         if (CanCrit())
         {
             totalDamage = CriticalDamage(totalDamage);
+            isCritical = true;
         }
 
+        targetStats._entityFX.CreateHitFX(targetStats.transform, isCritical);
         targetStats.GetComponent<Entity>().SetKnockbackDirection(this.transform);
         targetStats.TakeDamage(totalDamage, _isShocked);
     }
