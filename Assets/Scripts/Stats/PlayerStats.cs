@@ -23,6 +23,11 @@ public class PlayerStats : CharacterStats
     }
     protected override void DecreaseHealthBy(int damage)
     {
+        if (damage > GetMaxHealth() * 0.3f)
+        {
+            _player.EntityFX.ScreenShake(_player.EntityFX._shakeHighDamage);
+        }
+
         base.DecreaseHealthBy(damage);
         ItemDataEquipment currentArmor = Inventory.Instance.GetEquipment(EquipmentType.Armor);
         if (currentArmor != null)

@@ -141,7 +141,6 @@ public class Entity : MonoBehaviour
     }
     protected virtual IEnumerator IE_HitKnockback()
     {
-        Debug.Log("here");
         _isKnocked = true;
         RB.velocity = new Vector2(_knockbackForce.x * KnockbackDirection, _knockbackForce.y);
         yield return new WaitForSeconds(_knockbackDuration);

@@ -1,6 +1,5 @@
 public class PlayerDashState : PlayerState
 {
-
     public PlayerDashState(Player player, PlayerStateMachine playerStateMachine, string animBoolName) : base(player, playerStateMachine, animBoolName)
     {
     }
@@ -35,6 +34,8 @@ public class PlayerDashState : PlayerState
         {
             _stateMachine.ChangeState(_player.IdleState);
         }
+
+        _player.EntityFX.CreateAfterImage();
     }
 
 }

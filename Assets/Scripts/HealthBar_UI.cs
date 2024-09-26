@@ -36,5 +36,6 @@ public class HealthBar_UI : MonoBehaviour
     private void UpdateHealthUI()
     {
         _slider.value = _characterStats.GetCurrentHealthPercentage();
+        Debug.Log(_slider.value);
     }
 }

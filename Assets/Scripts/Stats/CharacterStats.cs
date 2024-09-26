@@ -50,7 +50,7 @@ public class CharacterStats : MonoBehaviour
 
     protected virtual void OnEnable()
     {
-        _currentHealth = MaxHealth.GetValue();
+        _currentHealth = GetMaxHealth();
     }
     protected virtual void Start()
     {
@@ -298,6 +298,7 @@ public class CharacterStats : MonoBehaviour
     }
     internal float GetCurrentHealthPercentage()
     {
+        Debug.Log("current Health: " + (float)_currentHealth + " max health: " + GetMaxHealth());
         float percentage = (float)_currentHealth / GetMaxHealth();
         return percentage;
     }
@@ -311,6 +312,7 @@ public class CharacterStats : MonoBehaviour
 
         _currentHealth -= totalDamage;
         CharacterStats_OnHealthChanged?.Invoke();
+        Debug.Log(totalDamage);
     }
     internal virtual void IncreaseHealthBy(int healAmount)
     {

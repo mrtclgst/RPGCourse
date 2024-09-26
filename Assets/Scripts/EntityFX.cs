@@ -1,11 +1,17 @@
+using Cinemachine;
 using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
 public class EntityFX : MonoBehaviour
 {
     private SpriteRenderer _spriteRenderer;
+    private Player _player;
+
+    [Header("After Image FX")]
+    [SerializeField] private GameObject _afterImagePrefab;
+    [SerializeField] private float _colorLooseRate;
+    [SerializeField] private float _afterImageCooldown;
+    private float _afterImageCooldownTimer;
 
     [Header("Flash FX")]
     [SerializeField] private Material _hitMat;
@@ -29,12 +35,23 @@ public class EntityFX : MonoBehaviour
     [Space]
     [SerializeField] private ParticleSystem _dustFX;
 
+    [Header("Screen Shake")]
+    [SerializeField] private CinemachineImpulseSource _impulseSource;
+    [SerializeField] private float _shakeMultiplier;
+    [SerializeField] internal Vector3 _shakeCatchSword;
+    [SerializeField] internal Vector3 _shakeHighDamage;
+
     private void Start()
     {
         _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         _originalMat = _spriteRenderer.material;
+        _player = PlayerManager.Instance.Player;
+        _impulseSource = GetComponent<CinemachineImpulseSource>();
     }
-
+    private void Update()
+    {
+        _afterImageCooldownTimer -= Time.deltaTime;
+    }
     private IEnumerator IE_FlashFX()
     {
         _spriteRenderer.material = _hitMat;
@@ -44,7 +61,6 @@ public class EntityFX : MonoBehaviour
         _spriteRenderer.color = currentColor;
         _spriteRenderer.material = _originalMat;
     }
-
     private void RedColorBlink()
     {
         if (_spriteRenderer.color != Color.white)
@@ -117,7 +133,6 @@ public class EntityFX : MonoBehaviour
     }
     public void CreateHitFX(Transform target, bool isCritical)
     {
-
         GameObject newHitFX;
 
         if (isCritical)
@@ -133,10 +148,23 @@ public class EntityFX : MonoBehaviour
 
         Destroy(newHitFX, 0.5f);
     }
-
     public void PlayDustFX()
     {
         if (_dustFX != null)
             _dustFX.Play();
+    }
+    public void CreateAfterImage()
+    {
+        if (_afterImageCooldownTimer < 0)
+        {
+            _afterImageCooldownTimer = _afterImageCooldown;
+            GameObject newAfterImage = Instantiate(_afterImagePrefab, transform.position, transform.rotation);
+            newAfterImage.GetComponent<AfterImageFX>().SetupAfterImage(_colorLooseRate, _spriteRenderer.sprite);
+        }
+    }
+    public void ScreenShake(Vector3 shakePower)
+    {
+        _impulseSource.m_DefaultVelocity = new Vector3(shakePower.x * _player.GetFacingDirection(), shakePower.y) * _shakeMultiplier;
+        _impulseSource.GenerateImpulse();
     }
 }

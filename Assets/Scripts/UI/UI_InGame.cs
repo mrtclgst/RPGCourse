@@ -90,6 +90,7 @@ public class UI_InGame : MonoBehaviour
     private void UpdateHealthUI()
     {
         _slider.value = _playerStats.GetCurrentHealthPercentage();
+        Debug.Log(_slider.value);
     }
     private void SetCooldownOf(Image image)
     {
