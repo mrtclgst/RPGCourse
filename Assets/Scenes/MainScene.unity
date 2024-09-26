@@ -134,10 +134,10 @@ GameObject:
   - component: {fileID: 250829}
   - component: {fileID: 250832}
   - component: {fileID: 250831}
-  - component: {fileID: 250833}
   - component: {fileID: 250834}
   - component: {fileID: 250835}
   - component: {fileID: 250836}
+  - component: {fileID: 250837}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -264,42 +264,6 @@ CapsuleCollider2D:
   m_Offset: {x: -0.07724869, y: -0.30305314}
   m_Size: {x: 0.7733419, y: 2.1290212}
   m_Direction: 0
---- !u!114 &250833
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 250828}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 231897eec7d344f4f99541f3700069f7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _afterImagePrefab: {fileID: 4683325395750789601, guid: 470d7f5aa5acac943b94b08e600308b7, type: 3}
-  _colorLooseRate: 2
-  _afterImageCooldown: 0.05
-  _hitMat: {fileID: 2100000, guid: d88cb3a6508197841b07e755a6a15f0b, type: 2}
-  _flashDuration: 0.2
-  _chilledColorArray:
-  - {r: 0, g: 0.7134721, b: 1, a: 1}
-  - {r: 0, g: 0.7137255, b: 1, a: 1}
-  _igniteColorArray:
-  - {r: 1, g: 0.69161433, b: 0.17647058, a: 1}
-  - {r: 1, g: 0, b: 0, a: 1}
-  _shockedColorArray:
-  - {r: 1, g: 0.88169336, b: 0, a: 1}
-  - {r: 0.8850914, g: 1, b: 0.5990566, a: 1}
-  _igniteFX: {fileID: 735194678}
-  _chillFX: {fileID: 1369099502}
-  _shockFX: {fileID: 655891218}
-  _hitFX: {fileID: 6763994545139406361, guid: 120b4da7e5ae84541b3b75497e092031, type: 3}
-  _hitCriticalFX: {fileID: 2570368084255701363, guid: ea7cd9b93ff5da844814cdb02f95bfee, type: 3}
-  _dustFX: {fileID: 1763597076}
-  _impulseSource: {fileID: 0}
-  _shakeMultiplier: 0.15
-  _shakeCatchSword: {x: 1, y: 0, z: 0}
-  _shakeHighDamage: {x: 2, y: 2, z: 0}
 --- !u!114 &250834
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -428,6 +392,43 @@ MonoBehaviour:
     m_DissipationDistance: 100
     m_PropagationSpeed: 343
   m_DefaultVelocity: {x: 0, y: -1, z: 0}
+--- !u!114 &250837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 250828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f19acc6773ec544f9773e6a7b8c7743, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _hitMat: {fileID: 2100000, guid: d88cb3a6508197841b07e755a6a15f0b, type: 2}
+  _flashDuration: 0.2
+  _chilledColorArray:
+  - {r: 1, g: 0, b: 0, a: 1}
+  - {r: 1, g: 0.6556604, b: 0.6556604, a: 1}
+  _igniteColorArray:
+  - {r: 0, g: 0.9612422, b: 1, a: 1}
+  - {r: 0, g: 0.52086806, b: 1, a: 1}
+  _shockedColorArray:
+  - {r: 0.9962778, g: 1, b: 0, a: 1}
+  - {r: 1, g: 0.9964248, b: 0, a: 1}
+  _igniteFX: {fileID: 8136074199591867579, guid: 9521aeeb2f57da44d9b967ae363d1acb, type: 3}
+  _chillFX: {fileID: 8376045593081300755, guid: 81246ed66c410da40a03bb442ee6b8fa, type: 3}
+  _shockFX: {fileID: 4718377113360148943, guid: 8f74d17e4aa16b142bed0223a705650d, type: 3}
+  _hitFX: {fileID: 6763994545139406361, guid: 120b4da7e5ae84541b3b75497e092031, type: 3}
+  _hitCriticalFX: {fileID: 2570368084255701363, guid: ea7cd9b93ff5da844814cdb02f95bfee, type: 3}
+  _popupTextPrefab: {fileID: 5145666957370442180, guid: 52b9a9b4eb40f724da72da5a6cbeccf0, type: 3}
+  _afterImagePrefab: {fileID: 4683325395750789601, guid: 470d7f5aa5acac943b94b08e600308b7, type: 3}
+  _colorLooseRate: 1
+  _afterImageCooldown: 0.05
+  _impulseSource: {fileID: 250836}
+  _shakeMultiplier: 0.2
+  _shakeCatchSword: {x: 1, y: 0, z: 0}
+  _shakeHighDamage: {x: 1.5, y: 1.5, z: 0}
+  _dustFX: {fileID: 2901360901657300776, guid: f9d3a525aedbc274ea2372b577cdfaf9, type: 3}
 --- !u!1001 &2508823
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10559,11 +10560,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7012481884370257022, guid: 8f74d17e4aa16b142bed0223a705650d, type: 3}
   m_PrefabInstance: {fileID: 1147605692342571146}
   m_PrefabAsset: {fileID: 0}
---- !u!198 &655891218 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 4718377113360148943, guid: 8f74d17e4aa16b142bed0223a705650d, type: 3}
-  m_PrefabInstance: {fileID: 1147605692342571146}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &657308056
 GameObject:
   m_ObjectHideFlags: 0
@@ -12155,11 +12151,6 @@ CanvasRenderer:
 --- !u!4 &735194676 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5704363404444237585, guid: 9521aeeb2f57da44d9b967ae363d1acb, type: 3}
-  m_PrefabInstance: {fileID: 127201145670651234}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &735194678 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 8136074199591867579, guid: 9521aeeb2f57da44d9b967ae363d1acb, type: 3}
   m_PrefabInstance: {fileID: 127201145670651234}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &744529799
@@ -28157,11 +28148,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8209925026516498733, guid: 81246ed66c410da40a03bb442ee6b8fa, type: 3}
   m_PrefabInstance: {fileID: 947527121699669750}
   m_PrefabAsset: {fileID: 0}
---- !u!198 &1369099502 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 8376045593081300755, guid: 81246ed66c410da40a03bb442ee6b8fa, type: 3}
-  m_PrefabInstance: {fileID: 947527121699669750}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1375877222
 GameObject:
   m_ObjectHideFlags: 0
@@ -35430,11 +35416,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 390785334251690732, guid: f9d3a525aedbc274ea2372b577cdfaf9, type: 3}
   m_PrefabInstance: {fileID: 1763597074}
   m_PrefabAsset: {fileID: 0}
---- !u!198 &1763597076 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 2901360901657300776, guid: f9d3a525aedbc274ea2372b577cdfaf9, type: 3}
-  m_PrefabInstance: {fileID: 1763597074}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1767456552
 GameObject:
   m_ObjectHideFlags: 0
@@ -40511,6 +40492,10 @@ PrefabInstance:
     - target: {fileID: 491287638232096643, guid: 139395e59f7c4dd42979bb6658a76278, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2758113495342518342, guid: 139395e59f7c4dd42979bb6658a76278, type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 8386469036807957304, guid: 139395e59f7c4dd42979bb6658a76278, type: 3}
       propertyPath: m_LocalPosition.x

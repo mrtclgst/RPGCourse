@@ -1,17 +1,12 @@
 using Cinemachine;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class EntityFX : MonoBehaviour
 {
-    private SpriteRenderer _spriteRenderer;
-    private Player _player;
-
-    [Header("After Image FX")]
-    [SerializeField] private GameObject _afterImagePrefab;
-    [SerializeField] private float _colorLooseRate;
-    [SerializeField] private float _afterImageCooldown;
-    private float _afterImageCooldownTimer;
+    protected SpriteRenderer _spriteRenderer;
+    protected Player _player;
 
     [Header("Flash FX")]
     [SerializeField] private Material _hitMat;
@@ -32,26 +27,19 @@ public class EntityFX : MonoBehaviour
     [SerializeField] private GameObject _hitFX;
     [SerializeField] private GameObject _hitCriticalFX;
 
-    [Space]
-    [SerializeField] private ParticleSystem _dustFX;
+    [Header("Pop up Text")]
+    [SerializeField] private GameObject _popupTextPrefab;
 
-    [Header("Screen Shake")]
-    [SerializeField] private CinemachineImpulseSource _impulseSource;
-    [SerializeField] private float _shakeMultiplier;
-    [SerializeField] internal Vector3 _shakeCatchSword;
-    [SerializeField] internal Vector3 _shakeHighDamage;
-
-    private void Start()
+    protected virtual void Start()
     {
         _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         _originalMat = _spriteRenderer.material;
         _player = PlayerManager.Instance.Player;
-        _impulseSource = GetComponent<CinemachineImpulseSource>();
     }
-    private void Update()
+    protected virtual void Update()
     {
-        _afterImageCooldownTimer -= Time.deltaTime;
     }
+
     private IEnumerator IE_FlashFX()
     {
         _spriteRenderer.material = _hitMat;
@@ -148,23 +136,13 @@ public class EntityFX : MonoBehaviour
 
         Destroy(newHitFX, 0.5f);
     }
-    public void PlayDustFX()
+    
+    
+   
+    public void CreatePopupText(string text)
     {
-        if (_dustFX != null)
-            _dustFX.Play();
-    }
-    public void CreateAfterImage()
-    {
-        if (_afterImageCooldownTimer < 0)
-        {
-            _afterImageCooldownTimer = _afterImageCooldown;
-            GameObject newAfterImage = Instantiate(_afterImagePrefab, transform.position, transform.rotation);
-            newAfterImage.GetComponent<AfterImageFX>().SetupAfterImage(_colorLooseRate, _spriteRenderer.sprite);
-        }
-    }
-    public void ScreenShake(Vector3 shakePower)
-    {
-        _impulseSource.m_DefaultVelocity = new Vector3(shakePower.x * _player.GetFacingDirection(), shakePower.y) * _shakeMultiplier;
-        _impulseSource.GenerateImpulse();
+        GameObject newText = Instantiate(_popupTextPrefab, transform.position + Vector3.up, Quaternion.identity);
+        newText.GetComponent<TextMeshPro>().text = text;
+
     }
 }

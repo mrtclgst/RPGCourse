@@ -26,6 +26,7 @@ public class Enemy : Entity
     [SerializeField] private float _stunDuration;
     [SerializeField] protected bool _canBeStunned;
     [SerializeField] protected GameObject _counterImage;
+    public EntityFX EntityFX { get; private set; }
 
 
     public EnemyStateMachine StateMachine { get; private set; }
@@ -43,6 +44,7 @@ public class Enemy : Entity
     {
         base.Start();
         _defaultMoveSpeed = _moveSpeed;
+        EntityFX = GetComponent<EntityFX>();
     }
     protected override void Update()
     {
@@ -94,7 +96,7 @@ public class Enemy : Entity
         return _stunForce;
     }
     #endregion
-    
+
     internal virtual void FreezeTimeFor(float duration)
     {
         StartCoroutine(IE_FreezeTimerFor(duration));

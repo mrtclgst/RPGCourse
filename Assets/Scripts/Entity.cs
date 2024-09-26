@@ -27,7 +27,7 @@ public class Entity : MonoBehaviour
     #region Components
     public Animator Animator { get; private set; }
     public Rigidbody2D RB { get; private set; }
-    public EntityFX EntityFX { get; private set; }
+    //public EntityFX EntityFX { get; private set; }
     public SpriteRenderer SpriteRenderer { get; private set; }
     public CharacterStats Stats { get; private set; }
     public CapsuleCollider2D Collider { get; private set; }
@@ -42,7 +42,7 @@ public class Entity : MonoBehaviour
     {
         Animator = GetComponentInChildren<Animator>();
         RB = GetComponent<Rigidbody2D>();
-        EntityFX = GetComponent<EntityFX>();
+        //EntityFX = GetComponent<EntityFX>();
         SpriteRenderer = GetComponentInChildren<SpriteRenderer>();
         Stats = GetComponent<CharacterStats>();
         Collider = GetComponent<CapsuleCollider2D>();

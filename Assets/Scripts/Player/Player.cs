@@ -21,6 +21,7 @@ public class Player : Entity
     private float _defaultJumpForce;
     private float _defaultDashSpeed;
 
+    public PlayerFX PlayerFX { get; private set; }
 
     private GameObject _sword;
 
@@ -67,6 +68,7 @@ public class Player : Entity
         _defaultMovementSpeed = _moveSpeed;
         _defaultJumpForce = _jumpForce;
         _defaultDashSpeed = _dashSpeed;
+        PlayerFX = GetComponent<PlayerFX>();
     }
     protected override void Update()
     {
@@ -160,7 +162,7 @@ public class Player : Entity
     public void CatchSword()
     {
         StateMachine.ChangeState(CatchSwordState);
-        EntityFX.PlayDustFX();
+        PlayerFX.PlayDustFX();
         Destroy(_sword);
     }
     internal override void Die()

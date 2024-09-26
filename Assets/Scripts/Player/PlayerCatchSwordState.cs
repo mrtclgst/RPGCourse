@@ -12,8 +12,8 @@ public class PlayerCatchSwordState : PlayerState
     {
         base.Enter();
         _sword = _player.GetSword().transform;
-        _player.EntityFX.PlayDustFX();
-        _player.EntityFX.ScreenShake(_player.EntityFX._shakeCatchSword);
+        _player.PlayerFX.PlayDustFX();
+        _player.PlayerFX.ScreenShake(_player.PlayerFX._shakeCatchSword);
 
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         if (_sword.position.x > _player.transform.position.x && _player.GetFacingDirection() != 1

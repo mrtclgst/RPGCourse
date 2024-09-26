@@ -25,7 +25,7 @@ public class PlayerStats : CharacterStats
     {
         if (damage > GetMaxHealth() * 0.3f)
         {
-            _player.EntityFX.ScreenShake(_player.EntityFX._shakeHighDamage);
+            _player.PlayerFX.ScreenShake(_player.PlayerFX._shakeHighDamage);
         }
 
         base.DecreaseHealthBy(damage);

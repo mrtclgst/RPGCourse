@@ -312,7 +312,7 @@ public class CharacterStats : MonoBehaviour
 
         _currentHealth -= totalDamage;
         CharacterStats_OnHealthChanged?.Invoke();
-        Debug.Log(totalDamage);
+        _entityFX.CreatePopupText(damage.ToString());
     }
     internal virtual void IncreaseHealthBy(int healAmount)
     {

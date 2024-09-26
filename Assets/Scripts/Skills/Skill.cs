@@ -20,12 +20,12 @@ public class Skill : MonoBehaviour
 
     internal virtual bool CanUseSkill()
     {
-        Debug.Log("Cd: " + _cooldown + "  cdtimer: " + _cooldownTimer);
         if (_cooldownTimer <= 0)
         {
             return true;
         }
 
+        _player.PlayerFX.CreatePopupText("Cooldown");
         return false;
     }
 
