@@ -95,6 +95,14 @@ public class Entity : MonoBehaviour
         transform.Rotate(0, 180, 0);
         Entity_OnFlipped?.Invoke();
     }
+    public virtual void SetupDefaultDirection(int dir)
+    {
+        _facingDirection = dir;
+        if (_facingDirection == -1)
+        {
+            _facingRight = false;
+        }
+    }
     #endregion
 
     public void SetVelocity(float velocityX, float velocityY)

@@ -1,14 +1,14 @@
-using UnityEngine;
+﻿using UnityEngine;
 
-public class SkeletonBattleState : EnemyState
+public class SlimeBattleState : EnemyState
 {
-    protected EnemySkeleton _enemySkeleton;
+    protected EnemySlime _enemySlime;
     private Transform _playerTransform;
     private int _moveDir;
 
-    public SkeletonBattleState(Enemy enemy, EnemyStateMachine stateMachine, string animBoolName, EnemySkeleton enemySkeleton) : base(enemy, stateMachine, animBoolName)
+    public SlimeBattleState(Enemy enemy, EnemyStateMachine stateMachine, string animBoolName, EnemySlime enemySlime) : base(enemy, stateMachine, animBoolName)
     {
-        _enemySkeleton = enemySkeleton;
+        _enemySlime = enemySlime;
     }
 
     public override void Enter()
@@ -17,7 +17,7 @@ public class SkeletonBattleState : EnemyState
         _playerTransform = PlayerManager.Instance.Player.transform;
 
         if (_playerTransform.GetComponent<PlayerStats>().IsDead())
-            _stateMachine.ChangeState(_enemySkeleton.MoveState);
+            _stateMachine.ChangeState(_enemySlime.MoveState);
     }
 
     public override void Exit()
@@ -34,14 +34,18 @@ public class SkeletonBattleState : EnemyState
             _stateTimer = _enemy.GetBattleTime();
             if (_enemy.IsPlayerDetected().distance < _enemy.GetAttackDistance() && CanAttack())
             {
-                _stateMachine.ChangeState(_enemySkeleton.AttackState);
+                _stateMachine.ChangeState(_enemySlime.AttackState);
             }
         }
         else
         {
             if (_stateTimer < 0 || Vector2.Distance(_playerTransform.position, _enemy.transform.position) > _enemy.GetChaseDistance())
-                _stateMachine.ChangeState(_enemySkeleton.IdleState);
+            {
+                _stateMachine.ChangeState(_enemySlime.IdleState);
+            }
         }
+
+
 
         if (_playerTransform.position.x > _enemy.transform.position.x)
         {
@@ -52,7 +56,7 @@ public class SkeletonBattleState : EnemyState
             _moveDir = -1;
         }
 
-        if (Vector2.Distance(_playerTransform.position, _enemySkeleton.transform.position) < _enemySkeleton.GetAttackDistance())
+        if (Vector2.Distance(_playerTransform.position, _enemySlime.transform.position) < _enemySlime.GetAttackDistance())
         {
             _enemy.SetVelocity(_moveDir * _enemy.GetMoveSpeed() / 3f, _rb.velocity.y);
         }

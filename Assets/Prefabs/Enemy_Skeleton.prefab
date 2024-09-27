@@ -4949,7 +4949,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 534f1b6689065c644bd12a2b2693b31d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemySkeleton: {fileID: 5768471328633032074}
+  _enemy: {fileID: 5768471328633032074}
 --- !u!1 &1313545645343824461
 GameObject:
   m_ObjectHideFlags: 0
@@ -10464,9 +10464,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 231897eec7d344f4f99541f3700069f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _afterImagePrefab: {fileID: 0}
-  _colorLooseRate: 0
-  _afterImageCooldown: 0
   _hitMat: {fileID: 2100000, guid: d88cb3a6508197841b07e755a6a15f0b, type: 2}
   _flashDuration: 0.2
   _chilledColorArray:
@@ -10483,11 +10480,6 @@ MonoBehaviour:
   _shockFX: {fileID: 6690030874758926436}
   _hitFX: {fileID: 6763994545139406361, guid: 120b4da7e5ae84541b3b75497e092031, type: 3}
   _hitCriticalFX: {fileID: 2570368084255701363, guid: ea7cd9b93ff5da844814cdb02f95bfee, type: 3}
-  _dustFX: {fileID: 0}
-  _impulseSource: {fileID: 4228515502809015763}
-  _shakeMultiplier: 0
-  _shakeCatchSword: {x: 0, y: 0, z: 0}
-  _shakeHighDamage: {x: 0, y: 0, z: 0}
   _popupTextPrefab: {fileID: 5145666957370442180, guid: 52b9a9b4eb40f724da72da5a6cbeccf0, type: 3}
 --- !u!114 &6785967924871042035
 MonoBehaviour:

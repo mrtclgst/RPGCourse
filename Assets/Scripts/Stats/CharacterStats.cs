@@ -298,7 +298,6 @@ public class CharacterStats : MonoBehaviour
     }
     internal float GetCurrentHealthPercentage()
     {
-        Debug.Log("current Health: " + (float)_currentHealth + " max health: " + GetMaxHealth());
         float percentage = (float)_currentHealth / GetMaxHealth();
         return percentage;
     }

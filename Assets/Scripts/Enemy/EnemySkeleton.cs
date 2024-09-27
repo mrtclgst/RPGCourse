@@ -34,6 +34,7 @@ public class EnemySkeleton : Enemy
     protected override void Update()
     {
         base.Update();
+        Debug.Log(StateMachine.CurrentState.ToString());
     }
     public override void DealDamage()
     {
