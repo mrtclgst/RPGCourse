@@ -26,7 +26,6 @@ public class UI : MonoBehaviour, ISaveManager
     {
         SwitchTo(_skillTreeUI);
     }
-
     private IEnumerator Start()
     {
         ItemTooltip.gameObject.SetActive(false);
@@ -54,7 +53,6 @@ public class UI : MonoBehaviour, ISaveManager
             SwitchWithKeyTo(_optionsUI);
         }
     }
-
     public void SwitchTo(GameObject menu)
     {
         for (int i = 0; transform.childCount > i; i++)
@@ -88,7 +86,6 @@ public class UI : MonoBehaviour, ISaveManager
         }
         SwitchTo(menu);
     }
-
     private void CheckForInGameUI()
     {
         for (int i = 0; i < transform.childCount; i++)
@@ -112,12 +109,10 @@ public class UI : MonoBehaviour, ISaveManager
         yield return new WaitForSeconds(1);
         _restartButton.SetActive(true);
     }
-
     public void RestartGameButton()
     {
         GameManager.Instance.RestartScene();
     }
-
     public void LoadData(GameData gameData)
     {
         foreach (KeyValuePair<string, float> pair in gameData.VolumeSettings)
@@ -131,7 +126,6 @@ public class UI : MonoBehaviour, ISaveManager
             }
         }
     }
-
     public void SaveData(ref GameData gameData)
     {
         gameData.VolumeSettings.Clear();
@@ -140,5 +134,9 @@ public class UI : MonoBehaviour, ISaveManager
         {
             gameData.VolumeSettings.Add(volumeSlider.Parameter, volumeSlider.Slider.value);
         }
+    }
+    public void EndGame()
+    {
+        Application.Quit();
     }
 }
