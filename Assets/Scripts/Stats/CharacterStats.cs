@@ -217,6 +217,11 @@ public class CharacterStats : MonoBehaviour
 
         DecreaseHealthBy(ArmorAddedDamage(damage));
         _entityFX.StartCoroutine("IE_FlashFX");
+        
+        Entity entity = GetComponent<Entity>();
+        if (entity != null)
+            entity.KnockbackEffect();
+
         if (_currentHealth <= 0 && !_isDead)
         {
             Die();

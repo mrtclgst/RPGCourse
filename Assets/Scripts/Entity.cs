@@ -144,13 +144,20 @@ public class Entity : MonoBehaviour
     public virtual void TakeDamage(int damage, bool isShocked)
     {
         Stats.TakeDamage(damage, isShocked);
-        //EntityFX.StartCoroutine("IE_FlashFX");
+    }
+    public void KnockbackEffect()
+    {
         StartCoroutine(IE_HitKnockback());
     }
     protected virtual IEnumerator IE_HitKnockback()
     {
         _isKnocked = true;
+
+        //if (_knockbackForce.magnitude > 0)
         RB.velocity = new Vector2(_knockbackForce.x * KnockbackDirection, _knockbackForce.y);
+        Debug.Log(_knockbackForce);
+        Debug.Log(RB.velocity);
+
         yield return new WaitForSeconds(_knockbackDuration);
         _isKnocked = false;
     }

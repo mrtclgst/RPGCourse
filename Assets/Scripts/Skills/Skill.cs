@@ -34,7 +34,6 @@ public class Skill : MonoBehaviour
         if (CanUseSkill())
         {
             _cooldownTimer = _cooldown;
-            Debug.Log("here");
         }
         else
         {

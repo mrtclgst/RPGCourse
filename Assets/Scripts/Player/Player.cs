@@ -151,6 +151,10 @@ public class Player : Entity
                     }
                 }
             }
+            else if (damageable.GetComponent<ArrowController>() != null)
+            {
+                damageable.GetComponent<ArrowController>().FlipArrow();
+            }
         }
 
         return hasEnemyCanBeStunned;
