@@ -6,16 +6,16 @@ public class Entity : MonoBehaviour
 {
     [Header("Collision Info")]
     [SerializeField] protected Transform _attackCheckPoint;
-    [SerializeField] protected float _attackCheckRadius;
+    [SerializeField] protected float _attackCheckRadius = 1;
     [SerializeField] protected Transform _groundCheck;
-    [SerializeField] protected float _groundCheckDistance;
+    [SerializeField] protected float _groundCheckDistance = 1;
     [SerializeField] protected LayerMask _whatIsGround;
     [SerializeField] protected Transform _wallCheck;
-    [SerializeField] protected float _wallCheckDistance;
+    [SerializeField] protected float _wallCheckDistance = 1;
 
     [Header("Knockback Info")]
-    [SerializeField] protected Vector2 _knockbackForce;
-    [SerializeField] protected float _knockbackDuration;
+    [SerializeField] protected Vector2 _knockbackForce = new(6, 12);
+    [SerializeField] protected float _knockbackDuration = 0.1f;
     protected bool _isKnocked;
 
     public Action Entity_OnFlipped;
@@ -155,9 +155,6 @@ public class Entity : MonoBehaviour
 
         //if (_knockbackForce.magnitude > 0)
         RB.velocity = new Vector2(_knockbackForce.x * KnockbackDirection, _knockbackForce.y);
-        Debug.Log(_knockbackForce);
-        Debug.Log(RB.velocity);
-
         yield return new WaitForSeconds(_knockbackDuration);
         _isKnocked = false;
     }

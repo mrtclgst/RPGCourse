@@ -14,21 +14,21 @@ public class Enemy : Entity
     [SerializeField] protected float _playerCheckDistance;
 
     [Header("Move Info")]
-    [SerializeField] private float _moveSpeed;
-    [SerializeField] private float _idleTimer;
-    [SerializeField] private float _battleTime;
+    [SerializeField] private float _moveSpeed = 3f;
+    [SerializeField] private float _idleTimer = 2;
+    [SerializeField] private float _battleTime = 7;
     private float _defaultMoveSpeed;
 
     [Header("Attack Info")]
-    [SerializeField] private float _attackDistance;
-    [SerializeField] private float _attackCooldown;
-    [SerializeField] private float _chaseDistance;
-    [SerializeField] private float _detectDistance;
+    [SerializeField] private float _attackDistance = 2;
+    [SerializeField] private float _attackCooldown = 1.5f;
+    [SerializeField] private float _chaseDistance = 5;
+    [SerializeField] private float _detectDistance = 10;
     private float _lastTimeAttacked;
 
     [Header("Stun Info")]
-    [SerializeField] private Vector2 _stunForce;
-    [SerializeField] private float _stunDuration;
+    [SerializeField] private Vector2 _stunForce = new(5, 6);
+    [SerializeField] private float _stunDuration = 1;
     [SerializeField] protected bool _canBeStunned;
     [SerializeField] protected GameObject _counterImage;
     public EntityFX EntityFX { get; private set; }
@@ -153,6 +153,11 @@ public class Enemy : Entity
     {
         StateMachine.CurrentState.AnimationFinishTrigger();
     }
+    public virtual void AnimationSpecialAttackTrigger()
+    {
+
+    }
+
     public virtual void AssignLastAnimName(string animBoolName)
     {
         LastAnimBoolName = animBoolName;
@@ -182,4 +187,5 @@ public class Enemy : Entity
         _moveSpeed = _defaultMoveSpeed;
         base.ReturnDefaultSpeed();
     }
+
 }

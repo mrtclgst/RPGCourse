@@ -11,28 +11,49 @@ public class ArrowController : MonoBehaviour
     [SerializeField] private int _damage;
     [SerializeField] Rigidbody2D _rigidbody;
 
+    [SerializeField] private bool _canMove = true;
     [SerializeField] private bool _isFlipped;
     [SerializeField] private float _xVelocity = 2f;
     [SerializeField] private float _yVelocity = 2f;
 
+    private CharacterStats _archerStats;
+
     private void Start()
     {
         _targetLayer = _player;
+        _canMove = true;
     }
     private void Update()
     {
-        _rigidbody.velocity = new Vector2(_xVelocity, _yVelocity);
+        if (_canMove)
+            _rigidbody.velocity = new Vector2(_xVelocity, _yVelocity);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == _targetLayer)
+        if (((1 << collision.gameObject.layer) & _targetLayer) != 0)
         {
-            Debug.Log("hit");
-            collision.GetComponent<CharacterStats>().TakeDamage(_damage, false);
-            Destroy(gameObject);
+            //collision.GetComponent<CharacterStats>().TakeDamage(_damage, false);
+            _archerStats.DealDamage(collision.GetComponent<CharacterStats>());
+            StuckInto(collision);
+        }
+        else if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        {
+            StuckInto(collision);
         }
     }
+
+    private void StuckInto(Collider2D collision)
+    {
+        _canMove = false;
+        _rigidbody.isKinematic = true;
+        _rigidbody.constraints = RigidbodyConstraints2D.FreezeAll;
+        transform.parent = collision.transform;
+        GetComponent<CapsuleCollider2D>().enabled = false;
+        GetComponentInChildren<TrailRenderer>().enabled = false;
+        Destroy(gameObject, Random.Range(2, 3));
+    }
+
     public void FlipArrow()
     {
         if (_isFlipped)
@@ -42,5 +63,11 @@ public class ArrowController : MonoBehaviour
         transform.Rotate(0, 180, 0);
         _isFlipped = true;
         _targetLayer = _enemy;
+    }
+
+    public void SetupArrow(float speed,CharacterStats characterStats)
+    {
+        _xVelocity = speed;
+        _archerStats = characterStats;
     }
 }

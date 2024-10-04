@@ -20,4 +20,8 @@ public class EnemyAnimationTriggers : MonoBehaviour
     {
         _enemy.CloseCounterAttackWindow();
     }
+    private void SpecialAttackTrigger()
+    {
+        _enemy.AnimationSpecialAttackTrigger();
+    }
 }
