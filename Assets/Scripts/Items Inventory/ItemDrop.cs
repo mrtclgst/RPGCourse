@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class ItemDrop : MonoBehaviour
 {
-    [SerializeField] private int _possibleAmountOfItems;
+    [SerializeField] private int _maxItemsToDrop;
     [SerializeField] private ItemData[] _possibleDrop;
     private List<ItemData> _dropList = new();
     [SerializeField] private GameObject _dropPrefab;
 
     public virtual void GenerateDrop()
     {
+        if (_possibleDrop.Length <= 0)
+            return;
+
         for (int i = 0; i < _possibleDrop.Length; i++)
         {
             if (Random.Range(0, 100) <= _possibleDrop[i].DropChance)
@@ -19,13 +22,16 @@ public class ItemDrop : MonoBehaviour
             }
         }
 
-        for (int i = 0; i < _possibleAmountOfItems; i++)
+        for (int i = 0; i < _maxItemsToDrop; i++)
         {
             if (_dropList.Count > 0)
             {
                 ItemData randomItem = _dropList[Random.Range(0, _dropList.Count - 1)];
-                _dropList.Remove(randomItem);
-                DropItem(randomItem);
+                if (randomItem != null)
+                {
+                    _dropList.Remove(randomItem);
+                    DropItem(randomItem);
+                }
             }
         }
     }

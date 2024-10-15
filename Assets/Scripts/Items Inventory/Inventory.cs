@@ -272,7 +272,10 @@ public class Inventory : MonoBehaviour, ISaveManager
     {
         for (int i = 0; i < craftData.CraftingMaterialList.Count; i++)
         {
-            RemoveItem(craftData.CraftingMaterialList[i].Data);
+            for (int j = 0; j < craftData.CraftingMaterialList[i].StackSize; j++)
+            {
+                RemoveItem(craftData.CraftingMaterialList[i].Data);
+            }
         }
         AddItem(craftData);
         Debug.Log("item crafted " + craftData.name);

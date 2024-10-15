@@ -16,6 +16,10 @@ public class SkillCloneController : MonoBehaviour
     private int _facingDir;
     private int _damage;
 
+    [Space]
+    [SerializeField] private LayerMask _whatIsEnemy;
+    [SerializeField] private float _closestEnemyCheckRadius = 25;
+
     private void Awake()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();

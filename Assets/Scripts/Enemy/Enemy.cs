@@ -131,7 +131,18 @@ public class Enemy : Entity
     }
     public virtual RaycastHit2D IsPlayerDetected()
     {
-        return Physics2D.Raycast(_playerCheck.position, Vector2.right * _facingDirection, _playerCheckDistance, _whatIsPlayer);
+
+        RaycastHit2D wallDetected =
+            Physics2D.Raycast(_wallCheck.position, Vector2.right * _facingDirection, _playerCheckDistance, _whatIsGround);
+        RaycastHit2D playerDetected =
+            Physics2D.Raycast(_playerCheck.position, Vector2.right * _facingDirection, _playerCheckDistance, _whatIsPlayer);
+        if (wallDetected)
+        {
+            if (wallDetected.distance < playerDetected.distance)
+                return default(RaycastHit2D);
+        }
+
+        return playerDetected;
     }
     protected override void OnDrawGizmos()
     {
@@ -187,5 +198,8 @@ public class Enemy : Entity
         _moveSpeed = _defaultMoveSpeed;
         base.ReturnDefaultSpeed();
     }
-
+    internal virtual void SetMoveSpeed(float moveSpeed)
+    {
+        _moveSpeed = moveSpeed;
+    }
 }

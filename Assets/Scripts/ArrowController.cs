@@ -65,9 +65,13 @@ public class ArrowController : MonoBehaviour
         _targetLayer = _enemy;
     }
 
-    public void SetupArrow(float speed,CharacterStats characterStats)
+    public void SetupArrow(float speed, CharacterStats characterStats)
     {
         _xVelocity = speed;
         _archerStats = characterStats;
+        if (_xVelocity < 0)
+        {
+            transform.Rotate(0, 180, 0);
+        }
     }
 }

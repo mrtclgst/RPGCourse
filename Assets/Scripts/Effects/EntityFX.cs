@@ -30,11 +30,14 @@ public class EntityFX : MonoBehaviour
     [Header("Pop up Text")]
     [SerializeField] private GameObject _popupTextPrefab;
 
+    private GameObject _healthBar;
+
     protected virtual void Start()
     {
         _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         _originalMat = _spriteRenderer.material;
         _player = PlayerManager.Instance.Player;
+        _healthBar = GetComponentInChildren<HealthBar_UI>()?.gameObject;
     }
     protected virtual void Update()
     {
@@ -136,13 +139,21 @@ public class EntityFX : MonoBehaviour
 
         Destroy(newHitFX, 0.5f);
     }
-    
-    
-   
     public void CreatePopupText(string text)
     {
         GameObject newText = Instantiate(_popupTextPrefab, transform.position + Vector3.up, Quaternion.identity);
         newText.GetComponent<TextMeshPro>().text = text;
 
+    }
+    public void MakeTransparent(bool transparency)
+    {
+        if (transparency)
+        {
+            _healthBar.SetActive(false);
+        }
+        else
+        {
+            _healthBar.SetActive(true);
+        }
     }
 }
