@@ -45,7 +45,6 @@ public class ShadyBattleState : EnemyState
             if (_stateTimer < 0 || Vector2.Distance(_playerTransform.position, _enemy.transform.position)
                 > _enemy.GetChaseDistance())
             {
-                Debug.Log(_stateTimer);
                 _stateMachine.ChangeState(_enemyShady.IdleState);
             }
         }

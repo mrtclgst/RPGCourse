@@ -81,7 +81,7 @@ public class Player : Entity
         if (Input.GetKeyDown(KeyCode.F) && SkillManager.Instance.GetSkillCrystal().CrystalUnlocked)
         { SkillManager.Instance.GetSkillCrystal().UseSkill(); }
 
-        if (Input.GetKeyDown(KeyCode.Keypad1))
+        if (Input.GetKeyDown(KeyCode.E))
         {
             Inventory.Instance.UseFlask();
         }

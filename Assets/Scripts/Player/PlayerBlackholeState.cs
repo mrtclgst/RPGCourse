@@ -46,12 +46,12 @@ public class PlayerBlackholeState : PlayerState
         if (_stateTimer < 0)
         {
             _playerRb.velocity = new Vector2(0, -0.1f);
-            if (!_skillUsed)
-            {
-                if (SkillManager.Instance.GetSkillBlackhole().CanUseSkill())
-                    SkillManager.Instance.GetSkillBlackhole().UseSkill();
-                _skillUsed = true;
-            }
+            //if (!_skillUsed)
+            //{
+            //    if (SkillManager.Instance.GetSkillBlackhole().CanUseSkill())
+            //        SkillManager.Instance.GetSkillBlackhole().UseSkill();
+            //    _skillUsed = true;
+            //}
         }
 
         if (SkillManager.Instance.GetSkillBlackhole().BlackholeFinished())

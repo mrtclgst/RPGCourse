@@ -26,7 +26,7 @@ public class PlayerAimSwordState : PlayerState
 
         _player.SetVelocityZero();
 
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.Q))
         {
             _stateMachine.ChangeState(_player.IdleState);
         }

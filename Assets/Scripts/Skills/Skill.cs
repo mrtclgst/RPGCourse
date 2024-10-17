@@ -25,6 +25,7 @@ public class Skill : MonoBehaviour
             return true;
         }
 
+        Debug.Log(_cooldownTimer);
         _player.PlayerFX.CreatePopupText("Cooldown");
         return false;
     }

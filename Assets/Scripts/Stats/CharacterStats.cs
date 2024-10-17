@@ -109,9 +109,11 @@ public class CharacterStats : MonoBehaviour
         int iceDamage = IceDamage.GetValue();
         int lightningDamage = LightningDamage.GetValue();
         int totalMagicalDamage = fireDamage + iceDamage + lightningDamage + Intelligence.GetValue();
+        Debug.Log(totalMagicalDamage);
         totalMagicalDamage = totalMagicalDamage - (targetStats.MagicResistance.GetValue() + (targetStats.Intelligence.GetValue() * 3));
         totalMagicalDamage = Mathf.Max(totalMagicalDamage, 0);
         targetStats.TakeDamage(totalMagicalDamage, _isShocked);
+        Debug.Log(totalMagicalDamage);
 
         int highestMagicalDamage = Mathf.Max(fireDamage, iceDamage, lightningDamage);
         bool canIgnite = false;
@@ -217,7 +219,7 @@ public class CharacterStats : MonoBehaviour
 
         DecreaseHealthBy(ArmorAddedDamage(damage));
         _entityFX.StartCoroutine("IE_FlashFX");
-        
+
         Entity entity = GetComponent<Entity>();
         if (entity != null)
             entity.KnockbackEffect();

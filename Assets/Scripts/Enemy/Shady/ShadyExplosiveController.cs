@@ -33,6 +33,7 @@ public class ShadyExplosiveController : MonoBehaviour
         _growSpeed = growSpeed;
         _maxSize = maxSize;
         _explosionRadius = radius;
+        Debug.Log("size " + _maxSize + "speed " + _growSpeed);
     }
 
     private void AnimationEventExplosion()
@@ -44,11 +45,11 @@ public class ShadyExplosiveController : MonoBehaviour
             {
                 //damageable.GetComponent<Enemy>().TakeDamage(_damage, false);
                 damageable.GetComponent<Entity>().SetKnockbackDirection(this.transform);
-                PlayerManager.Instance.Player.Stats.DealMagicalDamage(damageable.GetComponent<CharacterStats>());
+                _stats.DealMagicalDamage(damageable.GetComponent<CharacterStats>());
 
-                ItemDataEquipment equippedAmulet = Inventory.Instance.GetEquipment(EquipmentType.Amulet);
-                if (equippedAmulet != null)
-                    equippedAmulet.ExecuteItemEffect(damageable.transform);
+                //ItemDataEquipment equippedAmulet = Inventory.Instance.GetEquipment(EquipmentType.Amulet);
+                //if (equippedAmulet != null)
+                //    equippedAmulet.ExecuteItemEffect(damageable.transform);
             }
         }
     }

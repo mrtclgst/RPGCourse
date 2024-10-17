@@ -3,6 +3,7 @@ using System.Text;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class UI_InGame : MonoBehaviour
 {
@@ -43,19 +44,19 @@ public class UI_InGame : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftShift) && _skillManager.GetSkillDash().DashUnlocked)
             SetCooldownOf(_dashImage);
 
-        if (Input.GetKeyDown(KeyCode.Q) && _skillManager.GetSkillParry().ParryUnlocked)
-            SetCooldownOf(_parryImage);
+        //if (Input.GetKeyDown(KeyCode.Q) && _skillManager.GetSkillParry().ParryUnlocked)
+        //SetCooldownOf(_parryImage);
 
         if (Input.GetKeyDown(KeyCode.F) && _skillManager.GetSkillCrystal().CrystalUnlocked)
             SetCooldownOf(_crystalImage);
 
-        if (Input.GetKeyDown(KeyCode.Mouse1) && _skillManager.GetSkillSword().SwordUnlocked)
-            SetCooldownOf(_swordImage);
+        //if (Input.GetKeyDown(KeyCode.Q) && _skillManager.GetSkillSword().SwordUnlocked)
+        //    SetCooldownOf(_swordImage);
 
         if (Input.GetKeyDown(KeyCode.R) && _skillManager.GetSkillBlackhole().BlackholeUnlocked)
             SetCooldownOf(_blackholeImage);
 
-        if (Input.GetKeyDown(KeyCode.Keypad1) && Inventory.Instance.GetEquipment(EquipmentType.Flask) != null)
+        if (Input.GetKeyDown(KeyCode.E) && Inventory.Instance.GetEquipment(EquipmentType.Flask) != null)
             SetCooldownOf(_potionImage);
 
         if (Input.GetKeyDown(KeyCode.V))
@@ -67,15 +68,14 @@ public class UI_InGame : MonoBehaviour
         CheckCooldownOf(_dashImage, _skillManager.GetSkillDash().GetCooldown());
         CheckCooldownOf(_parryImage, _skillManager.GetSkillParry().GetCooldown());
         CheckCooldownOf(_crystalImage, _skillManager.GetSkillCrystal().GetCooldown());
-        CheckCooldownOf(_swordImage, _skillManager.GetSkillSword().GetCooldown());
+        //CheckCooldownOf(_swordImage, _skillManager.GetSkillSword().GetCooldown());
         CheckCooldownOf(_blackholeImage, _skillManager.GetSkillBlackhole().GetCooldown());
-
+        CheckSwordCooldown();
 
         if (Inventory.Instance.GetEquipment(EquipmentType.Flask) != null)
             CheckCooldownOf(_potionImage, Inventory.Instance.GetFlaskCooldown());
 
     }
-
     private void UpdateSoulsUI()
     {
         _increaseRate = Mathf.Max(Mathf.Abs(PlayerManager.Instance.Currency - _soulsAmount), 100);
@@ -86,7 +86,6 @@ public class UI_InGame : MonoBehaviour
         _currentSoulsText.text = _soulsAmount.ToString();
         //Debug.Log($"increase rate : {_increaseRate} \n souls amount : {_soulsAmount} \n manager currency : {PlayerManager.Instance.Currency}");
     }
-
     private void UpdateHealthUI()
     {
         _slider.value = _playerStats.GetCurrentHealthPercentage();
@@ -103,6 +102,17 @@ public class UI_InGame : MonoBehaviour
         if (image.fillAmount > 0)
         {
             image.fillAmount -= 1 / cooldown * Time.deltaTime;
+        }
+    }
+    private void CheckSwordCooldown()
+    {
+        if (PlayerManager.Instance.Player.GetSword() != null)
+        {
+            _swordImage.fillAmount = 1;
+        }
+        else
+        {
+            _swordImage.fillAmount = 0;
         }
     }
 }

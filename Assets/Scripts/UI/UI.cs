@@ -48,7 +48,7 @@ public class UI : MonoBehaviour, ISaveManager
         {
             SwitchWithKeyTo(_skillTreeUI);
         }
-        if (Input.GetKeyDown(KeyCode.O))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             SwitchWithKeyTo(_optionsUI);
         }

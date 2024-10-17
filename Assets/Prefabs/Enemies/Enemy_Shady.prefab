@@ -329,7 +329,7 @@ MonoBehaviour:
     _baseValue: 0
     _modifiers: 
   Damage:
-    _baseValue: 20
+    _baseValue: 0
     _modifiers: 
   CritChance:
     _baseValue: 0
@@ -338,7 +338,7 @@ MonoBehaviour:
     _baseValue: 0
     _modifiers: 
   MaxHealth:
-    _baseValue: 50
+    _baseValue: 20
     _modifiers: 
   Armor:
     _baseValue: 0
@@ -350,7 +350,7 @@ MonoBehaviour:
     _baseValue: 0
     _modifiers: 
   FireDamage:
-    _baseValue: 0
+    _baseValue: 20
     _modifiers: 
   IceDamage:
     _baseValue: 0
@@ -408,7 +408,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf663b18c421e814dae5074d2004023e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _possibleAmountOfItems: 0
+  _maxItemsToDrop: 0
   _possibleDrop: []
   _dropPrefab: {fileID: 5078578360333985665, guid: 3726905415b5f6540bc2951ad316d9d0, type: 3}
 --- !u!114 &6073973027160928532
@@ -452,7 +452,7 @@ MonoBehaviour:
   _counterImage: {fileID: 2394469593125563118}
   _battleMoveSpeed: 5
   _explosive: {fileID: 4187408894219929345, guid: 51916b73c3d79ef47a5270521cb37f1a, type: 3}
-  _growSpeed: 50
+  _growSpeed: 10
   _maxSize: 7
 --- !u!1 &1991260137794499517
 GameObject:

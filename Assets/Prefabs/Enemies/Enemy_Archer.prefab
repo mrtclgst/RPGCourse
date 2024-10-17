@@ -15018,19 +15018,19 @@ MonoBehaviour:
     _baseValue: 0
     _modifiers: 
   Damage:
-    _baseValue: 10
+    _baseValue: 30
     _modifiers: 
   CritChance:
-    _baseValue: 0
+    _baseValue: 30
     _modifiers: 
   CritDamage:
     _baseValue: 0
     _modifiers: 
   MaxHealth:
-    _baseValue: 50
+    _baseValue: 30
     _modifiers: 
   Armor:
-    _baseValue: 5
+    _baseValue: 0
     _modifiers: 
   Evasion:
     _baseValue: 0
@@ -15097,7 +15097,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf663b18c421e814dae5074d2004023e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _possibleAmountOfItems: 0
+  _maxItemsToDrop: 0
   _possibleDrop: []
   _dropPrefab: {fileID: 5078578360333985665, guid: 3726905415b5f6540bc2951ad316d9d0, type: 3}
 --- !u!114 &2693478865543132355

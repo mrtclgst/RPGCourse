@@ -82,6 +82,19 @@ public class EnemySlime : Enemy
     {
         _isKnocked = false;
     }
+
+    public override void DealDamage()
+    {
+        Collider2D[] damageableArray = Physics2D.OverlapCircleAll(_attackCheckPoint.position, _attackCheckRadius);
+        foreach (var damageable in damageableArray)
+        {
+            if (damageable.GetComponent<Player>() != null)
+            {
+                Player player = damageable.GetComponent<Player>();
+                Stats.DealDamage(player.Stats);
+            }
+        }
+    }
 }
 
 public enum SlimeType

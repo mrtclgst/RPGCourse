@@ -75,7 +75,7 @@ public class EntityFX : MonoBehaviour
     {
         _igniteFX.Play();
         InvokeRepeating("IgniteColorFX", 0, 0.2f);
-        Invoke("CancelColorChange", seconds);
+        Invoke("CancelColorChange", seconds + 0.1f);
     }
     private void IgniteColorFX()
     {

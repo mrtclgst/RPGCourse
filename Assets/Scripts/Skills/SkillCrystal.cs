@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -37,7 +36,6 @@ public class SkillCrystal : Skill
 
     private GameObject _currentCrystal;
 
-
     protected override void Start()
     {
         base.Start();
@@ -68,7 +66,7 @@ public class SkillCrystal : Skill
 
     internal override void UseSkill()
     {
-        base.UseSkill();
+        //base.UseSkill();
 
         if (_canUseMultiStackCrystal)
         {
@@ -77,11 +75,12 @@ public class SkillCrystal : Skill
 
             return;
         }
-        if (!_currentCrystal)
+        if (!_currentCrystal && CanUseSkill())
         {
             CreateCrystal();
+            _cooldownTimer = _cooldown;
         }
-        else
+        else if (_currentCrystal != null)
         {
             if (_canMoveToEnemy)
                 return;
@@ -133,6 +132,7 @@ public class SkillCrystal : Skill
                 if (_crystalList.Count <= 0)
                 {
                     _multiCrystalTimer = _cooldownOfMultiCrystal;
+                    _cooldown = _cooldownOfMultiCrystal;
                     RefillCrystal();
                 }
                 return true;

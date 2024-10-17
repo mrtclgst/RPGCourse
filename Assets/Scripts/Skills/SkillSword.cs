@@ -89,7 +89,7 @@ public class SkillSword : Skill
     protected override void Update()
     {
         base.Update();
-        if (Input.GetKeyUp(KeyCode.Alpha1))
+        if (Input.GetKeyUp(KeyCode.Q))
         {
             Vector2 targetDir = AimDirection().normalized;
             _finalDirection =
@@ -124,7 +124,6 @@ public class SkillSword : Skill
     }
 
     #region Unlock Region
-
     private void UnlockTimeStop()
     {
         if (_timeStopUnlockButton.Unlocked)
@@ -135,7 +134,6 @@ public class SkillSword : Skill
         if (_vulnurabilityUnlockButton.Unlocked)
             VulnurabilityUnlocked = true;
     }
-
     private void UnlockSword()
     {
         if (_swordUnlockButton.Unlocked)
@@ -144,7 +142,6 @@ public class SkillSword : Skill
             SwordUnlocked = true;
         }
     }
-
     private void UnlockBounceSword()
     {
         if (_bounceUnlockButton.Unlocked)
@@ -193,6 +190,8 @@ public class SkillSword : Skill
             new Vector2(direction.x * _launchForce.x, direction.y * _launchForce.y) * t + 0.5f * (Physics2D.gravity * _swordGravityScale) * (t * t);
         return position;
     }
+
+    
     #endregion
 }
 
