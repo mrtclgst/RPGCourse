@@ -310,13 +310,13 @@ MonoBehaviour:
     _baseValue: 0
     _modifiers: 
   FireDamage:
-    _baseValue: 30
+    _baseValue: 0
     _modifiers: 
   IceDamage:
     _baseValue: 0
     _modifiers: 
   LightningDamage:
-    _baseValue: 5
+    _baseValue: 0
     _modifiers: 
   _isIgnited: 0
   _isChilled: 0
@@ -18431,7 +18431,7 @@ MonoBehaviour:
   _unlockMultiCrystalButton: {fileID: 252003641}
   _canUseMultiStackCrystal: 0
   _amountOfStack: 3
-  _cooldownOfMultiCrystal: 2
+  _cooldownOfMultiCrystal: 3
   _useTimeWindow: 2.5
   _crystalList:
   - {fileID: 2755728465241350897, guid: bfccec2108b0237489611f4c3d7429b7, type: 3}

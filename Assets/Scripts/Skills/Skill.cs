@@ -25,7 +25,6 @@ public class Skill : MonoBehaviour
             return true;
         }
 
-        Debug.Log(_cooldownTimer);
         _player.PlayerFX.CreatePopupText("Cooldown");
         return false;
     }
@@ -35,6 +34,7 @@ public class Skill : MonoBehaviour
         if (CanUseSkill())
         {
             _cooldownTimer = _cooldown;
+            Debug.Log("skill used");
         }
         else
         {
@@ -70,8 +70,11 @@ public class Skill : MonoBehaviour
 
     }
 
-    public float GetCooldown()
+    public virtual float GetCooldown()
     {
         return _cooldown;
     }
+
+    public float GetCooldownTimer()
+    { return _cooldownTimer; }
 }

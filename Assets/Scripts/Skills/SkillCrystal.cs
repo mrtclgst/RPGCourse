@@ -68,7 +68,7 @@ public class SkillCrystal : Skill
     {
         //base.UseSkill();
 
-        if (_canUseMultiStackCrystal)
+        if (_canUseMultiStackCrystal && CanUseSkill())
         {
             if (CanUseMultiCrystal())
                 return;
@@ -98,6 +98,8 @@ public class SkillCrystal : Skill
             {
                 _currentCrystal.GetComponent<SkillCrystalController>()?.CrystalExplosionLogic();
             }
+
+            _currentCrystal = null;
         }
     }
 
@@ -132,6 +134,7 @@ public class SkillCrystal : Skill
                 if (_crystalList.Count <= 0)
                 {
                     _multiCrystalTimer = _cooldownOfMultiCrystal;
+                    _cooldownTimer = _cooldownOfMultiCrystal;
                     _cooldown = _cooldownOfMultiCrystal;
                     RefillCrystal();
                 }
@@ -140,6 +143,21 @@ public class SkillCrystal : Skill
         }
         return false;
     }
+
+    public override float GetCooldown()
+    {
+        return _cooldown;
+    }
+    public int GetCrystalCount()
+    {
+        return _crystalList.Count;
+    }
+    public bool GetMultiCrystalBoolean()
+    {
+        return _canUseMultiStackCrystal;
+    }
+
+
 
     private void RefillCrystal()
     {

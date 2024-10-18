@@ -1,9 +1,7 @@
 using System;
-using System.Text;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class UI_InGame : MonoBehaviour
 {
@@ -48,7 +46,7 @@ public class UI_InGame : MonoBehaviour
         //SetCooldownOf(_parryImage);
 
         if (Input.GetKeyDown(KeyCode.F) && _skillManager.GetSkillCrystal().CrystalUnlocked)
-            SetCooldownOf(_crystalImage);
+            SetCrystalSkillCooldownOf();
 
         //if (Input.GetKeyDown(KeyCode.Q) && _skillManager.GetSkillSword().SwordUnlocked)
         //    SetCooldownOf(_swordImage);
@@ -113,6 +111,19 @@ public class UI_InGame : MonoBehaviour
         else
         {
             _swordImage.fillAmount = 0;
+        }
+    }
+    private void SetCrystalSkillCooldownOf()
+    {
+        SkillCrystal skillCrystal = SkillManager.Instance.GetSkillCrystal();
+        if (skillCrystal.GetMultiCrystalBoolean())
+        {
+            if (skillCrystal.GetCrystalCount() == 1)
+                _crystalImage.fillAmount = 1;
+        }
+        else
+        {
+            _crystalImage.fillAmount = 1;
         }
     }
 }
