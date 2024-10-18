@@ -136,7 +136,7 @@ public class SkillCrystal : Skill
                     _multiCrystalTimer = _cooldownOfMultiCrystal;
                     _cooldownTimer = _cooldownOfMultiCrystal;
                     _cooldown = _cooldownOfMultiCrystal;
-                    RefillCrystal();
+                    Invoke("RefillCrystal", 0.1f);
                 }
                 return true;
             }

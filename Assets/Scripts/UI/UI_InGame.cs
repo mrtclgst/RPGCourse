@@ -118,12 +118,14 @@ public class UI_InGame : MonoBehaviour
         SkillCrystal skillCrystal = SkillManager.Instance.GetSkillCrystal();
         if (skillCrystal.GetMultiCrystalBoolean())
         {
-            if (skillCrystal.GetCrystalCount() == 1)
-                _crystalImage.fillAmount = 1;
+            if (skillCrystal.GetCrystalCount() == 0)
+            {
+                SetCooldownOf(_crystalImage);
+            }
         }
         else
         {
-            _crystalImage.fillAmount = 1;
+            SetCooldownOf(_crystalImage);
         }
     }
 }

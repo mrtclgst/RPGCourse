@@ -18427,7 +18427,7 @@ MonoBehaviour:
   _canExplode: 0
   _unlockMovingCrystalButton: {fileID: 1680106219}
   _canMoveToEnemy: 0
-  _moveSpeed: 5
+  _moveSpeed: 8
   _unlockMultiCrystalButton: {fileID: 252003641}
   _canUseMultiStackCrystal: 0
   _amountOfStack: 3
